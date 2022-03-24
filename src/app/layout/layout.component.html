@@ -1,47 +1,50 @@
-<!-- ----------------------------------------------------------------------------------------------------- -->
-<!-- Empty layout -->
-<!-- ----------------------------------------------------------------------------------------------------- -->
-<empty-layout *ngIf="layout === 'empty'"></empty-layout>
+<ng-container [ngSwitch]="layout">
+  <!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- Empty layout -->
 
-<!-- ----------------------------------------------------------------------------------------------------- -->
-<!-- Layouts with horizontal navigation -->
-<!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- ----------------------------------------------------------------------------------------------------- -->
+  <empty-layout *ngSwitchCase="'empty'"></empty-layout>
 
-<!-- Centered -->
-<centered-layout *ngIf="layout === 'centered'"></centered-layout>
+  <!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- Layouts with horizontal navigation -->
+  <!-- ----------------------------------------------------------------------------------------------------- -->
 
-<!-- Enterprise -->
-<enterprise-layout *ngIf="layout === 'enterprise'"></enterprise-layout>
+  <!-- Centered -->
+  <centered-layout *ngSwitchCase="'centered'"></centered-layout>
 
-<!-- Material -->
-<material-layout *ngIf="layout === 'material'"></material-layout>
+  <!-- Enterprise -->
+  <enterprise-layout *ngSwitchCase="'enterprise'"></enterprise-layout>
 
-<!-- Modern -->
-<modern-layout *ngIf="layout === 'modern'"></modern-layout>
+  <!-- Material -->
+  <material-layout *ngSwitchCase="'material'"></material-layout>
 
-<!-- ----------------------------------------------------------------------------------------------------- -->
-<!-- Layouts with vertical navigation -->
-<!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- Modern -->
+  <modern-layout *ngSwitchCase="'modern'"></modern-layout>
 
-<!-- Classic -->
-<classic-layout *ngIf="layout === 'classic'"></classic-layout>
+  <!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- Layouts with vertical navigation -->
+  <!-- ----------------------------------------------------------------------------------------------------- -->
 
-<!-- Classy -->
-<classy-layout *ngIf="layout === 'classy'"></classy-layout>
+  <!-- Classic -->
+  <classic-layout *ngSwitchCase="'classic'"></classic-layout>
 
-<!-- Compact -->
-<compact-layout *ngIf="layout === 'compact'"></compact-layout>
+  <!-- Classy -->
+  <classy-layout *ngSwitchCase="'classy'"></classy-layout>
 
-<!-- Dense -->
-<dense-layout *ngIf="layout === 'dense'"></dense-layout>
+  <!-- Compact -->
+  <compact-layout *ngSwitchCase="'compact'"></compact-layout>
 
-<!-- Futuristic -->
-<futuristic-layout *ngIf="layout === 'futuristic'"></futuristic-layout>
+  <!-- Dense -->
+  <dense-layout *ngSwitchCase="'dense'"></dense-layout>
 
-<!-- Thin -->
-<thin-layout *ngIf="layout === 'thin'"></thin-layout>
+  <!-- Futuristic -->
+  <futuristic-layout *ngSwitchCase="'futuristic'"></futuristic-layout>
 
-<!-- ----------------------------------------------------------------------------------------------------- -->
-<!-- Settings drawer - Remove this to remove the drawer and its button -->
-<!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- Thin -->
+  <thin-layout *ngSwitchCase="'thin'"></thin-layout>
+
+  <!-- ----------------------------------------------------------------------------------------------------- -->
+  <!-- Settings drawer - Remove this to remove the drawer and its button -->
+  <!-- ----------------------------------------------------------------------------------------------------- -->
+</ng-container>
 <settings></settings>
