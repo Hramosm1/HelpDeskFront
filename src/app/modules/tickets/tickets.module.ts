@@ -8,10 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { NewTicketComponent } from './new-ticket/new-ticket.component';
 
 @NgModule({
   declarations: [
-    TicketsComponent
+    TicketsComponent,
+    NewTicketComponent
   ],
   imports: [
     CommonModule,
