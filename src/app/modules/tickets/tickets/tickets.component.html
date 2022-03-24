@@ -1,4 +1,29 @@
-<app-base title="upfd" subtitle="jfkdlfjd">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit
-  excepturi saepe veritatis laborum architecto
-  in, unde dignissimos eaque quibusdam dolore aliquam eveniet optio. Earum, facere? Repellat, quod voluptatibus.
-  Expedita, quo.</app-base>
+<app-base title="upfd" subtitle="jfkdlfjd">
+  <button mat-raised-button class="bg-green">Crear nuevo ticket</button>
+  <form>
+    <mat-form-field class="w-full" appearance="standard">
+      <mat-label>Buscador</mat-label>
+      <input matInput [formControl]="control">
+    </mat-form-field>
+  </form>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col}} </th>
+        <td mat-cell *matCellDef="let row"> {{row[col]}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay data</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</app-base>

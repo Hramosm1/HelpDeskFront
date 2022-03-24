@@ -1,11 +1,11 @@
-<!-- CABECERA -->
-<div class="w-full mt-6 mx-6">
-  <h2 class="text-3xl font-semibold tracking-tight leading-8">{{title}}</h2>
-  <h3 class="font-medium tracking-tight text-secondary">{{subtitle}}</h3>
-</div>
-<!-- BODY -->
-<div class="flex-auto p-6 sm:p-10" cdkScrollable>
-  <section>
+<div class="w-full">
+  <!-- CABECERA -->
+  <div class="w-11/12 mt-6 mx-auto">
+    <h2 class="text-3xl font-semibold tracking-tight leading-8">{{title}}</h2>
+    <h3 class="font-medium tracking-tight text-secondary">{{subtitle}}</h3>
+  </div>
+  <!-- BODY -->
+  <section class="w-11/12 mx-auto" cdkScrollable>
     <ng-content></ng-content>
   </section>
 </div>
