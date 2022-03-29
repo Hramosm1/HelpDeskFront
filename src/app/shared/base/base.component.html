@@ -1,0 +1,11 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto" cdkScrollable>
+  <!-- CABECERA -->
+  <div class="w-11/12 my-6 mx-auto">
+    <h2 class="text-3xl font-semibold tracking-tight leading-8">{{title}}</h2>
+    <h3 class="font-medium tracking-tight text-secondary">{{subtitle}}</h3>
+  </div>
+  <!-- BODY -->
+  <section class="w-11/12 mx-auto my-6">
+    <ng-content></ng-content>
+  </section>
+</div>
