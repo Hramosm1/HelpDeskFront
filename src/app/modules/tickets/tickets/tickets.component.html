@@ -1,4 +1,4 @@
-<app-base title="Tickets" subtitle="Listado">
+<app-base title="Listado" subtitle="Tickets">
   <a routerLink="/tickets/newTicket" mat-raised-button color="primary">Crear nuevo ticket</a>
   <form>
     <mat-form-field class="w-full" appearance="standard">
@@ -11,7 +11,7 @@
 
       <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col}} </th>
-        <td mat-cell *matCellDef="let row"> {{row[col]}} </td>
+        <td mat-cell *matCellDef="let row"> {{row[col] | truncateText:100}} </td>
       </ng-container>
 
 
