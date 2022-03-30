@@ -4,12 +4,23 @@ export interface Estado {
   activo?: boolean
 }
 export interface Categoria {
+  id: number;
+  nombre: string;
 }
 export interface SubCategoria {
+  id: number;
+  nombre: string;
+  idCategoria: number;
+  categoria: string;
+  activo?: boolean;
 }
 export interface Prioridad {
   id: number;
   nombre: string;
   color: string;
   activo?: boolean;
+}
+export interface DataDialog<T> {
+  editar: boolean;
+  row?: T;
 }

@@ -1,11 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Prioridad } from '../../interfaces';
-interface Data {
-  editar: boolean;
-  row: Prioridad
-}
+import { DataDialog, Prioridad } from '../../interfaces';
+
 @Component({
   selector: 'app-creacion-prioridad',
   templateUrl: './creacion-prioridad.component.html',
@@ -16,7 +13,7 @@ export class CreacionPrioridadComponent implements OnInit {
   constructor(
     private ref: MatDialogRef<CreacionPrioridadComponent>,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: Data
+    @Inject(MAT_DIALOG_DATA) public data: DataDialog<Prioridad>
   ) { }
 
   ngOnInit(): void {

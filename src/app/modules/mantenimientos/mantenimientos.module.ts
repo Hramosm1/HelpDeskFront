@@ -17,6 +17,8 @@ import { CreacionEstadosComponent } from './estados/creacion-estados/creacion-es
 import { CreacionPrioridadComponent } from './prioridades/creacion-prioridad/creacion-prioridad.component';
 import { CreacionCategoriaComponent } from './categorias-ysub-categorias/creacion-categoria/creacion-categoria.component';
 import { CreacionSubCategoriaComponent } from './categorias-ysub-categorias/creacion-sub-categoria/creacion-sub-categoria.component';
+import { TablaCategoriasComponent } from './categorias-ysub-categorias/tabla-categorias/tabla-categorias.component';
+import { TablaSubCategoriasComponent } from './categorias-ysub-categorias/tabla-sub-categorias/tabla-sub-categorias.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { CreacionSubCategoriaComponent } from './categorias-ysub-categorias/crea
     CreacionEstadosComponent,
     CreacionPrioridadComponent,
     CreacionCategoriaComponent,
-    CreacionSubCategoriaComponent
+    CreacionSubCategoriaComponent,
+    TablaCategoriasComponent,
+    TablaSubCategoriasComponent
   ],
   imports: [
     CommonModule,

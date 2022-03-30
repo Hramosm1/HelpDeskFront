@@ -5,41 +5,35 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
 import { ConfirmComponent } from 'app/shared/confirm/confirm.component';
-import { Estado } from '../interfaces';
-import { CreacionEstadosComponent } from './creacion-estados/creacion-estados.component';
+import { Categoria } from '../../interfaces';
+import { CreacionCategoriaComponent } from '../creacion-categoria/creacion-categoria.component';
 
 @Component({
-  selector: 'app-estados',
-  templateUrl: './estados.component.html',
-  styleUrls: ['./estados.component.scss']
+  selector: 'app-tabla-categorias',
+  templateUrl: './tabla-categorias.component.html',
+  styleUrls: ['./tabla-categorias.component.scss']
 })
-export class EstadosComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator
+export class TablaCategoriasComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort
-  dataSource: MatTableDataSource<Estado> = new MatTableDataSource()
+  @ViewChild(MatPaginator) paginator: MatPaginator
+  dataSource: MatTableDataSource<Categoria> = new MatTableDataSource()
   displayedColumns: string[] = ['id', 'nombre', 'actions']
-  constructor(private dialog: MatDialog, private api: HttpService) { }
-
-  ngAfterViewInit(): void {
-    this.api.getAll<Estado>('estados').subscribe(res => {
-      this.dataSource.data = res
-      this.dataSource.paginator = this.paginator
-      this.dataSource.sort = this.sort
-    })
+  constructor(private api: HttpService, private dialog: MatDialog) { }
+  actualizar() {
+    this.api.getAll<Categoria>('categorias').subscribe(res => this.dataSource.data = res)
   }
-  actualizar() { this.api.getAll<Estado>('estados').subscribe(res => this.dataSource.data = res) }
-  openDialog(editar: boolean, nombre?: string, id?: number) {
-    const dialogRef = this.dialog.open(CreacionEstadosComponent, { width: '400px', data: { editar, nombre, id }, disableClose: true })
+  openDialog(editar: boolean, row?: Categoria) {
+    const dialogRef = this.dialog.open(CreacionCategoriaComponent, { width: '400px', data: { editar, row } })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
         if (result.editar) {
-          this.api.update('estados', result.id, result.value).subscribe(res => {
+          this.api.update('categorias', result.id, result.value).subscribe(res => {
             if (res.rowsAffected[0] > 0) {
               this.actualizar()
             }
           })
         } else {
-          this.api.create('estados', result.value).subscribe(res => {
+          this.api.create('categorias', result.value).subscribe(res => {
             if (res.rowsAffected[0] > 0) {
               this.actualizar()
             }
@@ -52,7 +46,7 @@ export class EstadosComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.api.delete('estados', result.id).subscribe(res => {
+        this.api.delete('categorias', result.id).subscribe(res => {
           if (res.rowsAffected[0] > 0) {
             this.actualizar()
           }
@@ -60,4 +54,12 @@ export class EstadosComponent implements AfterViewInit {
       }
     })
   }
+  ngAfterViewInit(): void {
+    this.api.getAll<Categoria>('categorias').subscribe(res => {
+      this.dataSource.data = res
+      this.dataSource.sort = this.sort
+      this.dataSource.paginator = this.paginator
+    })
+  }
+
 }

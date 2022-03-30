@@ -1,9 +1,9 @@
 <app-base title="Prioridades" subtitle="Mantenimientos">
-  <mat-card-header class="fixed right-5 top-20">
+  <div class="fixed right-5 top-20">
     <button mat-raised-button color="warn" (click)="openDialog(false)">
       Nueva Prioridad
     </button>
-  </mat-card-header>
+  </div>
   <div *ngIf="dataSource" class="mat-elevation-z8">
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">

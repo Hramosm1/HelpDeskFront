@@ -1,1 +1,18 @@
-<p>creacion-sub-categoria works!</p>
+<mat-dialog-content>
+  <form *ngIf="formulario" [formGroup]="formulario">
+    <mat-form-field class="w-full">
+      <mat-label>Sub Categoria</mat-label>
+      <input matInput formControlName="nombre">
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Categoria</mat-label>
+      <mat-select formControlName="idCategoria">
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="flex justify-end">
+  <button mat-button color="warn" [mat-dialog-close]="{action:false}">Cancelar</button>
+  <button mat-raised-button color="warn" (click)="create()">Crear</button>
+</mat-dialog-actions>
