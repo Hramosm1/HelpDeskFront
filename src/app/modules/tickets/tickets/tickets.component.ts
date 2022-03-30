@@ -25,17 +25,14 @@ const data = [
 export class TicketsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator
   control: FormControl = new FormControl('')
-  $data: Observable<any>
-  dataSource: MatTableDataSource<any> = new MatTableDataSource([])
+  dataSource: MatTableDataSource<any> = new MatTableDataSource()
   displayedColumns = ['postId', 'id', 'name', 'email', 'body']
-  constructor(private api: HttpService) {
-    this.$data = api.test()
+  constructor() {
   }
 
   ngOnInit(): void {
   }
   ngAfterViewInit() {
-    this.$data.subscribe(val => this.dataSource.data = val)
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
     this.dataSource.paginator = this.paginator;
   }

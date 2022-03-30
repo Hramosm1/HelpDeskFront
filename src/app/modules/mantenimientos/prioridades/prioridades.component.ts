@@ -1,0 +1,74 @@
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { HttpService } from 'app/backend/services/http.service';
+import { ConfirmComponent } from 'app/shared/confirm/confirm.component';
+import { Prioridad } from '../interfaces';
+import { CreacionPrioridadComponent } from './creacion-prioridad/creacion-prioridad.component';
+
+@Component({
+  selector: 'app-prioridades',
+  templateUrl: './prioridades.component.html',
+  styleUrls: ['./prioridades.component.scss']
+})
+export class PrioridadesComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator
+  @ViewChild(MatSort) sort: MatSort
+  dataSource: MatTableDataSource<any> = new MatTableDataSource()
+  displayedColumns: string[] = ['id', 'nombre', 'color', 'actions']
+  formulario: FormGroup
+
+  constructor(private fb: FormBuilder, private api: HttpService, private dialog: MatDialog) { }
+
+  ngOnInit(): void {
+    this.formulario = this.fb.group({
+      nombre: ['', Validators.required],
+      color: ''
+    })
+  }
+  ngAfterViewInit(): void {
+    this.api.getAll<Prioridad>('prioridades').subscribe(res => {
+      console.log(res)
+      this.dataSource.data = res
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
+    })
+  }
+  actualizar() { this.api.getAll<Prioridad>('prioridades').subscribe(res => this.dataSource.data = res) }
+  openDialog(editar: boolean, row?: Prioridad) {
+    const dialogRef = this.dialog.open(CreacionPrioridadComponent, { width: '400px', data: { editar, row } })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.action) {
+        if (result.editar) {
+          this.api.update('prioridades', result.id, result.value).subscribe(res => {
+            if (res.rowsAffected[0] > 0) {
+              this.actualizar()
+            }
+          })
+        } else {
+          this.api.create('prioridades', result.value).subscribe(res => {
+            if (res.rowsAffected[0] > 0) {
+              this.actualizar()
+            }
+          })
+        }
+      }
+    })
+  }
+  eliminar(id: number, nombre: string) {
+    const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.action) {
+        this.api.delete('estados', result.id).subscribe(res => {
+          if (res.rowsAffected[0] > 0) {
+            this.actualizar()
+          }
+        })
+      }
+    })
+  }
+
+}
