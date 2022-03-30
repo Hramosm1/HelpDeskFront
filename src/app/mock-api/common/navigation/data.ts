@@ -3,18 +3,22 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 const navigation: FuseNavigationItem[] = [
     {
-        id: 'example',
-        title: 'Example',
-        type: 'basic',
-        icon: 'heroicons_outline:chart-pie',
-        link: '/example'
-    },
-    {
         id: 'tickets',
         title: 'Tickets',
         type: 'basic',
-        icon: '',
+        icon: 'heroicons_outline:ticket',
         link: '/tickets'
+    },
+    {
+        id: 'mantenimientos',
+        title: 'Mantenimientos',
+        type: 'collapsable',
+        icon: 'heroicons_outline:adjustments',
+        children: [
+            { title: 'Prioridades', type: 'basic', link: '/mantenimientos/prioridades' },
+            { title: 'Estados', type: 'basic', link: '/mantenimientos/estados' },
+            { title: 'Categorias', type: 'basic', link: '/mantenimientos/categorias' }
+        ]
     }
 ];
 

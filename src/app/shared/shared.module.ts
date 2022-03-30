@@ -6,12 +6,17 @@ import { BaseComponent } from './base/base.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ConfirmComponent } from './confirm/confirm.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatButtonModule
     ],
     exports: [
         CommonModule,
@@ -21,11 +26,13 @@ import { MatSelectModule } from '@angular/material/select';
         MatInputModule,
         MatSelectModule,
         TopComponent,
-        BaseComponent
+        BaseComponent,
+        ConfirmComponent
     ],
     declarations: [
         TopComponent,
-        BaseComponent
+        BaseComponent,
+        ConfirmComponent
     ]
 })
 export class SharedModule {

@@ -12,7 +12,10 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './backend/interceptor.service';
+import { APP_BASE_HREF } from '@angular/common';
+import { environment } from 'environments/environment';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -44,6 +47,11 @@ const routerConfig: ExtraOptions = {
     ],
     bootstrap: [
         AppComponent
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true
+        }
     ]
 })
 export class AppModule {
