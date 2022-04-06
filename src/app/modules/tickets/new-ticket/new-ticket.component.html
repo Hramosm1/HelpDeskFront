@@ -1,88 +1,79 @@
-<app-base title="Nuevo Ticket" subtitle="Tickets">
-  <mat-card>
-    <mat-card-header>
-    </mat-card-header>
-    <mat-card-content>
-      <!-- Compose form -->
-      <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="composeForm">
-
-        <!-- To -->
-        <mat-form-field>
-          <mat-label>To</mat-label>
-          <input matInput [formControlName]="'to'">
-          <div class="copy-fields-toggles" matSuffix>
-            <span class="text-sm font-medium cursor-pointer select-none hover:underline" *ngIf="!copyFields.cc"
-              (click)="showCopyField('cc')">
-              Cc
+<h2 matDialogTitle>Nuevo Ticket</h2>
+<mat-dialog-content>
+  <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="composeForm">
+    <mat-form-field>
+      <mat-label>Titulo</mat-label>
+      <input matInput formControlName="titulo">
+    </mat-form-field>
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+      <mat-form-field>
+        <mat-label>Prioridad</mat-label>
+        <mat-select formControlName="prioridad">
+          <mat-option *ngFor="let prioridad of $prioridades|async" [value]="prioridad.id">
+            {{prioridad.nombre}} <span class="inline-block">
+              <div class="w-4 h-2" [ngStyle]="{'background-color':prioridad.color}"></div>
             </span>
-            <span class="ml-2 text-sm font-medium cursor-pointer select-none hover:underline" *ngIf="!copyFields.bcc"
-              (click)="showCopyField('bcc')">
-              Bcc
-            </span>
-          </div>
-        </mat-form-field>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option *ngFor="let estado of $estados|async" [value]="estado.id">{{estado.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Categoria</mat-label>
+        <mat-select multiple formControlName="categorias">
+          <mat-optgroup *ngFor="let categoria of $categorias|async" [label]="categoria.grupo">
+            <mat-option *ngFor="let sub of categoria.subcategoria" [value]="sub.id">{{sub.nombre}}</mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <quill-editor class="mt-2" formControlName="descripcion" [modules]="quillModules"></quill-editor>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+      <mat-form-field>
+        <mat-label>Solicitante</mat-label>
+        <mat-select formControlName="solicitudDe">
+          <mat-option *ngFor="let usuario of $usuarios|async" [value]="usuario.id">{{usuario.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Asignado a</mat-label>
+        <input matInput formControlName="asignadoA">
+      </mat-form-field>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 sm:mt-6">
+      <div class="-ml-2">
+        <!-- Attach file -->
+        <button mat-icon-button>
+          <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:paper-clip'"></mat-icon>
+        </button>
+        <!-- Insert link -->
+        <button mat-icon-button>
+          <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:link'"></mat-icon>
+        </button>
+        <!-- Insert emoji -->
+        <button mat-icon-button>
+          <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:emoji-happy'"></mat-icon>
+        </button>
+        <!-- Insert image -->
+        <button mat-icon-button>
+          <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
+        </button>
+      </div>
 
-        <select [(ngModel)]="selectedColor" [ngStyle]="{'background-color': selectedColor}">
-          <option *ngFor="let color of colors" [ngStyle]="{'background': color.value}" [ngValue]="color">
-            {{color.name}}
-          </option>
-        </select>
-        <!-- Cc -->
-        <mat-form-field *ngIf="copyFields.cc">
-          <mat-label>Cc</mat-label>
-          <input matInput [formControlName]="'cc'">
-        </mat-form-field>
-
-        <!-- Bcc -->
-        <mat-form-field *ngIf="copyFields.bcc">
-          <mat-label>Bcc</mat-label>
-          <input matInput [formControlName]="'bcc'">
-        </mat-form-field>
-
-        <!-- Subject -->
-        <mat-form-field>
-          <mat-label>Subject</mat-label>
-          <input matInput [formControlName]="'subject'">
-        </mat-form-field>
-
-        <!-- Body -->
-        <quill-editor class="mt-2" [formControlName]="'body'" [modules]="quillModules"></quill-editor>
-
-        <!-- Actions -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 sm:mt-6">
-          <div class="-ml-2">
-            <!-- Attach file -->
-            <button mat-icon-button>
-              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:paper-clip'"></mat-icon>
-            </button>
-            <!-- Insert link -->
-            <button mat-icon-button>
-              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:link'"></mat-icon>
-            </button>
-            <!-- Insert emoji -->
-            <button mat-icon-button>
-              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:emoji-happy'"></mat-icon>
-            </button>
-            <!-- Insert image -->
-            <button mat-icon-button>
-              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:photograph'"></mat-icon>
-            </button>
-          </div>
-
-          <div class="flex items-center mt-4 sm:mt-0">
-            <!-- Discard -->
-            <button class="ml-auto sm:ml-0" mat-stroked-button (click)="discard()">
-              Discard
-            </button>
-            <!-- Send -->
-            <button class="order-first sm:order-last" mat-flat-button [color]="'primary'" (click)="send()">
-              Send
-            </button>
-          </div>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-
-
-</app-base>
+      <div class="flex items-center mt-4 sm:mt-0">
+        <!-- Discard -->
+        <button class="ml-auto sm:ml-0" mat-button color="warn" (click)="cancel()">
+          cancelar
+        </button>
+        <!-- Send -->
+        <button class="order-first sm:order-last" mat-flat-button color="warn" (click)="send()">
+          Crear
+        </button>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>

@@ -24,3 +24,12 @@ export interface DataDialog<T> {
   editar: boolean;
   row?: T;
 }
+export interface Usuario {
+  id: string;
+  nombre: string;
+  usuario?: string;
+  correo?: string;
+  idPersonaUnica?: string;
+  idCobrador?: number
+  fechaCreacion?: Date
+}

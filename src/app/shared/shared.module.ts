@@ -9,6 +9,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { ListaDeUsuariosComponent } from './lista-de-usuarios/lista-de-usuarios.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
     imports: [
@@ -16,7 +20,11 @@ import { MatButtonModule } from '@angular/material/button';
         FormsModule,
         ReactiveFormsModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatInputModule
     ],
     exports: [
         CommonModule,
@@ -32,7 +40,8 @@ import { MatButtonModule } from '@angular/material/button';
     declarations: [
         TopComponent,
         BaseComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        ListaDeUsuariosComponent
     ]
 })
 export class SharedModule {

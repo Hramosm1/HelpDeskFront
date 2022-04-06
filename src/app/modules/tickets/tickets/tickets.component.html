@@ -1,5 +1,5 @@
 <app-base title="Listado" subtitle="Tickets">
-  <a routerLink="/tickets/newTicket" mat-raised-button color="primary">Crear nuevo ticket</a>
+  <button (click)="openDialog()" mat-raised-button color="primary">Crear nuevo ticket</button>
   <form>
     <mat-form-field class="w-full" appearance="standard">
       <mat-label>Buscador</mat-label>

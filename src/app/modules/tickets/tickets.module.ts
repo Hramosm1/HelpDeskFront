@@ -12,6 +12,8 @@ import { MatCardModule } from "@angular/material/card";
 import { NewTicketComponent } from './new-ticket/new-ticket.component';
 import { PipesModule } from 'app/pipes/pipes.module';
 import { QuillModule } from 'ngx-quill';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import { QuillModule } from 'ngx-quill';
     SharedModule,
     MatIconModule,
     MatTableModule,
+    MatDialogModule,
     TicketsRoutingModule,
     MatPaginatorModule,
     MatCardModule,
     PipesModule,
+    MatAutocompleteModule,
     QuillModule.forRoot(),
   ]
 })

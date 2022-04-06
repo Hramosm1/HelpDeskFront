@@ -17,7 +17,8 @@ const navigation: FuseNavigationItem[] = [
         children: [
             { title: 'Prioridades', type: 'basic', link: '/mantenimientos/prioridades' },
             { title: 'Estados', type: 'basic', link: '/mantenimientos/estados' },
-            { title: 'Categorias', type: 'basic', link: '/mantenimientos/categorias' }
+            { title: 'Categorias', type: 'basic', link: '/mantenimientos/categorias' },
+            { title: 'Personal de soporte', type: 'basic', link: '/mantenimientos/personal-de-soporte' }
         ]
     }
 ];

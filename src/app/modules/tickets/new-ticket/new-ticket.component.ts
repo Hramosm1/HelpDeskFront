@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpService } from 'app/backend/services/http.service';
+import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
+import { map, Observable } from 'rxjs';
+import { chain } from "lodash";
 import { MatDialogRef } from '@angular/material/dialog';
+import { AuthenticationService } from 'app/backend/services/authentication.service';
 
 @Component({
   selector: 'app-new-ticket',
@@ -9,28 +14,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class NewTicketComponent implements OnInit {
 
-  selectedColor = '';
-
-  colors = [
-    {
-      name: 'yellow',
-      value: '#ffff00'
-    },
-    {
-      name: 'red',
-      value: '#ff3300'
-    },
-    {
-      name: 'blue',
-      value: '#0000ff'
-    }
-  ];
-
+  $categorias: Observable<any[]>
+  $prioridades: Observable<Prioridad[]>
+  $estados: Observable<Estado[]>
+  $usuarios: Observable<Usuario[]>
   composeForm: FormGroup;
-  copyFields: { cc: boolean; bcc: boolean } = {
-    cc: false,
-    bcc: false
-  };
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline'],
@@ -39,77 +27,43 @@ export class NewTicketComponent implements OnInit {
     ]
   };
 
-  /**
-   * Constructor
-   */
   constructor(
-    private _formBuilder: FormBuilder
-  ) {
-  }
+    private fb: FormBuilder,
+    private api: HttpService,
+    private authApi: AuthenticationService,
+    private cd: ChangeDetectorRef,
+    private ref: MatDialogRef<NewTicketComponent>) { }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * On init
-   */
   ngOnInit(): void {
-    // Create the form
-    this.composeForm = this._formBuilder.group({
-      to: ['', [Validators.required, Validators.email]],
-      cc: ['', [Validators.email]],
-      bcc: ['', [Validators.email]],
-      subject: [''],
-      body: ['', [Validators.required]]
+    this.crearObservables()
+    this.crearFormulario()
+  }
+  crearObservables(): void {
+    this.$usuarios = this.authApi.getAll<Usuario>('usuarios')
+    this.$prioridades = this.api.getAll<Prioridad>('prioridades')
+    this.$estados = this.api.getAll<Estado>('estados')
+    this.$categorias = this.api.getAll<SubCategoria>('subCategorias')
+
+      .pipe(map(of => {
+        return chain(of).groupBy('categoria').map((subcategoria, grupo) => { return { grupo, subcategoria } }).value()
+      }))
+  }
+  crearFormulario(): void {
+    this.composeForm = this.fb.group({
+      titulo: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      prioridad: ['', Validators.required],
+      estado: ['', Validators.required],
+      categorias: [[], Validators.required],
+      solicitudDe: ['', Validators.required],
+      asignadoA: ['']
     });
   }
-
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Show the copy field with the given field name
-   *
-   * @param name
-   */
-  showCopyField(name: string): void {
-    // Return if the name is not one of the available names
-    if (name !== 'cc' && name !== 'bcc') {
-      return;
-    }
-
-    // Show the field
-    this.copyFields[name] = true;
-  }
-
-  /**
-   * Save and close
-   */
-  saveAndClose(): void {
-    // Save the message as a draft
-    this.saveAsDraft();
-
-  }
-
-  /**
-   * Discard the message
-   */
-  discard(): void {
+  cancel(): void {
     this.composeForm.reset()
+    this.ref.close()
   }
 
-  /**
-   * Save the message as a draft
-   */
-  saveAsDraft(): void {
-
-  }
-
-  /**
-   * Send the message
-   */
   send(): void {
     console.log(this.composeForm.value)
   }
