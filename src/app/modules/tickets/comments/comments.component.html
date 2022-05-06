@@ -1,0 +1,14 @@
+<ng-container *ngFor="let comentario of comentarios$|async">
+  <div class="bg-primary-100 bg-opacity-5 mt3 rounded-md">
+    <h3 class="text-on-primary-500 font-bold">{{comentario.nombre}}</h3>
+    <p>{{comentario.comentario}}</p>
+  </div>
+</ng-container>
+
+<mat-form-field class="w-full">
+  <mat-label>label</mat-label>
+  <textarea matInput></textarea>
+</mat-form-field>
+<button mat-raised-button color="primary">
+  Comentar
+</button>

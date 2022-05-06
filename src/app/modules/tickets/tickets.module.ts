@@ -14,11 +14,17 @@ import { PipesModule } from 'app/pipes/pipes.module';
 import { QuillModule } from 'ngx-quill';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
+import { TicketInformationComponent } from './ticket-information/ticket-information.component';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
     TicketsComponent,
-    NewTicketComponent
+    NewTicketComponent,
+    TicketInformationComponent,
+    CommentsComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +38,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatCardModule,
     PipesModule,
     MatAutocompleteModule,
+    MatSidenavModule,
+    MatSortModule,
     QuillModule.forRoot(),
   ]
 })

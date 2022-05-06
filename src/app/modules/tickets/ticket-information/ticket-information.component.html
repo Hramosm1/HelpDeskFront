@@ -1,0 +1,14 @@
+<app-base>
+  <mat-card *ngIf="ticket$|async; let ticket">
+    <mat-card-header>
+      <div mat-card-avatar class="w-28 mr-5">{{ticket.solicitudDe}}</div>
+      <mat-card-title>{{ticket.titulo}}</mat-card-title>
+      <mat-card-subtitle>{{ticket.estado}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div [innerHTML]="ticket.descripcion"></div>
+      <hr>
+      <app-comments [ticket]="id$|async"></app-comments>
+    </mat-card-content>
+  </mat-card>
+</app-base>

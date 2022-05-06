@@ -23,7 +23,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Categoria</mat-label>
+        <mat-label>Categorias</mat-label>
         <mat-select multiple formControlName="categorias">
           <mat-optgroup *ngFor="let categoria of $categorias|async" [label]="categoria.grupo">
             <mat-option *ngFor="let sub of categoria.subcategoria" [value]="sub.id">{{sub.nombre}}</mat-option>
@@ -35,13 +35,17 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
       <mat-form-field>
         <mat-label>Solicitante</mat-label>
-        <mat-select formControlName="solicitudDe">
-          <mat-option *ngFor="let usuario of $usuarios|async" [value]="usuario.id">{{usuario.nombre}}</mat-option>
-        </mat-select>
+        <input matInput disabled [value]="usuarioSeleccionado">
+        <button matSuffix mat-icon-button aria-label="Seleccionar usuario" (click)="openModal()">
+          <mat-icon>menu</mat-icon>
+        </button>
       </mat-form-field>
+
       <mat-form-field>
         <mat-label>Asignado a</mat-label>
-        <input matInput formControlName="asignadoA">
+        <mat-select formControlName="asignadoA">
+          <mat-option *ngFor="let per of $personal|async" [value]="per.id">{{per.nombre}}</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4 sm:mt-6">

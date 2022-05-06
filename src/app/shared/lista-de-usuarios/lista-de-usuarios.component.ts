@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'app/backend/services/authentication.service';
 import { Usuario } from 'app/modules/mantenimientos/interfaces';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-lista-de-usuarios',

@@ -1,10 +1,16 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { HttpService } from 'app/backend/services/http.service';
+import { Ticket, TablaTicket } from 'app/modules/mantenimientos/interfaces';
 import { NewTicketComponent } from '../new-ticket/new-ticket.component';
+import { map, tap } from "rxjs/operators";
+import { Observer } from 'rxjs';
+import { Router } from '@angular/router';
+import { UtilsService } from 'app/core/services/utils.service';
 
 @Component({
   selector: 'app-tickets',
@@ -12,18 +18,38 @@ import { NewTicketComponent } from '../new-ticket/new-ticket.component';
   styleUrls: ['./tickets.component.scss']
 })
 export class TicketsComponent implements OnInit {
-
+  @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   control: FormControl = new FormControl('')
-  dataSource: MatTableDataSource<any> = new MatTableDataSource()
-  displayedColumns = ['postId', 'id', 'name', 'email', 'body']
+  dataSource: MatTableDataSource<TablaTicket> = new MatTableDataSource()
+  displayedColumns = ['id', 'titulo', 'descripcion', 'estado', 'prioridad']
+  observe: Observer<TablaTicket[]> = {
+    next: (data) => {
+      this.dataSource.data = data
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
+    },
+    error: (err) => { console.warn('este es el error ', err) },
+    complete: () => { }
+  }
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private api: HttpService, private router: Router, private util: UtilsService) { }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
-    this.dataSource.paginator = this.paginator;
+    this.api.getAll<Ticket>('tickets').pipe(map(this.getTextColor)).subscribe(this.observe)
+  }
+  method(row: any) {
+    console.log(row)
+    this.router.navigateByUrl('tickets/' + row.id)
   }
   openDialog() {
     const dialogRef = this.dialog.open(NewTicketComponent, { disableClose: true, width: '80%' })
+    dialogRef.afterClosed().subscribe(() => {
+      this.api.getAll('tickets').pipe(map(this.getTextColor)).subscribe(this.observe)
+    })
+  }
+  dialogRight() { }
+  private getTextColor = (arr: Ticket[]): TablaTicket[] => {
+    return arr.map(ticket => { return { ...ticket, colorTexto: this.util.calcularBlancoONegroSegunColor(ticket.colorPrioridad) } })
   }
 }

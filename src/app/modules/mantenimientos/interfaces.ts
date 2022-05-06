@@ -33,3 +33,15 @@ export interface Usuario {
   idCobrador?: number
   fechaCreacion?: Date
 }
+export interface Ticket {
+  id: string;
+  titulo: string;
+  descripcion: string;
+  prioridad: string;
+  colorPrioridad: string;
+  estado: string;
+  activo?: boolean;
+}
+export interface TablaTicket extends Ticket {
+  colorTexto: string
+}
