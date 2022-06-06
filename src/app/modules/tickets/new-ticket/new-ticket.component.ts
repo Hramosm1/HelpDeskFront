@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { chain } from "lodash";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'app-new-ticket',
@@ -33,7 +34,8 @@ export class NewTicketComponent implements OnInit {
     private api: HttpService,
     private ref: MatDialogRef<NewTicketComponent>,
     private dialogref: MatDialogRef<ListaDeUsuariosComponent, Usuario>,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private _user: UserService) { }
 
   ngOnInit(): void {
     this.crearObservables()
@@ -71,7 +73,7 @@ export class NewTicketComponent implements OnInit {
     })
   }
   send(): void {
-    this.api.create('tickets', this.composeForm.value).pipe(tap(console.log)).subscribe(res => {
+    this.api.create('tickets', this.composeForm.value).subscribe(res => {
       if (res.rowsAffected[0] > 0) { this.ref.close() }
     })
   }
