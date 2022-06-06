@@ -7,10 +7,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
 import { Ticket, TablaTicket } from 'app/modules/mantenimientos/interfaces';
 import { NewTicketComponent } from '../new-ticket/new-ticket.component';
-import { map, tap } from "rxjs/operators";
+import { map, pluck, tap } from "rxjs/operators";
 import { Observer } from 'rxjs';
 import { Router } from '@angular/router';
 import { UtilsService } from 'app/core/services/utils.service';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'app-tickets',
@@ -23,6 +24,7 @@ export class TicketsComponent implements OnInit {
   control: FormControl = new FormControl('')
   dataSource: MatTableDataSource<TablaTicket> = new MatTableDataSource()
   displayedColumns = ['id', 'titulo', 'descripcion', 'estado', 'prioridad']
+  permisos$ = this._user.permisos$.pipe(pluck('Tickets'))
   observe: Observer<TablaTicket[]> = {
     next: (data) => {
       this.dataSource.data = data
@@ -33,7 +35,7 @@ export class TicketsComponent implements OnInit {
     complete: () => { }
   }
 
-  constructor(private dialog: MatDialog, private api: HttpService, private router: Router, private util: UtilsService) { }
+  constructor(private dialog: MatDialog, private api: HttpService, private router: Router, private util: UtilsService, private _user: UserService) { }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
     this.api.getAll<Ticket>('tickets').pipe(map(this.getTextColor)).subscribe(this.observe)

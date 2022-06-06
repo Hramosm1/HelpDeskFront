@@ -1,6 +1,6 @@
-<app-base title="Personal de soporte" subtitle="Mantenimientos">
+<app-base *ngIf="permisos$ | async as permiso" title="Personal de soporte" subtitle="Mantenimientos">
   <div class="fixed right-5 top-20">
-    <button [disabled]="cargando" mat-raised-button color="warn" (click)="openDialog()">
+    <button *ngIf="permiso.crear" [disabled]="cargando" mat-raised-button color="warn" (click)="openDialog()">
       Agregar personal
     </button>
   </div>
@@ -14,7 +14,7 @@
         <mat-header-cell *matHeaderCellDef>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="eliminar(element.id)">
+          <button *ngIf="permiso.eliminar" mat-icon-button (click)="eliminar(element.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>

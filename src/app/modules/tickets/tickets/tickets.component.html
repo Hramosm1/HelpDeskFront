@@ -1,5 +1,5 @@
-<app-base title="Listado" subtitle="Tickets">
-  <button (click)="openDialog()" mat-raised-button color="primary">Crear nuevo ticket</button>
+<app-base *ngIf="permisos$|async as permiso" title="Listado" subtitle="Tickets">
+  <button *ngIf="permiso.crear" (click)="openDialog()" mat-raised-button color="primary">Crear nuevo ticket</button>
   <form>
     <mat-form-field class="w-full" appearance="standard">
       <mat-label>Buscador</mat-label>

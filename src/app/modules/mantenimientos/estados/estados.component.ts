@@ -4,7 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
+import { UserService } from 'app/core/user/user.service';
 import { ConfirmComponent } from 'app/shared/confirm/confirm.component';
+import { pluck } from 'rxjs';
 import { Estado } from '../interfaces';
 import { CreacionEstadosComponent } from './creacion-estados/creacion-estados.component';
 
@@ -18,7 +20,8 @@ export class EstadosComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort
   dataSource: MatTableDataSource<Estado> = new MatTableDataSource()
   displayedColumns: string[] = ['id', 'nombre', 'actions']
-  constructor(private dialog: MatDialog, private api: HttpService) { }
+  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'))
+  constructor(private dialog: MatDialog, private api: HttpService, private _user: UserService) { }
 
   ngAfterViewInit(): void {
     this.api.getAll<Estado>('estados').subscribe(res => {

@@ -3,8 +3,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { createResponse } from 'app/backend/interfaces/http';
 import { HttpService } from 'app/backend/services/http.service';
+import { UserService } from 'app/core/user/user.service';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
-import { tap } from 'rxjs';
+import { pluck, tap } from 'rxjs';
 import { Usuario } from '../interfaces';
 
 @Component({
@@ -17,7 +18,8 @@ export class PersonalDeSoporteComponent implements OnInit {
   dialogRef: MatDialogRef<any, Usuario>
   cargando: boolean = false
   displayedColumns = ['nombre', 'actions']
-  constructor(private dialog: MatDialog, private api: HttpService) { }
+  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'))
+  constructor(private dialog: MatDialog, private api: HttpService, private _user: UserService) { }
 
   ngOnInit(): void {
     this.api.getAll<Usuario>('personalDeSoporte').pipe(tap(console.log)).subscribe(data => this.dataSource.data = data)

@@ -1,7 +1,7 @@
-<app-base title="Estados" subtitle="Mantenimientos">
+<app-base *ngIf="permisos$|async as permiso" title="Estados" subtitle="Mantenimientos">
 
   <div class="fixed right-5 top-20">
-    <button mat-raised-button color="warn" (click)="openDialog(false)">
+    <button *ngIf="permiso.crear" mat-raised-button color="warn" (click)="openDialog(false)">
       Nuevo Estado
     </button>
   </div>
@@ -19,10 +19,10 @@
         <mat-header-cell *matHeaderCellDef>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="openDialog(true,element.nombre,element.id)">
+          <button *ngIf="permiso.editar" mat-icon-button (click)="openDialog(true,element.nombre,element.id)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="eliminar(element.id, element.nombre)">
+          <button *ngIf="permiso.eliminar" mat-icon-button (click)="eliminar(element.id, element.nombre)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>

@@ -5,8 +5,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
+import { UserService } from 'app/core/user/user.service';
 import { ConfirmComponent } from 'app/shared/confirm/confirm.component';
+import { map, pluck } from 'rxjs';
 import { Prioridad } from '../interfaces';
+import { groupBy } from "lodash";
 import { CreacionPrioridadComponent } from './creacion-prioridad/creacion-prioridad.component';
 
 @Component({
@@ -20,8 +23,9 @@ export class PrioridadesComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
   displayedColumns: string[] = ['id', 'nombre', 'color', 'actions']
   formulario: FormGroup
+  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'))
 
-  constructor(private fb: FormBuilder, private api: HttpService, private dialog: MatDialog) { }
+  constructor(private fb: FormBuilder, private api: HttpService, private dialog: MatDialog, private _user: UserService) { }
 
   ngOnInit(): void {
     this.formulario = this.fb.group({

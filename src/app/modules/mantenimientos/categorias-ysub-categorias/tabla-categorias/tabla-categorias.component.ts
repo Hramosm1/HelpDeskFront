@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
+import { Permiso } from 'app/core/user/user.types';
 import { ConfirmComponent } from 'app/shared/confirm/confirm.component';
 import { Categoria } from '../../interfaces';
 import { CreacionCategoriaComponent } from '../creacion-categoria/creacion-categoria.component';
@@ -16,6 +17,7 @@ import { CreacionCategoriaComponent } from '../creacion-categoria/creacion-categ
 export class TablaCategoriasComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
+  @Input() permisos: Permiso
   dataSource: MatTableDataSource<Categoria> = new MatTableDataSource()
   displayedColumns: string[] = ['id', 'nombre', 'actions']
   constructor(private api: HttpService, private dialog: MatDialog) { }

@@ -1,6 +1,7 @@
 <mat-card class="bg-transparent">
   <mat-card-title>Categorias</mat-card-title>
-  <button class="absolute top-4 right-4" mat-raised-button color="warn" (click)="openDialog(false)">
+  <button *ngIf="permisos.crear" class="absolute top-4 right-4" mat-raised-button color="warn"
+    (click)="openDialog(false)">
     Nueva Categoria
   </button>
   <mat-card-content>
@@ -18,10 +19,10 @@
           <mat-header-cell *matHeaderCellDef>
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <button mat-icon-button (click)="openDialog(true,element)">
+            <button *ngIf="permisos.editar" mat-icon-button (click)="openDialog(true,element)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="eliminar(element.id, element.nombre)">
+            <button *ngIf="permisos.eliminar" mat-icon-button (click)="eliminar(element.id, element.nombre)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-cell>
