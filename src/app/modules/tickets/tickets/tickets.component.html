@@ -33,9 +33,14 @@
             [ngStyle]="{'background-color': row.colorPrioridad}">{{row.prioridad}}</span>
         </td>
       </ng-container>
+      <ng-container matColumnDef="activo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket </th>
+        <td mat-cell *matCellDef="let row"> {{row.activo?'Ticket abierto':'Ticket Cerrado'}} </td>
+      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="method(row)"></tr>
+      <tr mat-row [ngClass]="{'bg-yellow-600':!row.activo}" *matRowDef="let row; columns: displayedColumns;"
+        (click)="method(row)"></tr>
 
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>

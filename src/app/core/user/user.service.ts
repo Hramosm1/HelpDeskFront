@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, pluck, ReplaySubject } from 'rxjs';
-import { User } from 'app/core/user/user.types';
+import { PermisosEspecial, User } from 'app/core/user/user.types';
 import { groupBy, mapValues } from 'lodash';
 
 @Injectable({
@@ -25,6 +25,13 @@ export class UserService {
     get permisos$() {
         return this.user$.pipe(pluck('permisos'), map(arr => mapValues(groupBy(arr, 'modulo'), val => val[0])))
     }
+    get permisosEspeciales$() {
+        return this.user$.pipe(pluck('permisosEspeciales'))
+    }
+    get permisosEspecialesStr$() {
+        return this.user$.pipe(pluck('permisosEspeciales')).pipe(map<PermisosEspecial[], string[]>(val => val.reduce((prev, val) => (prev = [...prev, val.nombre.toLowerCase()]), [])))
+    }
+
 
 
     // get(): Observable<User> {

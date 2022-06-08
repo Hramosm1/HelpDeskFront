@@ -18,13 +18,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { TicketInformationComponent } from './ticket-information/ticket-information.component';
 import { CommentsComponent } from './comments/comments.component';
+import { CerrarTicketComponent } from './cerrar-ticket/cerrar-ticket.component';
 
 @NgModule({
   declarations: [
     TicketsComponent,
     NewTicketComponent,
     TicketInformationComponent,
-    CommentsComponent
+    CommentsComponent,
+    CerrarTicketComponent
   ],
   imports: [
     CommonModule,

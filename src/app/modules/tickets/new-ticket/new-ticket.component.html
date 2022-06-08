@@ -1,5 +1,5 @@
 <h2 matDialogTitle>Nuevo Ticket</h2>
-<mat-dialog-content>
+<mat-dialog-content *ngIf="$permisosEspeciales |async as pe">
   <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="composeForm">
     <mat-form-field>
       <mat-label>Titulo</mat-label>
@@ -36,12 +36,13 @@
       <mat-form-field>
         <mat-label>Solicitante</mat-label>
         <input matInput disabled [value]="usuarioSeleccionado">
-        <button matSuffix mat-icon-button aria-label="Seleccionar usuario" (click)="openModal()">
+        <button *ngIf="pe.includes('agregar solicitante')" matSuffix mat-icon-button aria-label="Seleccionar usuario"
+          (click)="openModal()">
           <mat-icon>menu</mat-icon>
         </button>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field *ngIf="pe.includes('asignar ticket')">
         <mat-label>Asignado a</mat-label>
         <mat-select formControlName="asignadoA">
           <mat-option *ngFor="let per of $personal|async" [value]="per.id">{{per.nombre}}</mat-option>

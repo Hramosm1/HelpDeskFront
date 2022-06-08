@@ -57,9 +57,10 @@ export class AuthService {
         // Renew token
         return this._httpClient.get(environment.autenticacionuri + 'login/verifytoken/' + this.accessToken).pipe(
             catchError(() =>
-
-                // Return false
-                of(false)
+            // Return false
+            {
+                return of(false)
+            }
             ),
             switchMap((response: any) => {
                 // Store the access token in the local storage
@@ -104,8 +105,8 @@ export class AuthService {
         }
 
         // Check the access token availability
-        if (!this.accessToken) {
-            return of(false);
+        if (!this.accessToken || this.accessToken === 'undefined') {
+            this.signOut()
         }
 
         // Check the access token expire date

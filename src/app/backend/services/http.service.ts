@@ -13,7 +13,6 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   getAll<T>(route: Destino): Observable<T[]> {
-    console.log(this.base + route)
     return this.http.get<T[]>(this.base + route)
   }
   getById<T>(route: Destino, id: number | string): Observable<T> {

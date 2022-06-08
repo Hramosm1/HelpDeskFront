@@ -5,7 +5,7 @@ import { createResponse } from 'app/backend/interfaces/http';
 import { HttpService } from 'app/backend/services/http.service';
 import { UserService } from 'app/core/user/user.service';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
-import { pluck, tap } from 'rxjs';
+import { pluck } from 'rxjs';
 import { Usuario } from '../interfaces';
 
 @Component({
@@ -22,7 +22,7 @@ export class PersonalDeSoporteComponent implements OnInit {
   constructor(private dialog: MatDialog, private api: HttpService, private _user: UserService) { }
 
   ngOnInit(): void {
-    this.api.getAll<Usuario>('personalDeSoporte').pipe(tap(console.log)).subscribe(data => this.dataSource.data = data)
+    this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data)
   }
 
   openDialog() {

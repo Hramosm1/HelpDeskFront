@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
 import { Ticket, TablaTicket } from 'app/modules/mantenimientos/interfaces';
 import { NewTicketComponent } from '../new-ticket/new-ticket.component';
-import { map, pluck, tap } from "rxjs/operators";
+import { map, mergeMap, pluck, tap } from "rxjs/operators";
 import { Observer } from 'rxjs';
 import { Router } from '@angular/router';
 import { UtilsService } from 'app/core/services/utils.service';
@@ -18,13 +18,15 @@ import { UserService } from 'app/core/user/user.service';
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss']
 })
-export class TicketsComponent implements OnInit {
+export class TicketsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   control: FormControl = new FormControl('')
   dataSource: MatTableDataSource<TablaTicket> = new MatTableDataSource()
-  displayedColumns = ['id', 'titulo', 'descripcion', 'estado', 'prioridad']
+  displayedColumns = ['id', 'titulo', 'descripcion', 'estado', 'prioridad', 'activo']
   permisos$ = this._user.permisos$.pipe(pluck('Tickets'))
+
+
   observe: Observer<TablaTicket[]> = {
     next: (data) => {
       this.dataSource.data = data
@@ -38,7 +40,10 @@ export class TicketsComponent implements OnInit {
   constructor(private dialog: MatDialog, private api: HttpService, private router: Router, private util: UtilsService, private _user: UserService) { }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
-    this.api.getAll<Ticket>('tickets').pipe(map(this.getTextColor)).subscribe(this.observe)
+    this.util.tickets$.subscribe(this.observe)
+  }
+  ngOnDestroy(): void {
+
   }
   method(row: any) {
     console.log(row)
@@ -47,11 +52,9 @@ export class TicketsComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(NewTicketComponent, { disableClose: true, width: '80%' })
     dialogRef.afterClosed().subscribe(() => {
-      this.api.getAll('tickets').pipe(map(this.getTextColor)).subscribe(this.observe)
+      this.util.tickets$.subscribe(this.observe)
     })
   }
   dialogRight() { }
-  private getTextColor = (arr: Ticket[]): TablaTicket[] => {
-    return arr.map(ticket => { return { ...ticket, colorTexto: this.util.calcularBlancoONegroSegunColor(ticket.colorPrioridad) } })
-  }
+
 }
