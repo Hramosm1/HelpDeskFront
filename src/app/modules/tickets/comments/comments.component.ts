@@ -38,4 +38,7 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     })
   }
+  getColor(id: string) {
+    return '#' + id.slice(-6)
+  }
 }

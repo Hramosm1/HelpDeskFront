@@ -3,7 +3,10 @@
     <h2>Comentarios</h2>
     <ul class="mt-8 rounded-2xl">
       <li *ngFor="let comentario of comentarios$|async">
-        <h3>{{comentario.fecha | date:'dd/MM/yy hh:mm a'}} {{comentario.nombre}}</h3>
+        <h3>{{comentario.fecha | date:'dd/MM/yy hh:mm a':'UTC'}} <span class="font-extrabold"
+            [ngClass]="{'text-primary-500':usuario===comentario.idUsuario}"
+            [ngStyle]="{'color': usuario!=comentario.idUsuario ? getColor(comentario.idUsuario) : null }">{{comentario.nombre}}</span>
+        </h3>
         <p>{{comentario.comentario}}</p>
       </li>
     </ul>
