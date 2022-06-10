@@ -236,8 +236,6 @@ export class FuseVerticalNavigationComponent implements OnChanges, OnInit, After
     }
 
     ngOnInit(): void {
-        console.log(this._user.user)
-        this._user.user$.subscribe(console.log)
         // Make sure the name input is not an empty string
         if (this.name === '') {
             this.name = this._fuseUtilsService.randomId();

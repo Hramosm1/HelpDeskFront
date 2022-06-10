@@ -21,7 +21,6 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
     this._user.user$.subscribe(u => this.usuario = u.id)
     this.comentarios$ = this.subject$
       .pipe(switchMap(() => this.api.getById<any[]>('comentarios', this.ticket)))
-    this.comentarios$.subscribe(console.log)
   }
   ngAfterViewInit(): void {
     this.subject$.next(null)

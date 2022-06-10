@@ -8,7 +8,6 @@ import { catchError, Observable, throwError } from 'rxjs';
 export class InterceptorService implements HttpInterceptor {
   constructor() { }
   mError(error: HttpErrorResponse) {
-    console.log('sucedio un error');
     console.warn(error);
 
     return throwError('error personalizado')

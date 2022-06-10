@@ -20,7 +20,6 @@ export class UtilsService {
   tickets$ = this._user.user$
     .pipe(mergeMap(us => {
       const pe = us.permisosEspeciales.reduce<string[]>((cur, val) => ([...cur, val.nombre.toLowerCase()]), [])
-      console.log(pe)
       if (pe.includes('ver tickets de otros')) {
         return this.api.getAll<Ticket>('tickets').pipe(map(this.getTextColor))
       }

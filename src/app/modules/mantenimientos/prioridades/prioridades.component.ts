@@ -35,7 +35,6 @@ export class PrioridadesComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.api.getAll<Prioridad>('prioridades').subscribe(res => {
-      console.log(res)
       this.dataSource.data = res
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort

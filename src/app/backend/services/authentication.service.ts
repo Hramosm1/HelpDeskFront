@@ -12,7 +12,6 @@ export class AuthenticationService {
   base = environment.autenticacionuri
   constructor(private http: HttpClient) { }
   getAll<T>(route: AuthRoutes): Observable<T[]> {
-    console.log(this.base + route)
     return this.http.get<T[]>(this.base + route)
   }
   getById<T>(route: AuthRoutes, id: number | string): Observable<T> {

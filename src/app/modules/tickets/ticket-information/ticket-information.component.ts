@@ -21,7 +21,6 @@ export class TicketInformationComponent implements OnInit {
   ngOnInit(): void {
     this.id$ = this.ar.params.pipe(pluck('id'))
     this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val))
-    this.permisosEspeciales$.subscribe(console.log)
   }
   cerrarTicket() {
     this.dialog.open(CerrarTicketComponent, { width: '80vw', disableClose: true, data: this.ticket$ })

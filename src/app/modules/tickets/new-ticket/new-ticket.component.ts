@@ -82,7 +82,6 @@ export class NewTicketComponent implements OnInit {
   }
   send(): void {
     this.api.create('tickets', this.composeForm.value).subscribe(res => {
-      console.log(res)
       if (res.rowsAffected[0] > 0) { this.ref.close() }
     })
   }
