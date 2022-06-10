@@ -3,17 +3,8 @@ table {
 }
 .mat-column-id{
 	max-width: 40px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.mat-column-descripcion {
-	width: 350px;
 }
 .chip{
 	padding: 5px;
 	border-radius: 50%;
-}
-mat-row:hover{
-	background-color: whitesmoke;
 }
