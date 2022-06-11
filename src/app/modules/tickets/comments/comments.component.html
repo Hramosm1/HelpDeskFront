@@ -1,7 +1,6 @@
 <div class="flex justify-center items-center px-12 py-4">
   <div class="w-full p-8 rounded-lg">
-    <h2>Comentarios</h2>
-    <ul class="mt-8 rounded-2xl">
+    <ul class="mt-8 bg rounded-2xl">
       <li *ngFor="let comentario of comentarios$|async">
         <h3>{{comentario.fecha | date:'dd/MM/yy hh:mm a':'UTC'}} <span class="font-extrabold"
             [ngClass]="{'text-primary-500':usuario===comentario.idUsuario}"
