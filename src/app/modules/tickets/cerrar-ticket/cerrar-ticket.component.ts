@@ -25,7 +25,7 @@ export class CerrarTicketComponent implements OnInit {
     })
   }
   confirmar() {
-    const body = { idEstado: this.control.value }
+    const body = { idEstado: this.control.value, activo: !this.ticket.activo }
     this.api.update('tickets/cerrar', this.ticket.id, body).subscribe(res => {
       if (res.rowsAffected[0] > 0) {
         this.dialogRef.close()

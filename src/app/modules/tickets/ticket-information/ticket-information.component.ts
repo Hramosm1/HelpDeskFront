@@ -25,5 +25,4 @@ export class TicketInformationComponent implements OnInit {
   cerrarTicket() {
     this.dialog.open(CerrarTicketComponent, { width: '80vw', disableClose: true, data: this.ticket$ })
   }
-
 }
