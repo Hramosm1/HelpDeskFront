@@ -1,0 +1,21 @@
+<h2 matDialogTitle>¿Desea cerrar este ticket?</h2>
+<mat-dialog-content>
+  <p class="text-secondary">El estado del ticket no tiene relacion con si es activo o no activo, puedes tener un ticket
+    activo con estado cerrado si no tienes cuidado</p>
+  <form>
+    <mat-form-field class="mt-8 w-full">
+      <mat-label>Selecciona el nuevo estado del ticket</mat-label>
+      <mat-select [formControl]="control">
+        <mat-option *ngFor="let estado of estados$|async" [value]="estado.id">{{estado.nombre}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button matDialogClose mat-button color="warn">
+    Cancelar
+  </button>
+  <button [disabled]="!control.valid" (click)="confirmar()" mat-raised-button color="warn">
+    Confirmar
+  </button>
+</mat-dialog-actions>

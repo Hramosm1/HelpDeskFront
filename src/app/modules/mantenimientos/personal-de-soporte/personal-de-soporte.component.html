@@ -1,0 +1,33 @@
+<app-base *ngIf="permisos$ | async as permiso" title="Personal de soporte" subtitle="Mantenimientos">
+  <div class="fixed right-5 top-20">
+    <button *ngIf="permiso.crear" [disabled]="cargando" mat-raised-button color="warn" (click)="openDialog()">
+      Agregar personal
+    </button>
+  </div>
+  <div *ngIf="dataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ESTADO</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button *ngIf="permiso.eliminar" mat-icon-button (click)="eliminar(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encontraron estados</td>
+      </tr>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</app-base>
