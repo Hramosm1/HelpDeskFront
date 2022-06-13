@@ -1,0 +1,46 @@
+<app-base *ngIf="permisos$|async as permiso" title="Prioridades" subtitle="Mantenimientos">
+  <div class="fixed right-5 top-20">
+    <button *ngIf="permiso.crear" mat-raised-button color="warn" (click)="openDialog(false)">
+      Nueva Prioridad
+    </button>
+  </div>
+  <div *ngIf="dataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>PRIORIDAD</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="color">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>COLOR</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="w-8 h-4" [ngStyle]="{'background-color':element.color}"></div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button *ngIf="permiso.editar" mat-icon-button (click)="openDialog(true,element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button *ngIf="permiso.eliminar" mat-icon-button (click)="eliminar(element.id, element.nombre)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encontraron prioridades</td>
+      </tr>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</app-base>

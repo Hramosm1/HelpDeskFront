@@ -13,8 +13,12 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'environments/environment';
+
+const socketConfig: SocketIoConfig = { url: environment.backenduri, options: {} }
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
+    preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
 };
 
@@ -22,7 +26,7 @@ const routerConfig: ExtraOptions = {
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
@@ -39,12 +43,13 @@ const routerConfig: ExtraOptions = {
         LayoutModule,
 
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
+        SocketIoModule.forRoot(socketConfig)
     ],
-    bootstrap   : [
+    bootstrap: [
         AppComponent
-    ]
+    ],
+    providers: []
 })
-export class AppModule
-{
+export class AppModule {
 }
