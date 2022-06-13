@@ -2,7 +2,7 @@
 <mat-dialog-content *ngIf="$permisosEspeciales |async as pe">
   <form class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto" [formGroup]="composeForm">
     <mat-form-field>
-      <mat-label>Titulo</mat-label>
+      <mat-label>Título</mat-label>
       <input matInput formControlName="titulo">
     </mat-form-field>
     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
@@ -23,8 +23,8 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Categorias</mat-label>
-        <mat-select multiple formControlName="categorias">
+        <mat-label>Categorías</mat-label>
+        <mat-select multiple formControlName="categorías">
           <mat-optgroup *ngFor="let categoria of $categorias|async" [label]="categoria.grupo">
             <mat-option *ngFor="let sub of categoria.subcategoria" [value]="sub.id">{{sub.nombre}}</mat-option>
           </mat-optgroup>

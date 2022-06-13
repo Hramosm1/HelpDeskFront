@@ -1,8 +1,8 @@
 <mat-card class="bg-transparent">
-  <mat-card-title>Categorias</mat-card-title>
+  <mat-card-title>Categorías</mat-card-title>
   <button *ngIf="permisos.crear" class="absolute top-4 right-4" mat-raised-button color="warn"
     (click)="openDialog(false)">
-    Nueva Categoria
+    Nueva Categoría
   </button>
   <mat-card-content>
     <div *ngIf="dataSource" class="mat-elevation-z8">
@@ -12,7 +12,7 @@
           <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>CATEGORIA</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>CATEGORíA</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">

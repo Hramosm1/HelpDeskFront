@@ -1,11 +1,11 @@
 <mat-dialog-content>
   <form *ngIf="formulario" [formGroup]="formulario">
     <mat-form-field class="w-full">
-      <mat-label>Sub Categoria</mat-label>
+      <mat-label>Sub Categoría</mat-label>
       <input matInput formControlName="nombre">
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>Categoria</mat-label>
+      <mat-label>Categoría</mat-label>
       <mat-select formControlName="idCategoria">
         <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</mat-option>
       </mat-select>

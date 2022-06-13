@@ -1,4 +1,4 @@
-<app-base title="Categorias" subtitle="Mantenimientos">
+<app-base title="Categorías" subtitle="Mantenimientos">
   <div *ngIf="permisos$|async as permiso" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <div>
       <app-tabla-categorias [permisos]="permiso"></app-tabla-categorias>

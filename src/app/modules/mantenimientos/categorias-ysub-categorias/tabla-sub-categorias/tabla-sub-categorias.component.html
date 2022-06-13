@@ -1,8 +1,8 @@
 <mat-card class="bg-transparent">
-  <mat-card-title>Sub categorias</mat-card-title>
+  <mat-card-title>Sub categorías</mat-card-title>
   <button *ngIf="permisos.crear" class="absolute top-4 right-4" mat-raised-button color="warn"
     (click)="openDialog(false)">
-    Nueva sub categoria
+    Nueva sub categoría
   </button>
   <mat-card-content>
     <div class="mat-elevation-z8">
@@ -13,7 +13,7 @@
           <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef> SUB CATEGORIA
+          <mat-header-cell *matHeaderCellDef> SUB CATEGORíA
           </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
         </ng-container>
@@ -36,7 +36,7 @@
         </ng-container>
 
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No se encontraron sub categorias</td>
+          <td class="mat-cell" colspan="4">No se encontraron sub categorías</td>
         </tr>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
