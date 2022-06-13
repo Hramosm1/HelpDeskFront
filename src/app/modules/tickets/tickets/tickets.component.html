@@ -39,6 +39,10 @@
             [ngStyle]="{'background-color': row.colorPrioridad}">{{row.prioridad}}</span>
         </td>
       </ng-container>
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha creacion </th>
+        <td mat-cell *matCellDef="let row"> {{row.fechaSolicitud|date:'dd/MM/yy hh:mm':'UTC'}} </td>
+      </ng-container>
       <ng-container matColumnDef="activo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket </th>
         <td mat-cell *matCellDef="let row"> {{row.activo?'Ticket abierto':'Ticket Cerrado'}} </td>
