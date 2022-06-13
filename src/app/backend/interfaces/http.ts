@@ -13,3 +13,19 @@ export interface deleteResponse {
   recordsets: any[]
   rowsAffected: number[]
 }
+export interface Ticket {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  fechaSolicitud: Date;
+  asignadoA?: string;
+  solicitudDe: string;
+  prioridad: string;
+  colorPrioridad: string;
+  estado: string;
+  idPrioridad: number;
+  idEstado: number;
+  idAsignado?: number;
+  idSolicitante: string;
+  activo: boolean;
+}

@@ -4,6 +4,7 @@
       <div mat-card-avatar class="w-28 mr-5">
         <h2 class="font-extrabold text-primary">{{ticket.solicitudDe}}</h2>
         <p>{{ticket.estado}}</p>
+        <p>Asignado a: <br>{{ticket.asignadoA}}</p>
       </div>
       <mat-card-title>{{ticket.titulo}}</mat-card-title>
       <mat-card-subtitle [innerHTML]="ticket.descripcion">
@@ -11,6 +12,10 @@
       <span class="flex flex-1"></span>
       <div>
         <p class="text-right mb-4 mr-4">{{ticket.fechaSolicitud|date:'dd/MM/yy hh:mm':'UTC'}}</p>
+        <button *ngIf="(permisosEspeciales$|async).includes('asignar ticket')" mat-raised-button color="acent"
+          (click)="asignarSoporte()">
+          Asignar personal de soporte
+        </button>
         <button (click)="cerrarTicket()" *ngIf="(permisosEspeciales$|async).includes('cerrar ticket')" mat-raised-button
           color="warn">
           {{ticket.activo?'Cerrar Ticket':'Reabrir Ticket'}}

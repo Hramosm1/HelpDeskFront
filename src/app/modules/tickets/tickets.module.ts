@@ -19,6 +19,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { TicketInformationComponent } from './ticket-information/ticket-information.component';
 import { CommentsComponent } from './comments/comments.component';
 import { CerrarTicketComponent } from './cerrar-ticket/cerrar-ticket.component';
+import { AsignarSoporteComponent } from './asignar-soporte/asignar-soporte.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CerrarTicketComponent } from './cerrar-ticket/cerrar-ticket.component';
     NewTicketComponent,
     TicketInformationComponent,
     CommentsComponent,
-    CerrarTicketComponent
+    CerrarTicketComponent,
+    AsignarSoporteComponent
   ],
   imports: [
     CommonModule,

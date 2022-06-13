@@ -6,6 +6,7 @@ import { HttpService } from 'app/backend/services/http.service';
 import { Estado } from 'app/modules/mantenimientos/interfaces';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Ticket } from 'app/backend/interfaces/http';
 
 @Component({
   selector: 'app-cerrar-ticket',
@@ -15,8 +16,8 @@ import { Observable } from 'rxjs';
 export class CerrarTicketComponent implements OnInit {
   estados$ = this.api.getAll<Estado>('estados')
   control = new FormControl('', Validators.required)
-  ticket
-  constructor(private api: HttpService, private dialogRef: MatDialogRef<CerrarTicketComponent>, @Inject(MAT_DIALOG_DATA) private data: Observable<any>, private router: Router) { }
+  ticket: Ticket
+  constructor(private api: HttpService, private dialogRef: MatDialogRef<CerrarTicketComponent>, @Inject(MAT_DIALOG_DATA) private data: Observable<Ticket>, private router: Router) { }
 
   ngOnInit(): void {
     this.data.pipe(take(1)).subscribe(dat => {
