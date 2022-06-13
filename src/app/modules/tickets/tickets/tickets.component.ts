@@ -23,7 +23,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator
   control: FormControl = new FormControl('')
   dataSource: MatTableDataSource<TablaTicket> = new MatTableDataSource()
-  displayedColumns = ['id', 'titulo', 'solicitudDe', 'estado', 'prioridad', 'activo', 'asignadoA',]
+  displayedColumns = ['id', 'titulo', 'solicitudDe', 'estado', 'prioridad', 'fecha', 'activo', 'asignadoA',]
   permisos$ = this._user.permisos$.pipe(pluck('Tickets'))
 
 

@@ -23,7 +23,7 @@
           {{row.solicitudDe}}
         </td>
       </ng-container>
-      <ng-container matColumnDef="asignadoA">
+      <ng-container class="sm:hidden" matColumnDef="asignadoA">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Asignado a </th>
         <td mat-cell *matCellDef="let row">
           {{row.asignadoA}}
@@ -38,6 +38,10 @@
         <td mat-cell *matCellDef="let row"> <span class="chip" [ngClass]="row.colorTexto"
             [ngStyle]="{'background-color': row.colorPrioridad}">{{row.prioridad}}</span>
         </td>
+      </ng-container>
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha creacion </th>
+        <td mat-cell *matCellDef="let row"> {{row.fechaSolicitud|date:'dd/MM/yy hh:mm':'UTC'}} </td>
       </ng-container>
       <ng-container matColumnDef="activo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket </th>
