@@ -4,17 +4,10 @@ import { finalize, Observable } from 'rxjs';
 import { FuseLoadingService } from '@fuse/services/loading/loading.service';
 
 @Injectable()
-export class FuseLoadingInterceptor implements HttpInterceptor
-{
+export class FuseLoadingInterceptor implements HttpInterceptor {
     handleRequestsAutomatically: boolean;
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private _fuseLoadingService: FuseLoadingService
-    )
-    {
+    constructor(private _fuseLoadingService: FuseLoadingService) {
         // Subscribe to the auto
         this._fuseLoadingService.auto$
             .subscribe((value) => {
@@ -22,17 +15,9 @@ export class FuseLoadingInterceptor implements HttpInterceptor
             });
     }
 
-    /**
-     * Intercept
-     *
-     * @param req
-     * @param next
-     */
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
-    {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // If the Auto mode is turned off, do nothing
-        if ( !this.handleRequestsAutomatically )
-        {
+        if (!this.handleRequestsAutomatically) {
             return next.handle(req);
         }
 

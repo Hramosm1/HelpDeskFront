@@ -1,0 +1,30 @@
+<h2 matDialogTitle>Usuarios</h2>
+<mat-dialog-content>
+  <form class="w-full">
+    <mat-form-field appearance="standard">
+      <mat-label>Buscar</mat-label>
+      <input matInput [formControl]="filtro">
+    </mat-form-field>
+  </form>
+  <div *ngIf="dataSource" class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{column|uppercase}}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[column]}}</mat-cell>
+      </ng-container>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No se encontraron estados</td>
+      </tr>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row (click)="send(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[4, 8, 12, 40]">
+    </mat-paginator>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-dialog-close mat-button color="warn">Cancelar</button>
+</mat-dialog-actions>

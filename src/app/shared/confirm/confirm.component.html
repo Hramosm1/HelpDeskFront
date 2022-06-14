@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Confirmacion</h2>
+<mat-dialog-content>
+  {{data.texto}}
+</mat-dialog-content>
+<mat-dialog-actions class="flex justify-end">
+  <button mat-button [mat-dialog-close]="cancelar" color="warn">
+    Cancelar
+  </button>
+  <button mat-raised-button [mat-dialog-close]="confirmar" color="warn">
+    Confirmar
+  </button>
+</mat-dialog-actions>
