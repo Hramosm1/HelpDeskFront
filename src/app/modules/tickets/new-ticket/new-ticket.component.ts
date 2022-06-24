@@ -15,14 +15,30 @@ import { PermisosEspecial } from 'app/core/user/user.types';
   styleUrls: ['./new-ticket.component.scss']
 })
 export class NewTicketComponent implements OnInit {
-
-  $categorias: Observable<any[]>
-  $prioridades: Observable<Prioridad[]>
-  $estados: Observable<Estado[]>
-  $personal: Observable<Usuario[]>
+  //**************VARIABLES OBSERVABLES**********************/
   $permisosEspeciales = this._user.permisosEspecialesStr$
+  $prioridades = this.api.getAll<Prioridad>('prioridades')
+  $estados = this.api.getAll<Estado>('estados')
+  $personal = this.api.getAll<Usuario>('personalDeSoporte')
+  $categorias = this.api.getAll<SubCategoria>('subCategorias')
+    .pipe(map(of => {
+      return chain(of)
+        .groupBy('categoria')
+        .map((subcategoria, grupo) => { return { grupo, subcategoria } })
+        .value()
+    }))
+  /*****************FORMULARIO**************************/
+  composeForm = this.fb.group({
+    titulo: ['', Validators.required],
+    descripcion: ['', Validators.required],
+    prioridad: ['', Validators.required],
+    estado: ['', Validators.required],
+    categorias: [[], Validators.required],
+    solicitudDe: ['', Validators.required],
+    asignadoA: ['']
+  });
+  /******************************************************/
   usuarioSeleccionado: string = ''
-  composeForm: FormGroup;
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline'],
@@ -40,33 +56,12 @@ export class NewTicketComponent implements OnInit {
     private _user: UserService) { }
 
   ngOnInit(): void {
-    this.crearObservables()
-    this.crearFormulario()
-  }
-  crearObservables(): void {
-    this.$prioridades = this.api.getAll<Prioridad>('prioridades')
-    this.$estados = this.api.getAll<Estado>('estados')
-    this.$personal = this.api.getAll<Usuario>('personalDeSoporte')
-    this.$categorias = this.api.getAll<SubCategoria>('subCategorias')
-      .pipe(map(of => {
-        return chain(of).groupBy('categoria').map((subcategoria, grupo) => { return { grupo, subcategoria } }).value()
-      }))
-  }
-  crearFormulario(): void {
-    this.composeForm = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      prioridad: ['', Validators.required],
-      estado: ['', Validators.required],
-      categorias: [[], Validators.required],
-      solicitudDe: ['', Validators.required],
-      asignadoA: ['']
-    });
     this._user.user$.subscribe(val => {
       this.composeForm.controls.solicitudDe.setValue(val.id)
       this.usuarioSeleccionado = val.nombre
     })
   }
+
   cancel(): void {
     this.composeForm.reset()
     this.ref.close()

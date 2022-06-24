@@ -24,7 +24,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Categorías</mat-label>
-        <mat-select multiple formControlName="categorías">
+        <mat-select multiple formControlName="categorias">
           <mat-optgroup *ngFor="let categoria of $categorias|async" [label]="categoria.grupo">
             <mat-option *ngFor="let sub of categoria.subcategoria" [value]="sub.id">{{sub.nombre}}</mat-option>
           </mat-optgroup>
