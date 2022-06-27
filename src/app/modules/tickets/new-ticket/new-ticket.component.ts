@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
-import { map, Observable, reduce } from 'rxjs';
+import { map } from 'rxjs';
 import { chain } from "lodash";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
 import { UserService } from 'app/core/user/user.service';
-import { PermisosEspecial } from 'app/core/user/user.types';
+import { QuillEditorComponent } from 'ngx-quill';
+import { quillConfig } from 'app/core/config/quill.config';
+
 
 @Component({
   selector: 'app-new-ticket',
   templateUrl: './new-ticket.component.html',
   styleUrls: ['./new-ticket.component.scss']
 })
-export class NewTicketComponent implements OnInit {
+export class NewTicketComponent implements OnInit, AfterViewInit {
+  @ViewChild(QuillEditorComponent) editor: QuillEditorComponent
   //**************VARIABLES OBSERVABLES**********************/
   $permisosEspeciales = this._user.permisosEspecialesStr$
   $prioridades = this.api.getAll<Prioridad>('prioridades')
@@ -39,13 +42,7 @@ export class NewTicketComponent implements OnInit {
   });
   /******************************************************/
   usuarioSeleccionado: string = ''
-  quillModules: any = {
-    toolbar: [
-      ['bold', 'italic', 'underline'],
-      [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
-      ['clean']
-    ]
-  };
+  modules = quillConfig.modules
 
   constructor(
     private fb: FormBuilder,
@@ -56,10 +53,14 @@ export class NewTicketComponent implements OnInit {
     private _user: UserService) { }
 
   ngOnInit(): void {
+
     this._user.user$.subscribe(val => {
       this.composeForm.controls.solicitudDe.setValue(val.id)
       this.usuarioSeleccionado = val.nombre
     })
+  }
+  ngAfterViewInit(): void {
+    this.editor.modules = quillConfig.modules
   }
 
   cancel(): void {
