@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
+import { quillConfig } from 'app/core/config/quill.config';
 import { UserService } from 'app/core/user/user.service';
+import { QuillEditorComponent } from 'ngx-quill';
 import { Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
@@ -10,6 +12,7 @@ import { Observable, Subject, switchMap } from 'rxjs';
   styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(QuillEditorComponent, { static: true }) editor: QuillEditorComponent
   @Input() ticket: string
   subject$ = new Subject()
   comentarios$: Observable<any>
@@ -17,7 +20,10 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   usuario: string
   constructor(private api: HttpService, private _user: UserService) { }
 
+
   ngOnInit(): void {
+    this.editor.modules = quillConfig.modules
+
     this._user.user$.subscribe(u => this.usuario = u.id)
     this.comentarios$ = this.subject$
       .pipe(switchMap(() => this.api.getById<any[]>('comentarios', this.ticket)))

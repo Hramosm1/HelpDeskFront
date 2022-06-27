@@ -15,6 +15,7 @@ import { appRoutes } from 'app/app.routing';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'environments/environment';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 const socketConfig: SocketIoConfig = { url: environment.backenduri, options: {} }
 const routerConfig: ExtraOptions = {
@@ -49,7 +50,9 @@ const routerConfig: ExtraOptions = {
     bootstrap: [
         AppComponent
     ],
-    providers: []
+    providers: [
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
+    ]
 })
 export class AppModule {
 }
