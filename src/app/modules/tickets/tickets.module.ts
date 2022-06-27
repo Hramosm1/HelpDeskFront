@@ -20,7 +20,7 @@ import { TicketInformationComponent } from './ticket-information/ticket-informat
 import { CommentsComponent } from './comments/comments.component';
 import { CerrarTicketComponent } from './cerrar-ticket/cerrar-ticket.component';
 import { AsignarSoporteComponent } from './asignar-soporte/asignar-soporte.component';
-
+import { quillConfig } from 'app/core/config/quill.config';
 @NgModule({
   declarations: [
     TicketsComponent,
@@ -44,7 +44,7 @@ import { AsignarSoporteComponent } from './asignar-soporte/asignar-soporte.compo
     MatAutocompleteModule,
     MatSidenavModule,
     MatSortModule,
-    QuillModule.forRoot(),
+    QuillModule.forRoot(quillConfig),
   ]
 })
 export class TicketsModule { }

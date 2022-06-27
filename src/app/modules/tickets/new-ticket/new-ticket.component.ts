@@ -1,35 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
-import { map, Observable, reduce } from 'rxjs';
+import { map } from 'rxjs';
 import { chain } from "lodash";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
 import { UserService } from 'app/core/user/user.service';
-import { PermisosEspecial } from 'app/core/user/user.types';
+import { QuillEditorComponent } from 'ngx-quill';
+import { quillConfig } from 'app/core/config/quill.config';
+
 
 @Component({
   selector: 'app-new-ticket',
   templateUrl: './new-ticket.component.html',
   styleUrls: ['./new-ticket.component.scss']
 })
-export class NewTicketComponent implements OnInit {
-
-  $categorias: Observable<any[]>
-  $prioridades: Observable<Prioridad[]>
-  $estados: Observable<Estado[]>
-  $personal: Observable<Usuario[]>
+export class NewTicketComponent implements OnInit, AfterViewInit {
+  @ViewChild(QuillEditorComponent) editor: QuillEditorComponent
+  //**************VARIABLES OBSERVABLES**********************/
   $permisosEspeciales = this._user.permisosEspecialesStr$
+  $prioridades = this.api.getAll<Prioridad>('prioridades')
+  $estados = this.api.getAll<Estado>('estados')
+  $personal = this.api.getAll<Usuario>('personalDeSoporte')
+  $categorias = this.api.getAll<SubCategoria>('subCategorias')
+    .pipe(map(of => {
+      return chain(of)
+        .groupBy('categoria')
+        .map((subcategoria, grupo) => { return { grupo, subcategoria } })
+        .value()
+    }))
+  /*****************FORMULARIO**************************/
+  composeForm = this.fb.group({
+    titulo: ['', Validators.required],
+    descripcion: ['', Validators.required],
+    prioridad: ['', Validators.required],
+    estado: ['', Validators.required],
+    categorias: [[], Validators.required],
+    solicitudDe: ['', Validators.required],
+    asignadoA: ['']
+  });
+  /******************************************************/
   usuarioSeleccionado: string = ''
-  composeForm: FormGroup;
-  quillModules: any = {
-    toolbar: [
-      ['bold', 'italic', 'underline'],
-      [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
-      ['clean']
-    ]
-  };
+  modules = quillConfig.modules
 
   constructor(
     private fb: FormBuilder,
@@ -40,33 +53,16 @@ export class NewTicketComponent implements OnInit {
     private _user: UserService) { }
 
   ngOnInit(): void {
-    this.crearObservables()
-    this.crearFormulario()
-  }
-  crearObservables(): void {
-    this.$prioridades = this.api.getAll<Prioridad>('prioridades')
-    this.$estados = this.api.getAll<Estado>('estados')
-    this.$personal = this.api.getAll<Usuario>('personalDeSoporte')
-    this.$categorias = this.api.getAll<SubCategoria>('subCategorias')
-      .pipe(map(of => {
-        return chain(of).groupBy('categoria').map((subcategoria, grupo) => { return { grupo, subcategoria } }).value()
-      }))
-  }
-  crearFormulario(): void {
-    this.composeForm = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      prioridad: ['', Validators.required],
-      estado: ['', Validators.required],
-      categorias: [[], Validators.required],
-      solicitudDe: ['', Validators.required],
-      asignadoA: ['']
-    });
+
     this._user.user$.subscribe(val => {
       this.composeForm.controls.solicitudDe.setValue(val.id)
       this.usuarioSeleccionado = val.nombre
     })
   }
+  ngAfterViewInit(): void {
+    this.editor.modules = quillConfig.modules
+  }
+
   cancel(): void {
     this.composeForm.reset()
     this.ref.close()
