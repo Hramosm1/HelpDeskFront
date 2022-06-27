@@ -16,13 +16,18 @@ import { CerrarTicketComponent } from '../cerrar-ticket/cerrar-ticket.component'
 export class TicketInformationComponent implements OnInit {
   id$: Observable<string>
   ticket$: Observable<Ticket>
+  comentarios = []
   permisosEspeciales$ = this.user.permisosEspecialesStr$
   @ViewChild('descripcion') descripcion: ElementRef
   constructor(private ar: ActivatedRoute, private api: HttpService, private user: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.id$ = this.ar.params.pipe(pluck('id'))
-    this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val))
+    this.id$.subscribe(val => {
+      this.ticket$ = this.api.getById('tickets', val)
+
+      this.api.getById<any[]>('comentarios', val).subscribe({ next: val => this.comentarios = val, error: _ => null })
+    })
   }
   cerrarTicket() {
     this.dialog.open(CerrarTicketComponent, { width: '80vw', disableClose: true, data: this.ticket$ })
