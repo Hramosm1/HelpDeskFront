@@ -38,10 +38,8 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   submit() {
     const body = { ticket: this.ticket, comentario: this.comentario.value, usuario: this.usuario }
     this.api.create('comentarios', body).subscribe(res => {
-      if (res.rowsAffected[0] > 0) {
-        this.subject$.next(null)
-        this.comentario.reset()
-      }
+      this.subject$.next(null)
+      this.comentario.reset()
     })
   }
   getColor(id: string) {

@@ -47,15 +47,11 @@ export class PrioridadesComponent implements OnInit, AfterViewInit {
       if (result.action) {
         if (result.editar) {
           this.api.update('prioridades', result.id, result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
+            this.actualizar()
           })
         } else {
           this.api.create('prioridades', result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
+            this.actualizar()
           })
         }
       }
@@ -65,11 +61,7 @@ export class PrioridadesComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.api.delete('estados', result.id).subscribe(res => {
-          if (res.rowsAffected[0] > 0) {
-            this.actualizar()
-          }
-        })
+        this.api.delete('prioridades', result.id).subscribe(res => this.actualizar())
       }
     })
   }
