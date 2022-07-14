@@ -33,11 +33,6 @@ export class AsignarSoporteComponent implements OnInit {
     })
   }
   confirmar() {
-    console.log
-    this.api.update('tickets', this.id, this.formulario.value).subscribe(res => {
-      if (res.rowsAffected[0] > 0) {
-        this.dialogRef.close()
-      }
-    })
+    this.api.update('tickets', this.id, this.formulario.value).subscribe(res => this.dialogRef.close())
   }
 }

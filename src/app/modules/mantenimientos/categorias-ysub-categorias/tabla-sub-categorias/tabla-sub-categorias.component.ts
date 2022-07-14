@@ -30,17 +30,9 @@ export class TablaSubCategoriasComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
         if (result.editar) {
-          this.api.update('subCategorias', result.id, result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.update('subCategorias', result.id, result.value).subscribe(res => this.actualizar())
         } else {
-          this.api.create('subCategorias', result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.create('subCategorias', result.value).subscribe(res => this.actualizar())
         }
       }
     })
@@ -49,11 +41,7 @@ export class TablaSubCategoriasComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.api.delete('subCategorias', result.id).subscribe(res => {
-          if (res.rowsAffected[0] > 0) {
-            this.actualizar()
-          }
-        })
+        this.api.delete('subCategorias', result.id).subscribe(res => this.actualizar())
       }
     })
   }

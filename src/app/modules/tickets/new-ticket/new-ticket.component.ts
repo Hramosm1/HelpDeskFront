@@ -77,8 +77,6 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     })
   }
   send(): void {
-    this.api.create('tickets', this.composeForm.value).subscribe(res => {
-      if (res.rowsAffected[0] > 0) { this.ref.close() }
-    })
+    this.api.create('tickets', this.composeForm.value).subscribe(res => this.ref.close())
   }
 }

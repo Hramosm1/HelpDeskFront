@@ -36,17 +36,9 @@ export class EstadosComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
         if (result.editar) {
-          this.api.update('estados', result.id, result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.update('estados', result.id, result.value).subscribe(res => this.actualizar())
         } else {
-          this.api.create('estados', result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.create('estados', result.value).subscribe(res => this.actualizar())
         }
       }
     })
@@ -55,11 +47,7 @@ export class EstadosComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.api.delete('estados', result.id).subscribe(res => {
-          if (res.rowsAffected[0] > 0) {
-            this.actualizar()
-          }
-        })
+        this.api.delete('estados', result.id).subscribe(res => this.actualizar())
       }
     })
   }
