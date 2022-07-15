@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
+import { quillConfig } from 'app/core/config/quill.config';
 import { UserService } from 'app/core/user/user.service';
+import { QuillEditorComponent } from 'ngx-quill';
 import { Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
@@ -10,17 +12,22 @@ import { Observable, Subject, switchMap } from 'rxjs';
   styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(QuillEditorComponent, { static: true }) editor: QuillEditorComponent
   @Input() ticket: string
+  @Output() validacion = new EventEmitter<boolean>()
   subject$ = new Subject()
   comentarios$: Observable<any>
   comentario = new FormControl('', Validators.required)
   usuario: string
   constructor(private api: HttpService, private _user: UserService) { }
 
+
   ngOnInit(): void {
+    this.editor.modules = quillConfig.modules
     this._user.user$.subscribe(u => this.usuario = u.id)
     this.comentarios$ = this.subject$
       .pipe(switchMap(() => this.api.getById<any[]>('comentarios', this.ticket)))
+    this.comentarios$.subscribe(val => this.validacion.emit(val.length > 0))
   }
   ngAfterViewInit(): void {
     this.subject$.next(null)
