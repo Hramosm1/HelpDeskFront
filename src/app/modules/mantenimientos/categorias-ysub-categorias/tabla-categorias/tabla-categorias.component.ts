@@ -29,17 +29,9 @@ export class TablaCategoriasComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
         if (result.editar) {
-          this.api.update('categorias', result.id, result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.update('categorias', result.id, result.value).subscribe(res => this.actualizar())
         } else {
-          this.api.create('categorias', result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.create('categorias', result.value).subscribe(res => this.actualizar())
         }
       }
     })
@@ -48,11 +40,7 @@ export class TablaCategoriasComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
     dialogRef.afterClosed().subscribe(result => {
       if (result.action) {
-        this.api.delete('categorias', result.id).subscribe(res => {
-          if (res.rowsAffected[0] > 0) {
-            this.actualizar()
-          }
-        })
+        this.api.delete('categorias', result.id).subscribe(res => this.actualizar())
       }
     })
   }

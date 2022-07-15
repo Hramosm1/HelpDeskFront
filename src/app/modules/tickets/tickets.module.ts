@@ -21,6 +21,11 @@ import { CommentsComponent } from './comments/comments.component';
 import { CerrarTicketComponent } from './cerrar-ticket/cerrar-ticket.component';
 import { AsignarSoporteComponent } from './asignar-soporte/asignar-soporte.component';
 import { quillConfig } from 'app/core/config/quill.config';
+import { FiltroTicketsComponent } from './filtro-tickets/filtro-tickets.component';
+import { MatDatepickerModule, } from '@angular/material/datepicker';
+import { LuxonDateAdapter, MatLuxonDateModule } from "@angular/material-luxon-adapter";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DATA_CONFIG } from './interfaces/filtro.interfaces';
 @NgModule({
   declarations: [
     TicketsComponent,
@@ -28,7 +33,8 @@ import { quillConfig } from 'app/core/config/quill.config';
     TicketInformationComponent,
     CommentsComponent,
     CerrarTicketComponent,
-    AsignarSoporteComponent
+    AsignarSoporteComponent,
+    FiltroTicketsComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +50,14 @@ import { quillConfig } from 'app/core/config/quill.config';
     MatAutocompleteModule,
     MatSidenavModule,
     MatSortModule,
+    MatDatepickerModule,
+    MatLuxonDateModule,
     QuillModule.forRoot(quillConfig),
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    { provide: DateAdapter, useClass: LuxonDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: DATA_CONFIG }
   ]
 })
 export class TicketsModule { }
