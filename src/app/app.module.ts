@@ -13,6 +13,10 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'environments/environment';
+
+const socketConfig: SocketIoConfig = { url: environment.backenduri, options: { withCredentials: true } };
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -40,7 +44,10 @@ const routerConfig: ExtraOptions = {
         LayoutModule,
 
         // 3rd party modules that require global configuration via forRoot
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
+
+        // SocketIO
+        SocketIoModule.forRoot(socketConfig)
     ],
     bootstrap: [
         AppComponent
