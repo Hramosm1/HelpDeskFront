@@ -9,7 +9,7 @@ import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-
 import { UserService } from 'app/core/user/user.service';
 import { QuillEditorComponent } from 'ngx-quill';
 import { quillConfig } from 'app/core/config/quill.config';
-
+import { omitBy, isNull } from "lodash";
 
 @Component({
   selector: 'app-new-ticket',
@@ -38,7 +38,7 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     estado: ['', Validators.required],
     categorias: [[], Validators.required],
     solicitudDe: ['', Validators.required],
-    asignadoA: ['']
+    asignadoA: null
   });
   /******************************************************/
   usuarioSeleccionado: string = ''
@@ -77,6 +77,7 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     })
   }
   send(): void {
-    this.api.create('tickets', this.composeForm.value).subscribe(res => this.ref.close())
+    const body = omitBy(this.composeForm.value, isNull)
+    this.api.create('tickets', body).subscribe(res => this.ref.close())
   }
 }

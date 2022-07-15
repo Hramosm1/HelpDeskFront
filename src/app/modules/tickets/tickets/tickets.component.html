@@ -45,7 +45,7 @@
 			<ng-container matColumnDef="asignadoA">
 				<th mat-header-cell *matHeaderCellDef>Asignado a</th>
 				<td mat-cell *matCellDef="let row">
-					{{ row.PersonalDeSoporte.nombre || "" }}
+					{{ row.PersonalDeSoporte ? row.PersonalDeSoporte.nombre : "" }}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="estado">

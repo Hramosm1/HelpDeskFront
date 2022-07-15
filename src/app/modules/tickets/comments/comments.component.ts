@@ -36,7 +36,7 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subject$.complete()
   }
   submit() {
-    const body = { ticket: this.ticket, comentario: this.comentario.value, usuario: this.usuario }
+    const body = { idTicket: Number(this.ticket), comentario: this.comentario.value, idUsuario: this.usuario }
     this.api.create('comentarios', body).subscribe(res => {
       this.subject$.next(null)
       this.comentario.reset()
