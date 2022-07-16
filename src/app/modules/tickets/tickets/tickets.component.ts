@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'app/backend/services/http.service';
 import { Ticket, TicketResult } from 'app/modules/mantenimientos/interfaces';
 import { NewTicketComponent } from '../new-ticket/new-ticket.component';
-import { pluck, startWith, switchMap, tap } from "rxjs/operators";
+import { pluck, startWith, switchMap } from "rxjs/operators";
 import { merge, Observer, Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { UtilsService } from 'app/core/services/utils.service';
@@ -36,7 +36,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.totalRows = data.count
     },
     error: (err) => { console.warn('este es el error ', err) },
-    complete: () => { console.log('complete') }
+    complete: () => { }
   }
 
   constructor(private dialog: MatDialog, private api: HttpService, private router: Router, private util: UtilsService, private _user: UserService) { }
