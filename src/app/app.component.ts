@@ -10,6 +10,6 @@ export class AppComponent {
     /**
      * Constructor
      */
-    constructor(private socket: SocketsService) {
+    constructor() {
     }
 }

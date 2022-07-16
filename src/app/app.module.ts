@@ -16,7 +16,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'environments/environment';
 
-const socketConfig: SocketIoConfig = { url: environment.backenduri, options: { withCredentials: true } };
+const socketConfig: SocketIoConfig = { url: environment.backenduri, options: {} };
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -47,7 +47,7 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
 
         // SocketIO
-        SocketIoModule.forRoot(socketConfig)
+        //SocketIoModule.forRoot(socketConfig)
     ],
     bootstrap: [
         AppComponent

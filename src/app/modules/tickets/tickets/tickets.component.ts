@@ -65,7 +65,6 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dialog.open<FiltroTicketsComponent, Filtro, Filtro>(FiltroTicketsComponent, { disableClose: true, width: '80%', data: this.filtro })
       .afterClosed().subscribe(val => {
         this.filtro = val
-        console.log(this.filtro)
         this.paginator.firstPage()
         this.emiterObserver$.next({})
         this.botonLimpiar = Object.keys(this.filtro).length > 0
