@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { HttpService } from 'app/backend/services/http.service';
 import { Ticket, TicketResult } from 'app/modules/mantenimientos/interfaces';
 import { NewTicketComponent } from '../new-ticket/new-ticket.component';
 import { pluck, startWith, switchMap } from "rxjs/operators";
@@ -13,6 +12,7 @@ import { UtilsService } from 'app/core/services/utils.service';
 import { UserService } from 'app/core/user/user.service';
 import { FiltroTicketsComponent } from '../filtro-tickets/filtro-tickets.component';
 import { Filtro } from '../interfaces/filtro.interfaces';
+import { SocketsService } from 'app/shared/services/sockets.service';
 
 @Component({
   selector: 'app-tickets',
@@ -30,6 +30,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   emiterObserver$ = new Subject()
   update$: Subscription
   botonLimpiar: boolean = false
+  subscripcion: Subscription
   observe: Observer<TicketResult> = {
     next: (data) => {
       this.dataSource.data = data.rows
@@ -39,7 +40,13 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     complete: () => { }
   }
 
-  constructor(private dialog: MatDialog, private api: HttpService, private router: Router, private util: UtilsService, private _user: UserService) { }
+  constructor(
+    private dialog: MatDialog,
+    private util: UtilsService,
+    private _user: UserService,
+    private socket: SocketsService,
+    public router: Router
+  ) { }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
   }
@@ -57,9 +64,12 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
           ))
     )
       .subscribe(this.observe)
+    this.subscripcion = this.socket.nuevoTicket$.subscribe(_ => this.emiterObserver$.next({}))
+
   }
   ngOnDestroy(): void {
     this.update$.unsubscribe()
+    this.subscripcion.unsubscribe()
   }
   openFilter() {
     this.dialog.open<FiltroTicketsComponent, Filtro, Filtro>(FiltroTicketsComponent, { disableClose: true, width: '80%', data: this.filtro })
@@ -74,7 +84,6 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dialog.open(NewTicketComponent, { disableClose: true, width: '80%' })
       .afterClosed().subscribe(() => {
         this.paginator.firstPage()
-        this.emiterObserver$.next({})
       })
   }
   actualizar() {

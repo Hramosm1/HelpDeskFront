@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SocketsService } from './shared/services/sockets.service';
 
 @Component({
@@ -10,6 +10,6 @@ export class AppComponent {
     /**
      * Constructor
      */
-    constructor() {
+    constructor(private socket: SocketsService) {
     }
 }
