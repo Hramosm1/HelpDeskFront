@@ -3,8 +3,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { quillConfig } from 'app/core/config/quill.config';
 import { UserService } from 'app/core/user/user.service';
+import { SocketsService } from 'app/shared/services/sockets.service';
 import { QuillEditorComponent } from 'ngx-quill';
-import { Observable, Subject, switchMap } from 'rxjs';
+import { mergeMap, Observable, Subject, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-comments',
@@ -19,7 +20,8 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   comentarios$: Observable<any>
   comentario = new FormControl('', Validators.required)
   usuario: string
-  constructor(private api: HttpService, private _user: UserService) { }
+  subs: Subscription
+  constructor(private api: HttpService, private _user: UserService, private socket: SocketsService) { }
 
 
   ngOnInit(): void {
@@ -31,9 +33,11 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit(): void {
     this.subject$.next(null)
+    this.subs = this.socket.nuevoComentario$.subscribe(_ => this.subject$.next(null))
   }
   ngOnDestroy(): void {
     this.subject$.complete()
+    this.subs.unsubscribe()
   }
   submit() {
     const body = { idTicket: Number(this.ticket), comentario: this.comentario.value, idUsuario: this.usuario }
