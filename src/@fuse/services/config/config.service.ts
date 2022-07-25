@@ -11,7 +11,7 @@ export class FuseConfigService {
 
     constructor(@Inject(FUSE_APP_CONFIG) config: any) {
         // Private
-        this._config = new BehaviorSubject(config);
+        this._config = new BehaviorSubject(JSON.parse(localStorage.getItem('config')) || config);
     }
 
     set config(value: any) {
