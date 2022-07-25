@@ -1,25 +1,36 @@
-<h2 matDialogTitle *ngIf="ticket | async as info">{{info.titulo}}</h2>
+<h2 matDialogTitle *ngIf="ticket | async as info">{{ info.titulo }}</h2>
 <mat-dialog-content>
-  <form [formGroup]="formulario">
-    <mat-form-field class="mt-8 w-full">
-      <mat-label>Selecciona quien va a solucionar este ticket</mat-label>
-      <mat-select formControlName="personal">
-        <mat-option *ngFor="let personal of personal$|async" [value]="personal.id">{{personal.nombre}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="mt-8 w-full">
-      <mat-label>Selecciona el nuevo estado del ticket</mat-label>
-      <mat-select formControlName="estado">
-        <mat-option *ngFor="let estado of estados$ | async" [value]="estado.id">{{estado.nombre}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
+	<form [formGroup]="formulario">
+		<mat-form-field class="mt-8 w-full">
+			<mat-label>Selecciona quien va a solucionar este ticket</mat-label>
+			<mat-select formControlName="asignadoA">
+				<mat-option
+					*ngFor="let personal of personal$ | async"
+					[value]="personal.id"
+					>{{ personal.nombre }}</mat-option
+				>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field class="mt-8 w-full">
+			<mat-label>Selecciona el nuevo estado del ticket</mat-label>
+			<mat-select formControlName="idEstado">
+				<mat-option
+					*ngFor="let estado of estados$ | async"
+					[value]="estado.id"
+					>{{ estado.nombre }}</mat-option
+				>
+			</mat-select>
+		</mat-form-field>
+	</form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button matDialogClose mat-button color="warn">
-    Cancelar
-  </button>
-  <button [disabled]="!formulario.valid" (click)="confirmar()" mat-raised-button color="warn">
-    Confirmar
-  </button>
+	<button matDialogClose mat-button color="warn">Cancelar</button>
+	<button
+		[disabled]="!formulario.valid"
+		(click)="confirmar()"
+		mat-raised-button
+		color="warn"
+	>
+		Confirmar
+	</button>
 </mat-dialog-actions>

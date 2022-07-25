@@ -34,14 +34,31 @@ export interface Usuario {
   fechaCreacion?: Date
 }
 export interface Ticket {
-  id: string;
+  id: number;
   titulo: string;
-  descripcion: string;
-  prioridad: string;
-  colorPrioridad: string;
-  estado: string;
-  activo?: boolean;
+  solicitudDe: Solicitud;
+  asignadoA: number;
+  fechaSolicitud: Date;
+  activo: boolean;
+  Prioridades: Prioridades;
+  Estados: Estados;
+}
+export interface TicketResult {
+  rows: Ticket[],
+  count: number
 }
 export interface TablaTicket extends Ticket {
   colorTexto: string
+}
+export interface Prioridades {
+  nombre: string;
+  color: string;
+}
+export interface Solicitud {
+  id: string
+  nombre: string
+}
+
+export interface Estados {
+  nombre: string;
 }

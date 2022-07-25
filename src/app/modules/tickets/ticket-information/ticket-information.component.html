@@ -1,29 +1,54 @@
 <app-base>
-  <mat-card class="relative z-20" *ngIf="ticket$|async; let ticket">
-    <mat-card-header class="sticky top-0 bg-card z-50">
-      <div mat-card-avatar class="w-28 mr-5">
-        <h2 class="font-extrabold text-primary">{{ticket.solicitudDe}}</h2>
-        <p>{{ticket.estado}}</p>
-      </div>
-      <mat-card-title>{{ticket.titulo}}</mat-card-title>
-      <mat-card-subtitle>Asignado a: {{ticket.asignadoA}}</mat-card-subtitle>
-      <span class="flex flex-1"></span>
-      <div>
-        <p class="text-right mb-4 mr-4">{{ticket.fechaSolicitud|date:'dd/MM/yy hh:mm':'UTC'}}</p>
-        <button *ngIf="(permisosEspeciales$|async).includes('asignar ticket')" mat-raised-button color="acent"
-          (click)="asignarSoporte()">
-          Asignar personal de soporte
-        </button>
-        <button (click)="cerrarTicket()"
-          *ngIf="(permisosEspeciales$|async).includes('cerrar ticket') && comentarios.length>0" mat-raised-button
-          color="warn">
-          {{ticket.activo?'Cerrar Ticket':'Reabrir Ticket'}}
-        </button>
-      </div>
-    </mat-card-header>
-    <mat-card-content class="z-30">
-      <div class="shadow-md rounded-md p-8 mx-auto w-10/12" [innerHTML]="ticket.descripcion"></div>
-      <app-comments [ticket]="id$|async"></app-comments>
-    </mat-card-content>
-  </mat-card>
+	<mat-card class="relative z-20" *ngIf="ticket$ | async; let ticket">
+		<mat-card-header class="sticky top-0 bg-card z-50">
+			<div mat-card-avatar class="w-28 mr-5">
+				<h2 class="font-extrabold text-primary">
+					{{ ticket.nombreSolicitante[0].nombre }}
+				</h2>
+				<p>{{ ticket.Estados.nombre }}</p>
+			</div>
+			<mat-card-title>{{ ticket.titulo }}</mat-card-title>
+			<mat-card-subtitle
+				>Asignado a:
+				{{
+					ticket.PersonalDeSoporte ? ticket.PersonalDeSoporte.nombre : ""
+				}}</mat-card-subtitle
+			>
+			<span class="flex flex-1"></span>
+			<div>
+				<p class="text-right mb-4 mr-4">
+					{{ ticket.fechaSolicitud | date: "dd/MM/yy hh:mm":"UTC" }}
+				</p>
+				<button
+					*ngIf="(permisosEspeciales$ | async).includes('asignar ticket')"
+					mat-raised-button
+					color="acent"
+					(click)="asignarSoporte()"
+				>
+					Asignar personal de soporte
+				</button>
+				<button
+					(click)="cerrarTicket()"
+					*ngIf="
+						(permisosEspeciales$ | async).includes('cerrar ticket') &&
+						tieneComentarios
+					"
+					mat-raised-button
+					color="warn"
+				>
+					{{ ticket.activo ? "Cerrar Ticket" : "Reabrir Ticket" }}
+				</button>
+			</div>
+		</mat-card-header>
+		<mat-card-content class="z-30">
+			<div
+				class="shadow-md rounded-md p-8 mx-auto w-10/12"
+				[innerHTML]="ticket.descripcion"
+			></div>
+			<app-comments
+				(validacion)="GetLegn($event)"
+				[ticket]="id$ | async"
+			></app-comments>
+		</mat-card-content>
+	</mat-card>
 </app-base>

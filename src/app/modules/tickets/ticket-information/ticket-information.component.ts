@@ -14,20 +14,16 @@ import { CerrarTicketComponent } from '../cerrar-ticket/cerrar-ticket.component'
   styleUrls: ['./ticket-information.component.scss']
 })
 export class TicketInformationComponent implements OnInit {
+  @ViewChild('descripcion') descripcion: ElementRef
   id$: Observable<string>
   ticket$: Observable<Ticket>
-  comentarios = []
+  tieneComentarios: boolean = false
   permisosEspeciales$ = this.user.permisosEspecialesStr$
-  @ViewChild('descripcion') descripcion: ElementRef
   constructor(private ar: ActivatedRoute, private api: HttpService, private user: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.id$ = this.ar.params.pipe(pluck('id'))
-    this.id$.subscribe(val => {
-      this.ticket$ = this.api.getById('tickets', val)
-
-      this.api.getById<any[]>('comentarios', val).subscribe({ next: val => this.comentarios = val, error: _ => null })
-    })
+    this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val))
   }
   cerrarTicket() {
     this.dialog.open(CerrarTicketComponent, { width: '80vw', disableClose: true, data: this.ticket$ })
@@ -38,5 +34,8 @@ export class TicketInformationComponent implements OnInit {
       .subscribe(_ => {
         this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val))
       })
+  }
+  GetLegn(event: boolean) {
+    this.tieneComentarios = event
   }
 }

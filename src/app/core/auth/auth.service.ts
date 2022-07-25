@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { environment } from 'environments/environment';
+import { user } from 'app/mock-api/common/user/data';
 
 @Injectable()
 export class AuthService {
@@ -45,7 +46,6 @@ export class AuthService {
 
                 // Store the user on the user service
                 this._userService.user = response.user;
-
                 // Return a new observable with the response
                 return of(response);
             })
@@ -55,7 +55,10 @@ export class AuthService {
 
     signInUsingToken(): Observable<any> {
         // Renew token
-        return this._httpClient.get(environment.autenticacionuri + 'login/verifytoken/' + this.accessToken).pipe(
+        const headers: HttpHeaders = new HttpHeaders()
+        headers.set('Authorization', `Bearer ${this.accessToken}`)
+        headers.set('Content-Type', 'application/json')
+        return this._httpClient.get(environment.autenticacionuri + 'login/verifytoken', { headers }).pipe(
             catchError(() =>
             // Return false
             {

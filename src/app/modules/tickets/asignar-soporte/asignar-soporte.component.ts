@@ -14,8 +14,8 @@ export class AsignarSoporteComponent implements OnInit {
   personal$ = this.api.getAll('personalDeSoporte')
   estados$ = this.api.getAll('estados')
   formulario = this.fb.group({
-    personal: [null, Validators.required],
-    estado: [null, Validators.required]
+    asignadoA: [null, Validators.required],
+    idEstado: [null, Validators.required]
   })
   id: number
   constructor(
@@ -28,16 +28,11 @@ export class AsignarSoporteComponent implements OnInit {
   ngOnInit(): void {
     this.ticket.subscribe(({ id, idEstado, idAsignado }) => {
       this.id = id
-      this.formulario.controls.personal.setValue(idAsignado)
-      this.formulario.controls.estado.setValue(idEstado)
+      this.formulario.controls.asignadoA.setValue(idAsignado)
+      this.formulario.controls.idEstado.setValue(idEstado)
     })
   }
   confirmar() {
-    console.log
-    this.api.update('tickets', this.id, this.formulario.value).subscribe(res => {
-      if (res.rowsAffected[0] > 0) {
-        this.dialogRef.close()
-      }
-    })
+    this.api.update('tickets', this.id, this.formulario.value).subscribe(res => this.dialogRef.close())
   }
 }
