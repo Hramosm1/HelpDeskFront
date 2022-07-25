@@ -5,7 +5,7 @@ import { quillConfig } from 'app/core/config/quill.config';
 import { UserService } from 'app/core/user/user.service';
 import { SocketsService } from 'app/shared/services/sockets.service';
 import { QuillEditorComponent } from 'ngx-quill';
-import { mergeMap, Observable, Subject, Subscription, switchMap } from 'rxjs';
+import { Observable, Subject, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-comments',
