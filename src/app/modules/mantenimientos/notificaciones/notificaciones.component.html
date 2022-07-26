@@ -1,1 +1,12 @@
-<app-base title="Notificaciones" subtitle="Mantenimientos"> </app-base>
+<app-base title="Notificaciones" subtitle="Mantenimientos">
+	<mat-card *ngFor="let rol of roles$ | async">
+		<mat-card-header>
+			<mat-card-title>{{ rol.nombre }}</mat-card-title>
+		</mat-card-header>
+		<mat-card-content> content </mat-card-content>
+		<mat-card-actions>
+			<button mat-button>actionOne</button>
+			<button mat-button>actionTwo</button>
+		</mat-card-actions>
+	</mat-card>
+</app-base>
