@@ -50,10 +50,10 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     private ref: MatDialogRef<NewTicketComponent>,
     private dialogref: MatDialogRef<ListaDeUsuariosComponent, Usuario>,
     private dialog: MatDialog,
-    private _user: UserService) { }
+    private _user: UserService,
+  ) { }
 
   ngOnInit(): void {
-
     this._user.user$.subscribe(val => {
       this.composeForm.controls.solicitudDe.setValue(val.id)
       this.usuarioSeleccionado = val.nombre
@@ -78,6 +78,8 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   }
   send(): void {
     const body = omitBy(this.composeForm.value, isNull)
-    this.api.create('tickets', body).subscribe(res => this.ref.close())
+    this.api.create('tickets', body).subscribe(res => {
+      this.ref.close()
+    })
   }
 }

@@ -27,3 +27,9 @@ export interface PermisosEspecial {
     nombre: string;
     activo: boolean;
 }
+
+export interface AuthResult {
+    accessToken: string;
+    user: User;
+}
+

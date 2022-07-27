@@ -1,19 +1,35 @@
 <div class="flex justify-center items-center px-12 py-4">
-  <div class="w-full p-8 rounded-lg">
-    <ul class="mt-8 bg rounded-2xl">
-      <li *ngFor="let comentario of comentarios$|async">
-        <h3>{{comentario.fecha | date:'dd/MM/yy hh:mm a':'UTC'}} <span class="font-extrabold"
-            [ngClass]="{'text-primary-500':usuario===comentario.idUsuario}"
-            [ngStyle]="{'color': usuario!=comentario.idUsuario ? getColor(comentario.idUsuario) : null }">{{comentario.nombre}}</span>
-        </h3>
-        <div [innerHTML]="comentario.comentario"></div>
-      </li>
-    </ul>
-  </div>
+	<div class="w-full p-8 rounded-lg">
+		<ul class="mt-8 bg rounded-2xl">
+			<li *ngFor="let comentario of comentarios$ | async">
+				<h3>
+					{{ comentario.fecha | date: "dd/MM/yy hh:mm a" }}
+					<span
+						class="font-extrabold"
+						[ngClass]="{ 'text-primary-500': usuario === comentario.idUsuario }"
+						[ngStyle]="{
+							color:
+								usuario != comentario.idUsuario
+									? getColor(comentario.idUsuario)
+									: null
+						}"
+						>{{ comentario.nombre }}</span
+					>
+				</h3>
+				<div [innerHTML]="comentario.comentario"></div>
+			</li>
+		</ul>
+	</div>
 </div>
 <form class="mx-auto w-10/12">
-  <quill-editor [formControl]="comentario"></quill-editor>
+	<quill-editor [formControl]="comentario"></quill-editor>
 </form>
-<button [disabled]="!comentario.valid" (click)="submit()" disa mat-raised-button color="primary">
-  Comentar
+<button
+	[disabled]="!comentario.valid"
+	(click)="submit()"
+	disa
+	mat-raised-button
+	color="primary"
+>
+	Comentar
 </button>

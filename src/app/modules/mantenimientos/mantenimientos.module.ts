@@ -20,6 +20,7 @@ import { CreacionSubCategoriaComponent } from './categorias-ysub-categorias/crea
 import { TablaCategoriasComponent } from './categorias-ysub-categorias/tabla-categorias/tabla-categorias.component';
 import { TablaSubCategoriasComponent } from './categorias-ysub-categorias/tabla-sub-categorias/tabla-sub-categorias.component';
 import { PersonalDeSoporteComponent } from './personal-de-soporte/personal-de-soporte.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PersonalDeSoporteComponent } from './personal-de-soporte/personal-de-so
     TablaCategoriasComponent,
     TablaSubCategoriasComponent,
     PersonalDeSoporteComponent,
+    NotificacionesComponent,
   ],
   imports: [
     CommonModule,

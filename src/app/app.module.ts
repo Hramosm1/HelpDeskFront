@@ -47,7 +47,7 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
 
         // SocketIO
-        //SocketIoModule.forRoot(socketConfig)
+        SocketIoModule.forRoot(socketConfig)
     ],
     bootstrap: [
         AppComponent

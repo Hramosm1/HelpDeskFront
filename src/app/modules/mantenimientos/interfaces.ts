@@ -1,25 +1,18 @@
-export interface Estado {
-  id: number;
-  nombre: string;
-  activo?: boolean
-}
-export interface Categoria {
-  id: number;
-  nombre: string;
-}
-export interface SubCategoria {
-  id: number;
-  nombre: string;
+export interface BasicInterface { id: string, nombre: string }
+export interface Solicitud extends BasicInterface { }
+export interface Categoria extends BasicInterface { }
+export interface Estado extends BasicInterface { activo?: boolean }
+export interface SubCategoria extends BasicInterface {
   idCategoria: number;
   categoria: string;
   activo?: boolean;
 }
-export interface Prioridad {
-  id: number;
-  nombre: string;
+export interface Prioridad extends BasicInterface {
   color: string;
   activo?: boolean;
 }
+export interface TablaTicket extends Ticket { colorTexto: string }
+export interface Estados { nombre: string }
 export interface DataDialog<T> {
   editar: boolean;
   row?: T;
@@ -47,18 +40,8 @@ export interface TicketResult {
   rows: Ticket[],
   count: number
 }
-export interface TablaTicket extends Ticket {
-  colorTexto: string
-}
 export interface Prioridades {
   nombre: string;
   color: string;
 }
-export interface Solicitud {
-  id: string
-  nombre: string
-}
 
-export interface Estados {
-  nombre: string;
-}

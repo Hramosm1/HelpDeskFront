@@ -66,7 +66,7 @@
 			<ng-container matColumnDef="fecha">
 				<th mat-header-cell *matHeaderCellDef>Fecha creacion</th>
 				<td mat-cell *matCellDef="let row">
-					{{ row.fechaSolicitud | date: "dd/MM/yy hh:mm":"UTC" }}
+					{{ row.fechaSolicitud | date: "dd/MM/yy hh:mm a" }}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="activo">
