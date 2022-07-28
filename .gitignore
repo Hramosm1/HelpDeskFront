@@ -47,3 +47,5 @@ Thumbs.db
 
 # cypress
 cypress/fixtures/credentials.json
+cypress/videos/*
+cypress/screenshots/*
