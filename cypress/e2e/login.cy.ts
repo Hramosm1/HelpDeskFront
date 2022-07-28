@@ -40,7 +40,8 @@ describe('LOGIN', () => {
     cy.token('/')
     cy.get('user > .mat-focus-indicator').click()
     cy.get('.mat-menu-content > :nth-child(3)').click()
-    const token = localStorage.getItem('accessToken')
-    expect(token).to.be.null
+    cy.wait(1000).then(() => {
+      expect(localStorage.getItem('accessToken')).to.be.null
+    })
   })
 })

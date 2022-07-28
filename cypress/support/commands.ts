@@ -36,7 +36,7 @@ Cypress.Commands.add('login', (credentials: { user: string, pass: string }) => {
 })
 Cypress.Commands.add('token', (url: string) => {
   cy.fixture('credentials').then(c => {
-    window.localStorage.setItem('accessToken', c.token)
+    localStorage.setItem('accessToken', c.token)
     cy.visit(url)
   })
 })
