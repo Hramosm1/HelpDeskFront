@@ -3,18 +3,19 @@
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    login(credentials: { user: string, pass: string }): void
+    token(url: string): void
+  }
+}
 //
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
+//function customCommand(param: any): void {
+//  console.warn(param);
+//}
 //
 // NOTE: You can use it like so:
-// Cypress.Commands.add('customCommand', customCommand);
+//Cypress.Commands.add('customCommand', customCommand);
 //
 // ***********************************************
 // This example commands.js shows you how to
@@ -28,8 +29,17 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
+Cypress.Commands.add('login', (credentials: { user: string, pass: string }) => {
+  cy.get('#user').type(credentials.user)
+  cy.get('#password').type(credentials.pass)
+  cy.get('.fuse-mat-button-large').click()
+})
+Cypress.Commands.add('token', (url: string) => {
+  cy.fixture('credentials').then(c => {
+    localStorage.setItem('accessToken', c.token)
+    cy.visit(url)
+  })
+})
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
@@ -41,3 +51,4 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
