@@ -29,7 +29,7 @@ export class PersonalDeSoporteComponent implements OnInit {
     this.dialogRef = this.dialog.open(ListaDeUsuariosComponent, { width: '80vw' })
     this.dialogRef.afterClosed().subscribe(val => {
       this.cargando = true
-      this.api.create('personalDeSoporte', { idUsuario: val.id }).subscribe({ next: this.actualizar, complete: () => this.cargando = false })
+      this.api.create('personalDeSoporte', { idUsuario: val.id, nombre: val.nombre }).subscribe({ next: this.actualizar, complete: () => this.cargando = false })
     })
   }
   eliminar(id: number) {
@@ -37,8 +37,6 @@ export class PersonalDeSoporteComponent implements OnInit {
   }
 
   private actualizar = (val: createResponse) => {
-    if (val.rowsAffected[0] > 0) {
-      this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data)
-    }
+    this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data)
   }
 }

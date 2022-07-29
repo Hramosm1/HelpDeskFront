@@ -1,3 +1,3 @@
 export type Destino =
-  'estados' | 'categorias' | 'subCategorias' | 'prioridades' | 'tickets' | 'tickets/cerrar' | 'tickets/byUser' | 'comentarios' | 'personalDeSoporte' | 'comentarios' | 'documentos'
-export type AuthRoutes = 'usuarios'
+  'estados' | 'categorias' | 'subCategorias' | 'prioridades' | 'tickets' | 'tickets/cerrar' | 'tickets/byUser' | 'comentarios' | 'personalDeSoporte' | 'comentarios' | 'documentos' | 'usuarios'
+export type AuthRoutes = 'aplicaciones' | 'modulos' | 'roles' | 'usuarios'

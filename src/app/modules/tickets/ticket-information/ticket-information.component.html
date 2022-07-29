@@ -2,11 +2,18 @@
 	<mat-card class="relative z-20" *ngIf="ticket$ | async; let ticket">
 		<mat-card-header class="sticky top-0 bg-card z-50">
 			<div mat-card-avatar class="w-28 mr-5">
-				<h2 class="font-extrabold text-primary">{{ ticket.solicitudDe }}</h2>
-				<p>{{ ticket.estado }}</p>
+				<h2 class="font-extrabold text-primary">
+					{{ ticket.nombreSolicitante[0].nombre }}
+				</h2>
+				<p>{{ ticket.Estados.nombre }}</p>
 			</div>
 			<mat-card-title>{{ ticket.titulo }}</mat-card-title>
-			<mat-card-subtitle>Asignado a: {{ ticket.asignadoA }}</mat-card-subtitle>
+			<mat-card-subtitle
+				>Asignado a:
+				{{
+					ticket.PersonalDeSoporte ? ticket.PersonalDeSoporte.nombre : ""
+				}}</mat-card-subtitle
+			>
 			<span class="flex flex-1"></span>
 			<div>
 				<p class="text-right mb-4 mr-4">
