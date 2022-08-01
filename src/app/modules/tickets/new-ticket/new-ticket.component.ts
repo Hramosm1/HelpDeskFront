@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { chain } from "lodash";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
@@ -24,9 +24,9 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   $estados = this.api.getAll<Estado>('estados')
   $personal = this.api.getAll<Usuario>('personalDeSoporte')
   $categorias = this.api.getAll<SubCategoria>('subCategorias')
-    .pipe(map(of => {
+    .pipe(tap(console.log), map(of => {
       return chain(of)
-        .groupBy('categoria')
+        .groupBy('Categorias.nombre')
         .map((subcategoria, grupo) => { return { grupo, subcategoria } })
         .value()
     }))
@@ -54,6 +54,7 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.$categorias.subscribe(console.log)
     this._user.user$.subscribe(val => {
       this.composeForm.controls.solicitudDe.setValue(val.id)
       this.usuarioSeleccionado = val.nombre
