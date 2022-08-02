@@ -75,7 +75,8 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'tickets', loadChildren: () => import('app/modules/tickets/tickets.module').then(m => m.TicketsModule) },
-            { path: 'mantenimientos', loadChildren: () => import('app/modules/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule) }
+            { path: 'mantenimientos', loadChildren: () => import('app/modules/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule) },
+            { path: 'dasboard', loadChildren: () => import('app/modules/dashboard/dashboard.module').then(m => m.DashboardModule) }
         ]
     },
 ];

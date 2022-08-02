@@ -3,6 +3,13 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 const navigation: FuseNavigationItem[] = [
     {
+        id: 'dasboard',
+        title: 'Dasboard',
+        type: 'basic',
+        icon: 'heroicons_outline:chart-bar',
+        link: '/dasboard'
+    },
+    {
         id: 'tickets',
         title: 'Tickets',
         type: 'basic',
