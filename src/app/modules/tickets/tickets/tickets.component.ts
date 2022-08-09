@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Ticket, TicketResult } from 'app/modules/mantenimientos/interfaces';
 import { NewTicketComponent } from '../new-ticket/new-ticket.component';
-import { pluck, startWith, switchMap, tap } from "rxjs/operators";
+import { pluck, startWith, switchMap } from "rxjs/operators";
 import { merge, Observer, Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { UtilsService } from 'app/core/services/utils.service';
@@ -13,7 +13,6 @@ import { UserService } from 'app/core/user/user.service';
 import { FiltroTicketsComponent } from '../filtro-tickets/filtro-tickets.component';
 import { Filtro } from '../interfaces/filtro.interfaces';
 import { SocketsService } from 'app/shared/services/sockets.service';
-import { toInteger } from 'lodash';
 
 @Component({
   selector: 'app-tickets',
@@ -51,7 +50,9 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     private _user: UserService,
     private socket: SocketsService,
     public router: Router
-  ) { }
+  ) {
+
+  }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
     this.botonLimpiar = Object.entries.length > 0 ? true : false
