@@ -7,6 +7,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { NgChartsModule } from 'ng2-charts';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
     SharedModule,
     NgChartsModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatDividerModule,
+    MatTableModule
   ]
 })
 export class DashboardModule { }
