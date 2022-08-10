@@ -30,7 +30,7 @@
 				<button
 					(click)="cerrarTicket()"
 					*ngIf="
-						(ticket.activo ||
+						(!ticket.activo ||
 							(permisosEspeciales$ | async).includes('cerrar ticket')) &&
 						ticket.PersonalDeSoporte
 					"
