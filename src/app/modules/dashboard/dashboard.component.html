@@ -71,15 +71,15 @@
 					<h3 class="text-lg font-light">Tiempo promedio por ticket</h3>
 				</mat-card-header>
 				<mat-card-content class="text-right mt-4">
-					<div class="">
+					<!-- <div class="">
 						<h3 class="text-center text-3xl text-primary-500">En desarrollo</h3>
 						<img
-							class="h-120"
+							class="h-10"
 							src="assets/images/logo/page.svg"
 							alt="En construccion"
 						/>
-					</div>
-					<!-- <mat-divider inset class="shadow"></mat-divider>
+					</div> -->
+					<mat-divider inset class="shadow"></mat-divider>
 					<mat-table class="w-full" [dataSource]="tiemposPromedio">
 						<ng-container matColumnDef="personal">
 							<mat-header-cell *matHeaderCellDef>
@@ -104,7 +104,7 @@
 						<mat-row
 							*matRowDef="let row; columns: ['personal', 'promedio']"
 						></mat-row>
-					</mat-table> -->
+					</mat-table>
 				</mat-card-content>
 			</mat-card>
 		</ng-container>

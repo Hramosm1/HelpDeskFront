@@ -27,7 +27,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns = ['id', 'titulo', 'solicitudDe', 'estado', 'prioridad', 'fecha', 'activo', 'asignadoA']
   permisos$ = this._user.permisos$.pipe(pluck('Tickets'))
   totalRows: number = 0
-  filtro: Filtro = {}
+  filtro: Filtro = JSON.parse(localStorage.getItem('filtro')) || {}
   pagez = Number(localStorage.getItem('pageSize')) || 10
   emiterObserver$ = new Subject()
   update$: Subscription

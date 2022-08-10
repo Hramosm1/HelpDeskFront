@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
           const promedioNumber = suma / list.length
           const horas = Math.floor(promedioNumber / (60 * 60))
           const minutos = Math.floor(promedioNumber / 60) - (horas * 60)
-          const segundos = Math.floor(promedioNumber - minutos * 60)
+          const segundos = Math.floor(promedioNumber - (minutos * 60) - (horas * 60 * 60))
           const promedio = `${horas}h: ${minutos}m: ${segundos}s`
           result.push({ personal: key, promedio })
         }
