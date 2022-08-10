@@ -7,7 +7,7 @@
 				</h2>
 				<p>{{ ticket.Estados.nombre }}</p>
 			</div>
-			<mat-card-title>{{ ticket.titulo }}</mat-card-title>
+			<mat-card-title>{{ ticket.id }} - {{ ticket.titulo }}</mat-card-title>
 			<mat-card-subtitle
 				>Asignado a:
 				{{
@@ -30,7 +30,8 @@
 				<button
 					(click)="cerrarTicket()"
 					*ngIf="
-						(permisosEspeciales$ | async).includes('cerrar ticket') &&
+						(ticket.activo ||
+							(permisosEspeciales$ | async).includes('cerrar ticket')) &&
 						ticket.PersonalDeSoporte
 					"
 					mat-raised-button

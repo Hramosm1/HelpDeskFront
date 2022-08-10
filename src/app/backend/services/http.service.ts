@@ -2,7 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Destino } from './endpoints';
+import { tap } from "rxjs/operators";
+import { DashboardPath, Destino, Meses } from './endpoints';
 import { TicketResult } from 'app/modules/mantenimientos/interfaces';
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,12 @@ export class HttpService {
   delete(route: Destino, id: number | string) {
     return this.http.delete<any>(`${this.base}${route}/${id}`).pipe(catchError(this.handleError))
   }
-
   getTickets(take: number, page: number, query?: any) {
     const params = new HttpParams({ fromObject: query })
     return this.http.get<TicketResult>(`${this.base}tickets/${take}/${page}`, { params })
+  }
+  getDashboard<T>(path: DashboardPath, mes?: Number) {
+    return this.http.get<T>(`${this.base}dashboard/${path}/${mes}`).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse) {

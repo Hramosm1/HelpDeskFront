@@ -1,4 +1,10 @@
-<h2 matDialogTitle>¿Desea cerrar este ticket?</h2>
+<h2 matDialogTitle>
+	{{
+		ticket.activo
+			? "¿Desea cerrar este ticket?"
+			: "¿Desea re abrir este ticket?"
+	}}
+</h2>
 <mat-dialog-content>
 	<p class="text-secondary">
 		El estado del ticket no tiene relación con si es activo o no activo, puedes
@@ -6,7 +12,9 @@
 	</p>
 	<form [formGroup]="formulario">
 		<mat-form-field class="mt-8 w-full">
-			<mat-label>Comentario de cierre</mat-label>
+			<mat-label>{{
+				ticket.activo ? "Comentario de cierre" : "Comentario de reapertura"
+			}}</mat-label>
 			<textarea matInput formControlName="comentario"></textarea>
 		</mat-form-field>
 		<mat-form-field class="w-full">
