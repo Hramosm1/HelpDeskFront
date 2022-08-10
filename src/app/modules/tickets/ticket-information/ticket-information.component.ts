@@ -17,7 +17,6 @@ export class TicketInformationComponent implements OnInit {
   @ViewChild('descripcion') descripcion: ElementRef
   id$: Observable<string>
   ticket$: Observable<Ticket>
-  tieneComentarios: boolean = false
   permisosEspeciales$ = this.user.permisosEspecialesStr$
   constructor(private ar: ActivatedRoute, private api: HttpService, private user: UserService, private dialog: MatDialog) { }
 
@@ -34,8 +33,5 @@ export class TicketInformationComponent implements OnInit {
       .subscribe(_ => {
         this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val))
       })
-  }
-  GetLegn(event: boolean) {
-    this.tieneComentarios = event
   }
 }

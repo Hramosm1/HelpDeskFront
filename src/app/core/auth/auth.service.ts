@@ -29,7 +29,7 @@ export class AuthService {
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
-    signIn(credentials: { user: string; password: string }): Observable<any> {
+    signIn(credentials: { user: string; password: string, rememberMe: boolean, aplicacion: number }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
