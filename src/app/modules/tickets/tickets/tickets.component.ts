@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,15 +21,17 @@ import { SocketsService } from 'app/shared/services/sockets.service';
 })
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator
+
   control: FormControl = new FormControl('')
   dataSource: MatTableDataSource<Ticket> = new MatTableDataSource()
   displayedColumns = ['id', 'titulo', 'solicitudDe', 'estado', 'prioridad', 'fecha', 'activo', 'asignadoA']
   permisos$ = this._user.permisos$.pipe(pluck('Tickets'))
   totalRows: number = 0
-  filtro: Filtro = JSON.parse(localStorage.getItem('filtro')) || { activo: true }
+  filtro: Filtro = {}
+  pagez = Number(localStorage.getItem('pageSize')) || 10
   emiterObserver$ = new Subject()
   update$: Subscription
-  botonLimpiar: boolean = true
+  botonLimpiar: boolean = false
   subscripcion: Subscription
   observe: Observer<TicketResult> = {
     next: (data) => {
@@ -55,12 +57,9 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
-    this.botonLimpiar = Object.entries.length > 0 ? true : false
+    this.botonLimpiar = Object.entries(this.filtro).length > 0 ? true : false
   }
   ngAfterViewInit(): void {
-    if (localStorage.getItem('pageSize') != undefined) {
-      this.paginator.pageSize = Number(localStorage.getItem('pageSize'))
-    }
     this.update$ = merge(
       this.emiterObserver$
         .pipe(switchMap(_ => this.util
