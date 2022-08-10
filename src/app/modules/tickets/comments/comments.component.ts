@@ -15,7 +15,6 @@ import { Observable, Subject, Subscription, switchMap } from 'rxjs';
 export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(QuillEditorComponent, { static: true }) editor: QuillEditorComponent
   @Input() ticket: string
-  @Output() validacion = new EventEmitter<boolean>()
   subject$ = new Subject()
   comentarios$: Observable<any>
   comentario = new FormControl('', Validators.required)
@@ -29,7 +28,6 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
     this._user.user$.subscribe(u => this.usuario = u.id)
     this.comentarios$ = this.subject$
       .pipe(switchMap(() => this.api.getById<any[]>('comentarios', this.ticket)))
-    this.comentarios$.subscribe(val => this.validacion.emit(val.length > 0))
   }
   ngAfterViewInit(): void {
     this.subject$.next(null)

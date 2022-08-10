@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,22 +21,28 @@ import { SocketsService } from 'app/shared/services/sockets.service';
 })
 export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator
+
   control: FormControl = new FormControl('')
   dataSource: MatTableDataSource<Ticket> = new MatTableDataSource()
   displayedColumns = ['id', 'titulo', 'solicitudDe', 'estado', 'prioridad', 'fecha', 'activo', 'asignadoA']
   permisos$ = this._user.permisos$.pipe(pluck('Tickets'))
   totalRows: number = 0
-  filtro: Filtro = { activo: true }
+  filtro: Filtro = {}
+  pagez = Number(localStorage.getItem('pageSize')) || 10
   emiterObserver$ = new Subject()
   update$: Subscription
-  botonLimpiar: boolean = true
+  botonLimpiar: boolean = false
   subscripcion: Subscription
   observe: Observer<TicketResult> = {
     next: (data) => {
       this.dataSource.data = data.rows
       this.totalRows = data.count
     },
-    error: (err) => { console.warn('este es el error ', err) },
+    error: (err) => {
+      this.dataSource.data = []
+      this.totalRows = 0
+      console.warn('este es el error ', err)
+    },
     complete: () => { }
   }
 
@@ -46,9 +52,12 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     private _user: UserService,
     private socket: SocketsService,
     public router: Router
-  ) { }
+  ) {
+
+  }
   ngOnInit(): void {
     this.control.valueChanges.subscribe(ob => this.dataSource.filter = ob)
+    this.botonLimpiar = Object.entries(this.filtro).length > 0 ? true : false
   }
   ngAfterViewInit(): void {
     this.update$ = merge(
@@ -65,7 +74,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     )
       .subscribe(this.observe)
     this.subscripcion = this.socket.nuevoTicket$.subscribe(_ => this.emiterObserver$.next({}))
-
+    this.paginator.page.subscribe(({ pageSize }) => localStorage.setItem('pageSize', pageSize.toString()))
   }
   ngOnDestroy(): void {
     this.update$.unsubscribe()
@@ -75,6 +84,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dialog.open<FiltroTicketsComponent, Filtro, Filtro>(FiltroTicketsComponent, { disableClose: true, width: '80%', data: this.filtro })
       .afterClosed().subscribe(val => {
         this.filtro = val
+        localStorage.setItem('filtro', JSON.stringify(this.filtro))
         this.paginator.firstPage()
         this.emiterObserver$.next({})
         this.botonLimpiar = Object.keys(this.filtro).length > 0
@@ -88,6 +98,7 @@ export class TicketsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   actualizar() {
     this.filtro = {}
+    localStorage.setItem('filtro', JSON.stringify(this.filtro))
     this.botonLimpiar = false
     this.emiterObserver$.next({})
   }

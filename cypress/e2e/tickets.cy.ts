@@ -40,7 +40,7 @@ describe('Tickets', () => {
       cy.get('mat-select:first').click()
       cy.get('mat-option:first').click()
       cy.get('mat-select:last').click()
-      cy.get('#mat-option-10').click()
+      cy.get('mat-option').contains('Asignado').click()
       cy.get('.mat-dialog-actions > .mat-raised-button').click()
     })
     cy.wait('@apiPost').then((res) => {
@@ -65,8 +65,9 @@ describe('Tickets', () => {
     cy.wait('@api').then(() => {
       cy.get('.mat-row:first').dblclick()
       cy.get('.mat-warn').click()
+      cy.get('textarea').type('comentario de cierre cypress')
       cy.get('.mat-select').click()
-      cy.get('#mat-option-5').click()
+      cy.get('mat-option').contains('Cerrado').click()
       cy.get('.mat-dialog-actions > .mat-raised-button').click()
     })
     cy.wait('@apiPost').then((res) => {
