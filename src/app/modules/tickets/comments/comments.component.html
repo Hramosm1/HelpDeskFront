@@ -13,7 +13,8 @@
 									? getColor(comentario.idUsuario)
 									: null
 						}"
-						>{{ comentario.nombre }}</span
+						>{{ comentario.nombre
+						}}<b>{{ comentario.ComentarioDeCierre ? " *" : "" }}</b></span
 					>
 				</h3>
 				<div [innerHTML]="comentario.comentario"></div>

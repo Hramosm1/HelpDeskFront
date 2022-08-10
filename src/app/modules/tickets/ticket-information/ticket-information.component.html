@@ -7,7 +7,7 @@
 				</h2>
 				<p>{{ ticket.Estados.nombre }}</p>
 			</div>
-			<mat-card-title>{{ ticket.titulo }}</mat-card-title>
+			<mat-card-title>{{ ticket.id }} - {{ ticket.titulo }}</mat-card-title>
 			<mat-card-subtitle
 				>Asignado a:
 				{{
@@ -17,7 +17,7 @@
 			<span class="flex flex-1"></span>
 			<div>
 				<p class="text-right mb-4 mr-4">
-					{{ ticket.fechaSolicitud | date: "dd/MM/yy hh:mm":"UTC" }}
+					{{ ticket.fechaSolicitud | date: "dd/MM/yy hh:mm" }}
 				</p>
 				<button
 					*ngIf="(permisosEspeciales$ | async).includes('asignar ticket')"
@@ -30,8 +30,9 @@
 				<button
 					(click)="cerrarTicket()"
 					*ngIf="
-						(permisosEspeciales$ | async).includes('cerrar ticket') &&
-						tieneComentarios
+						(ticket.activo ||
+							(permisosEspeciales$ | async).includes('cerrar ticket')) &&
+						ticket.PersonalDeSoporte
 					"
 					mat-raised-button
 					color="warn"
@@ -45,10 +46,7 @@
 				class="shadow-md rounded-md p-8 mx-auto w-10/12"
 				[innerHTML]="ticket.descripcion"
 			></div>
-			<app-comments
-				(validacion)="GetLegn($event)"
-				[ticket]="id$ | async"
-			></app-comments>
+			<app-comments [ticket]="id$ | async"></app-comments>
 		</mat-card-content>
 	</mat-card>
 </app-base>
