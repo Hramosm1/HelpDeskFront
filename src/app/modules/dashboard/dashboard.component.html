@@ -27,26 +27,23 @@
 				<mat-card-content class="text-right mt-4">
 					<mat-divider inset class="shadow"></mat-divider>
 					<div class="flex place-content-center">
-						<mat-table
-							class="w-full"
-							[dataSource]="informacionTickets.personalDeSoporte"
-						>
+						<mat-table class="w-full" [dataSource]="informacionTickets">
 							<ng-container matColumnDef="personalAsignado">
 								<mat-header-cell *matHeaderCellDef> Personal </mat-header-cell>
 								<mat-cell *matCellDef="let element">
 									{{ element.personalAsignado }}
 								</mat-cell>
 							</ng-container>
-							<ng-container matColumnDef="ticketsActivos">
+							<ng-container matColumnDef="activos">
 								<mat-header-cell *matHeaderCellDef> Activos </mat-header-cell>
 								<mat-cell *matCellDef="let element">
-									{{ element.ticketsActivos }}
+									{{ element.cerrados }}
 								</mat-cell>
 							</ng-container>
-							<ng-container matColumnDef="ticketsCerrados">
+							<ng-container matColumnDef="cerrados">
 								<mat-header-cell *matHeaderCellDef> Cerrados </mat-header-cell>
 								<mat-cell *matCellDef="let element">
-									{{ element.ticketsCerrados }}
+									{{ element.activos }}
 								</mat-cell>
 							</ng-container>
 
@@ -57,7 +54,6 @@
 								*matRowDef="let row; columns: displayedColumns"
 							></mat-row>
 						</mat-table>
-						<!-- <canvas baseChart [type]="'bar'" [options]="options" [data]="ticketsAsignados"></canvas> -->
 					</div>
 				</mat-card-content>
 			</mat-card>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Meses } from 'app/backend/services/endpoints';
+import { map } from "rxjs/operators";
 import { HttpService } from 'app/backend/services/http.service';
 import { ChartData, ChartOptions } from "chart.js";
 import { groupBy, sum } from 'lodash';
@@ -12,7 +12,7 @@ import { AverageTickets, TicketsInfo, TicketsPorDia, TiempoPromedio } from './da
 })
 export class DashboardComponent implements OnInit {
   mes: Number
-  informacionTickets: TicketsInfo
+  informacionTickets
   options: ChartOptions<'bar'> = {
     maintainAspectRatio: true,
     aspectRatio: 4 / 1,
@@ -26,29 +26,34 @@ export class DashboardComponent implements OnInit {
     }
   }
   data: ChartData<'bar'>
-  displayedColumns = ['personalAsignado', 'ticketsActivos', 'ticketsCerrados']
+  displayedColumns = ['personalAsignado', 'activos', 'cerrados']
   tiemposPromedio: TiempoPromedio[]
   tpdData: ChartData<'bar'>
   constructor(private api: HttpService) { }
 
   ngOnInit(): void {
     this.mes = new Date().getMonth() + 1
-    this.api.getDashboard<TicketsInfo>('stats', this.mes).subscribe(x => {
-      this.data = {
-        labels: ['Tickets por mes'],
-        datasets: [
-          {
-            label: 'Tickets creados',
-            data: [x.ticketsCreados]
-          },
-          {
-            label: 'Tickets cerrados',
-            data: [x.ticketCerrados]
-          }
-        ]
-      }
-      this.informacionTickets = x
-    })
+    this.api.getDashboard<TicketsInfo>('stats', this.mes)
+      .subscribe(({ ticketsActivos, ticketsCerrados, ticketsPorUsuario }) => {
+        this.data = {
+          labels: ['Tickets por mes'],
+          datasets: [
+            {
+              label: 'Tickets Activos',
+              data: [ticketsActivos]
+            },
+            {
+              label: 'Tickets cerrados',
+              data: [ticketsCerrados]
+            },
+            {
+              label: 'Total tickets',
+              data: [ticketsCerrados + ticketsActivos]
+            }
+          ]
+        }
+        this.informacionTickets = ticketsPorUsuario
+      })
     this.api.getDashboard<AverageTickets[]>('average', this.mes).subscribe(av => {
       const gp = groupBy(av, 'personal')
       const result = []

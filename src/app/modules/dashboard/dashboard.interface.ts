@@ -10,9 +10,13 @@ interface PersonalDeSoporte extends Values {
 }
 
 export interface TicketsInfo {
-  ticketsCreados: number;
-  ticketCerrados: number;
-  personalDeSoporte: PersonalDeSoporte[];
+  ticketsActivos: number
+  ticketsCerrados: number
+  ticketsPorUsuario: {
+    personalAsignado: string;
+    activos: number;
+    cerrados: number;
+  }
 }
 
 export interface AverageTickets {
