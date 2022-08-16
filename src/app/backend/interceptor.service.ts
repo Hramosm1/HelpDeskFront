@@ -10,9 +10,9 @@ export class InterceptorService implements HttpInterceptor {
   mError(error: HttpErrorResponse) {
     console.warn(error);
 
-    return throwError('error personalizado')
+    return throwError('error personalizado');
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(catchError(this.mError))
+    return next.handle(req).pipe(catchError(this.mError));
   }
 }

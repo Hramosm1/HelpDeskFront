@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
 import { HttpService } from 'app/backend/services/http.service';
-import { ChartData, ChartOptions } from "chart.js";
+import { ChartData, ChartOptions } from 'chart.js';
 import { groupBy, sum } from 'lodash';
 import { AverageTickets, TicketsInfo, TicketsPorDia, TiempoPromedio } from './dashboard.interface';
 
@@ -11,8 +11,8 @@ import { AverageTickets, TicketsInfo, TicketsPorDia, TiempoPromedio } from './da
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  mes: Number
-  informacionTickets
+  mes: Number;
+  informacionTickets;
   options: ChartOptions<'bar'> = {
     maintainAspectRatio: true,
     aspectRatio: 4 / 1,
@@ -24,15 +24,15 @@ export class DashboardComponent implements OnInit {
         stacked: true
       }
     }
-  }
-  data: ChartData<'bar'>
-  displayedColumns = ['personalAsignado', 'activos', 'cerrados']
-  tiemposPromedio: TiempoPromedio[]
-  tpdData: ChartData<'bar'>
+  };
+  data: ChartData<'bar'>;
+  displayedColumns = ['personalAsignado', 'activos', 'cerrados'];
+  tiemposPromedio: TiempoPromedio[];
+  tpdData: ChartData<'bar'>;
   constructor(private api: HttpService) { }
 
   ngOnInit(): void {
-    this.mes = new Date().getMonth() + 1
+    this.mes = new Date().getMonth() + 1;
     this.api.getDashboard<TicketsInfo>('stats', this.mes)
       .subscribe(({ ticketsActivos, ticketsCerrados, ticketsPorUsuario }) => {
         this.data = {
@@ -51,29 +51,29 @@ export class DashboardComponent implements OnInit {
               data: [ticketsCerrados + ticketsActivos]
             }
           ]
-        }
-        this.informacionTickets = ticketsPorUsuario
-      })
-    this.api.getDashboard<AverageTickets[]>('average', this.mes).subscribe(av => {
-      const gp = groupBy(av, 'personal')
-      const result = []
+        };
+        this.informacionTickets = ticketsPorUsuario;
+      });
+    this.api.getDashboard<AverageTickets[]>('average', this.mes).subscribe((av) => {
+      const gp = groupBy(av, 'personal');
+      const result = [];
       for (const key in gp) {
         if (Object.prototype.hasOwnProperty.call(gp, key)) {
           const list = gp[key];
-          const suma = list.reduce((prev, { tiempoAbierto }) => (prev + tiempoAbierto), 0)
-          const promedioNumber = suma / list.length
-          const horas = Math.floor(promedioNumber / (60 * 60))
-          const minutos = Math.floor(promedioNumber / 60) - (horas * 60)
-          const segundos = Math.floor(promedioNumber - (minutos * 60) - (horas * 60 * 60))
-          const promedio = `${horas}h: ${minutos}m: ${segundos}s`
-          result.push({ personal: key, promedio })
+          const suma = list.reduce((prev, { tiempoAbierto }) => (prev + tiempoAbierto), 0);
+          const promedioNumber = suma / list.length;
+          const horas = Math.floor(promedioNumber / (60 * 60));
+          const minutos = Math.floor(promedioNumber / 60) - (horas * 60);
+          const segundos = Math.floor(promedioNumber - (minutos * 60) - (horas * 60 * 60));
+          const promedio = `${horas}h: ${minutos}m: ${segundos}s`;
+          result.push({ personal: key, promedio });
         }
       }
-      this.tiemposPromedio = result
-    })
-    this.api.getDashboard<TicketsPorDia[]>('graph', this.mes).subscribe(x => {
-      const gp = groupBy(x, 'dia')
-      const ticketsPorDia: Array<TicketsPorDia[]> = Object.values(gp)
+      this.tiemposPromedio = result;
+    });
+    this.api.getDashboard<TicketsPorDia[]>('graph', this.mes).subscribe((x) => {
+      const gp = groupBy(x, 'dia');
+      const ticketsPorDia: Array<TicketsPorDia[]> = Object.values(gp);
       this.tpdData = {
         labels: ticketsPorDia.map(val => val[0].dia.substring(0, 10)),
         datasets: [
@@ -86,8 +86,8 @@ export class DashboardComponent implements OnInit {
             data: ticketsPorDia.map(x => x[0].tickets)
           }
         ]
-      }
-    })
+      };
+    });
   }
 
 }

@@ -14,7 +14,7 @@
 	<!-- BODY -->
 	<div class="w-11/12 mx-auto">
 		<div class="inline" *ngFor="let path of ruta; let i = index">
-			<ng-container *ngIf="path != ''; else home">
+			<ng-container *ngIf="path !== ''; else home">
 				/
 				<a [routerLink]="[navegate(i)]">
 					{{ path }}

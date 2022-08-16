@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, tap, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { UserService } from '../user/user.service';
 
@@ -25,18 +25,18 @@ export class NavigationService {
      * Getter for navigation
      */
     get navigation$(): Observable<Navigation> {
-        const obs = combineLatest(this.user.permisos$, this._navigation.asObservable())
+        const obs = combineLatest(this.user.permisos$, this._navigation.asObservable());
         return obs.pipe(map(([permisos, navegacion]) => {
-            const newNavegacion: any = {}
+            const newNavegacion: any = {};
             for (const key in navegacion) {
                 if (Object.prototype.hasOwnProperty.call(navegacion, key)) {
                     const element: any[] = navegacion[key];
-                    const nList = element.filter(url => permisos[url.id].ver || false)
-                    newNavegacion[key] = nList
+                    const nList = element.filter(url => permisos[url.id].ver || false);
+                    newNavegacion[key] = nList;
                 }
             }
-            return newNavegacion
-        }))
+            return newNavegacion;
+        }));
     }
 
     // -----------------------------------------------------------------------------------------------------

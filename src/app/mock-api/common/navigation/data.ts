@@ -51,7 +51,7 @@ const navigation: FuseNavigationItem[] = [
     }
 ];
 
-export const defaultNavigation: FuseNavigationItem[] = navigation
-export const compactNavigation: FuseNavigationItem[] = navigation
-export const futuristicNavigation: FuseNavigationItem[] = navigation
-export const horizontalNavigation: FuseNavigationItem[] = navigation
+export const defaultNavigation: FuseNavigationItem[] = navigation;
+export const compactNavigation: FuseNavigationItem[] = navigation;
+export const futuristicNavigation: FuseNavigationItem[] = navigation;
+export const horizontalNavigation: FuseNavigationItem[] = navigation;

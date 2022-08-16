@@ -29,7 +29,7 @@ export class AuthService {
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
-    signIn(credentials: { user: string; password: string, rememberMe: boolean, aplicacion: number }): Observable<any> {
+    signIn(credentials: { user: string; password: string; rememberMe: boolean; aplicacion: number }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
@@ -55,15 +55,13 @@ export class AuthService {
 
     signInUsingToken(): Observable<any> {
         // Renew token
-        const headers: HttpHeaders = new HttpHeaders()
-        headers.set('Authorization', `Bearer ${this.accessToken}`)
-        headers.set('Content-Type', 'application/json')
+        const headers: HttpHeaders = new HttpHeaders();
+        headers.set('Authorization', `Bearer ${this.accessToken}`);
+        headers.set('Content-Type', 'application/json');
         return this._httpClient.get(environment.autenticacionuri + 'login/verifytoken', { headers }).pipe(
             catchError(() =>
             // Return false
-            {
-                return of(false)
-            }
+            of(false)
             ),
             switchMap((response: any) => {
                 // Store the access token in the local storage
@@ -109,7 +107,7 @@ export class AuthService {
 
         // Check the access token availability
         if (!this.accessToken || this.accessToken === 'undefined') {
-            this.signOut()
+            this.signOut();
         }
 
         // Check the access token expire date

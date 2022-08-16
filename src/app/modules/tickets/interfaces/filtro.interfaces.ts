@@ -1,16 +1,16 @@
-import { MatDateFormats } from "@angular/material/core"
-import { } from "luxon";
+import { MatDateFormats } from '@angular/material/core';
+import { } from 'luxon';
 
 export interface Filtro {
-  id?: number
-  titulo?: string,
-  solicitudDe?: string,
-  idEstado?: number,
-  idPrioridad?: number,
-  desde?: Date,
-  hasta?: Date,
-  asignadoA?: string,
-  activo?: boolean
+  id?: number;
+  titulo?: string;
+  solicitudDe?: string;
+  idEstado?: number;
+  idPrioridad?: number;
+  desde?: Date;
+  hasta?: Date;
+  asignadoA?: string;
+  activo?: boolean;
 }
 export const DATA_CONFIG: MatDateFormats = {
   parse: {
@@ -22,4 +22,4 @@ export const DATA_CONFIG: MatDateFormats = {
     dateA11yLabel: 'MMMM',
     monthYearA11yLabel: 'MMMM yyyy',
   },
-}
+};
