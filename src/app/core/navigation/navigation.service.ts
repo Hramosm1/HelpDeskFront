@@ -31,7 +31,7 @@ export class NavigationService {
             for (const key in navegacion) {
                 if (Object.prototype.hasOwnProperty.call(navegacion, key)) {
                     const element: any[] = navegacion[key];
-                    const nList = element.filter(url => permisos[url.id].ver)
+                    const nList = element.filter(url => permisos[url.id].ver || false)
                     newNavegacion[key] = nList
                 }
             }
