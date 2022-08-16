@@ -1,4 +1,4 @@
-import { QuillConfig } from "ngx-quill";
+import { QuillConfig } from 'ngx-quill';
 import ImageCompress from 'quill-image-compress';
 
 export const quillConfig: QuillConfig = {
@@ -21,4 +21,4 @@ export const quillConfig: QuillConfig = {
     //   suppressErrorLogging: false, // default
     // }
   }
-}
+};

@@ -23,15 +23,15 @@ export class UserService {
         return this._user.asObservable();
     }
     get permisos$() {
-        return this.user$.pipe(pluck('permisos'), map(arr => mapValues(groupBy(arr, 'Modulos.nombre'), val => val[0])))
+        return this.user$.pipe(pluck('permisos'), map(arr => mapValues(groupBy(arr, 'Modulos.nombre'), val => val[0])));
     }
     get permisosEspeciales$() {
-        return this.user$.pipe(pluck('permisosEspeciales'))
+        return this.user$.pipe(pluck('permisosEspeciales'));
     }
     get permisosEspecialesStr$() {
         return this.user$.
             pipe(pluck('permisosEspeciales'))
-            .pipe(map<PermisosEspecial[], string[]>(val => val.reduce((prev, val) => (prev = [...prev, val.nombre.toLowerCase()]), [])))
+            .pipe(map<PermisosEspecial[], string[]>(val => val.reduce((prev, val) => (prev = [...prev, val.nombre.toLowerCase()]), [])));
     }
 
 

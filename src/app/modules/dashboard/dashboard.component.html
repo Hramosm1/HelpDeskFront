@@ -11,9 +11,6 @@
 				</mat-card-header>
 				<mat-card-content class="text-right mt-4">
 					<mat-divider inset class="shadow"></mat-divider>
-					<span class="text-4xl text-bold">{{
-						informacionTickets.ticketsCreados
-					}}</span>
 					<canvas baseChart [data]="data" [type]="'bar'"> </canvas>
 				</mat-card-content>
 			</mat-card>
@@ -30,26 +27,23 @@
 				<mat-card-content class="text-right mt-4">
 					<mat-divider inset class="shadow"></mat-divider>
 					<div class="flex place-content-center">
-						<mat-table
-							class="w-full"
-							[dataSource]="informacionTickets.personalDeSoporte"
-						>
+						<mat-table class="w-full" [dataSource]="informacionTickets">
 							<ng-container matColumnDef="personalAsignado">
 								<mat-header-cell *matHeaderCellDef> Personal </mat-header-cell>
 								<mat-cell *matCellDef="let element">
 									{{ element.personalAsignado }}
 								</mat-cell>
 							</ng-container>
-							<ng-container matColumnDef="ticketsActivos">
+							<ng-container matColumnDef="activos">
 								<mat-header-cell *matHeaderCellDef> Activos </mat-header-cell>
 								<mat-cell *matCellDef="let element">
-									{{ element.ticketsActivos }}
+									{{ element.cerrados }}
 								</mat-cell>
 							</ng-container>
-							<ng-container matColumnDef="ticketsCerrados">
+							<ng-container matColumnDef="cerrados">
 								<mat-header-cell *matHeaderCellDef> Cerrados </mat-header-cell>
 								<mat-cell *matCellDef="let element">
-									{{ element.ticketsCerrados }}
+									{{ element.activos }}
 								</mat-cell>
 							</ng-container>
 
@@ -60,7 +54,6 @@
 								*matRowDef="let row; columns: displayedColumns"
 							></mat-row>
 						</mat-table>
-						<!-- <canvas baseChart [type]="'bar'" [options]="options" [data]="ticketsAsignados"></canvas> -->
 					</div>
 				</mat-card-content>
 			</mat-card>
@@ -71,9 +64,17 @@
 						<mat-icon class="text-on-warn">book</mat-icon>
 					</div>
 					<span class="flex flex-1"></span>
-					<h3 class="text-lg font-light">Tiempo por ticket</h3>
+					<h3 class="text-lg font-light">Tiempo promedio por ticket</h3>
 				</mat-card-header>
 				<mat-card-content class="text-right mt-4">
+					<!-- <div class="">
+						<h3 class="text-center text-3xl text-primary-500">En desarrollo</h3>
+						<img
+							class="h-10"
+							src="assets/images/logo/page.svg"
+							alt="En construccion"
+						/>
+					</div> -->
 					<mat-divider inset class="shadow"></mat-divider>
 					<mat-table class="w-full" [dataSource]="tiemposPromedio">
 						<ng-container matColumnDef="personal">
@@ -92,7 +93,6 @@
 								{{ element.promedio }}
 							</mat-cell>
 						</ng-container>
-						<!-- press ctrl + space to add more column snippet or delete this line -->
 
 						<mat-header-row
 							*matHeaderRowDef="['personal', 'promedio']"
@@ -105,13 +105,19 @@
 			</mat-card>
 		</ng-container>
 		<!-- *************************TIMELAPSE*********************** -->
-		-
-		<mat-card class="col-span-3">
+		<mat-card class="shadow-lg lg:col-span-3">
 			<mat-card-header>
 				<mat-card-title>Tickets por dia</mat-card-title>
 			</mat-card-header>
 			<mat-card-content>
-				<canvas baseChart [data]="tpdData" [type]="'bar'" [options]="options">
+				<mat-divider inset class="shadow"></mat-divider>
+				<canvas
+					baseChart
+					class="overflow-x-auto"
+					[data]="tpdData"
+					[type]="'bar'"
+					[options]="options"
+				>
 				</canvas>
 			</mat-card-content>
 		</mat-card>

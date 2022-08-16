@@ -11,13 +11,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./asignar-soporte.component.scss']
 })
 export class AsignarSoporteComponent implements OnInit {
-  personal$ = this.api.getAll('personalDeSoporte')
-  estados$ = this.api.getAll('estados')
+  personal$ = this.api.getAll('personalDeSoporte');
+  estados$ = this.api.getAll('estados');
   formulario = this.fb.group({
     asignadoA: [null, Validators.required],
     idEstado: [null, Validators.required]
-  })
-  id: number
+  });
+  id: number;
   constructor(
     @Inject(MAT_DIALOG_DATA) public ticket: Observable<Ticket>,
     private api: HttpService,
@@ -27,12 +27,12 @@ export class AsignarSoporteComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticket.subscribe(({ id, idEstado, idAsignado }) => {
-      this.id = id
-      this.formulario.controls.asignadoA.setValue(idAsignado)
-      this.formulario.controls.idEstado.setValue(idEstado)
-    })
+      this.id = id;
+      this.formulario.controls.asignadoA.setValue(idAsignado);
+      this.formulario.controls.idEstado.setValue(idEstado);
+    });
   }
   confirmar() {
-    this.api.update('tickets', this.id, this.formulario.value).subscribe(res => this.dialogRef.close())
+    this.api.update('tickets', this.id, this.formulario.value).subscribe(res => this.dialogRef.close());
   }
 }

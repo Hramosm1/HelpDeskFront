@@ -15,12 +15,12 @@ import { UserService } from 'app/core/user/user.service';
   styleUrls: ['./cerrar-ticket.component.scss']
 })
 export class CerrarTicketComponent implements OnInit {
-  estados$ = this.api.getAll<Estado>('estados')
+  estados$ = this.api.getAll<Estado>('estados');
   formulario = this.fb.group({
     comentario: ['', Validators.required],
     idEstado: ['', Validators.required]
-  })
-  ticket: Ticket
+  });
+  ticket: Ticket;
   constructor(
     private api: HttpService,
     private dialogRef: MatDialogRef<CerrarTicketComponent>,
@@ -31,19 +31,19 @@ export class CerrarTicketComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.data.pipe(take(1)).subscribe(dat => {
-      this.ticket = dat
-      this.formulario.patchValue({ idEstado: this.ticket.idEstado })
-    })
+    this.data.pipe(take(1)).subscribe((dat) => {
+      this.ticket = dat;
+      this.formulario.patchValue({ idEstado: this.ticket.idEstado });
+    });
   }
   confirmar() {
-    this.user.user$.pipe(pluck('id')).subscribe(idUsuario => {
-      const body = { ...this.formulario.value, idUsuario, activo: !this.ticket.activo }
-      this.api.update('tickets/cerrar', this.ticket.id, body).subscribe(res => {
-        this.dialogRef.close()
-        this.router.navigateByUrl('tickets/list')
-      })
-    })
+    this.user.user$.pipe(pluck('id')).subscribe((idUsuario) => {
+      const body = { ...this.formulario.value, idUsuario, activo: !this.ticket.activo };
+      this.api.update('tickets/cerrar', this.ticket.id, body).subscribe((res) => {
+        this.dialogRef.close();
+        this.router.navigateByUrl('tickets/list');
+      });
+    });
   }
 
 }

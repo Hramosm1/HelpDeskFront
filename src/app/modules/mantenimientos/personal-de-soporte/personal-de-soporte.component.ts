@@ -14,29 +14,29 @@ import { Usuario } from '../interfaces';
   styleUrls: ['./personal-de-soporte.component.scss']
 })
 export class PersonalDeSoporteComponent implements OnInit {
-  dataSource: MatTableDataSource<Usuario> = new MatTableDataSource()
-  dialogRef: MatDialogRef<any, Usuario>
-  cargando: boolean = false
-  displayedColumns = ['nombre', 'actions']
-  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'))
+  dataSource: MatTableDataSource<Usuario> = new MatTableDataSource();
+  dialogRef: MatDialogRef<any, Usuario>;
+  cargando: boolean = false;
+  displayedColumns = ['nombre', 'actions'];
+  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'));
   constructor(private dialog: MatDialog, private api: HttpService, private _user: UserService) { }
 
   ngOnInit(): void {
-    this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data)
+    this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data);
   }
 
   openDialog() {
-    this.dialogRef = this.dialog.open(ListaDeUsuariosComponent, { width: '80vw' })
-    this.dialogRef.afterClosed().subscribe(val => {
-      this.cargando = true
-      this.api.create('personalDeSoporte', { idUsuario: val.id, nombre: val.nombre }).subscribe({ next: this.actualizar, complete: () => this.cargando = false })
-    })
+    this.dialogRef = this.dialog.open(ListaDeUsuariosComponent, { width: '80vw' });
+    this.dialogRef.afterClosed().subscribe((val) => {
+      this.cargando = true;
+      this.api.create('personalDeSoporte', { idUsuario: val.id, nombre: val.nombre }).subscribe({ next: this.actualizar, complete: () => this.cargando = false });
+    });
   }
   eliminar(id: number) {
-    this.api.delete('personalDeSoporte', id).subscribe(this.actualizar)
+    this.api.delete('personalDeSoporte', id).subscribe(this.actualizar);
   }
 
   private actualizar = (val: createResponse) => {
-    this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data)
-  }
+    this.api.getAll<Usuario>('personalDeSoporte').subscribe(data => this.dataSource.data = data);
+  };
 }

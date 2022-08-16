@@ -6,26 +6,30 @@ interface Values {
 
 
 interface PersonalDeSoporte extends Values {
-  personalAsignado: string
+  personalAsignado: string;
 }
 
 export interface TicketsInfo {
-  ticketsCreados: number;
-  ticketCerrados: number;
-  personalDeSoporte: PersonalDeSoporte[];
+  ticketsActivos: number;
+  ticketsCerrados: number;
+  ticketsPorUsuario: {
+    personalAsignado: string;
+    activos: number;
+    cerrados: number;
+  };
 }
 
 export interface AverageTickets {
-  personal: string
-  tiempoAbierto: number
-  ticket: string
+  personal: string;
+  tiempoAbierto: number;
+  ticket: string;
 }
 export interface TiempoPromedio {
-  personal: string,
-  promedio: string
+  personal: string;
+  promedio: string;
 }
 export interface TicketsPorDia {
-  accion: string
-  dia: string
-  tickets: number
+  accion: string;
+  dia: string;
+  tickets: number;
 }

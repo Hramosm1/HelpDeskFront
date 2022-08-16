@@ -3,13 +3,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
 import { map, tap } from 'rxjs';
-import { chain } from "lodash";
+import { chain } from 'lodash';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
 import { UserService } from 'app/core/user/user.service';
 import { QuillEditorComponent } from 'ngx-quill';
 import { quillConfig } from 'app/core/config/quill.config';
-import { omitBy, isNull } from "lodash";
+import { omitBy, isNull } from 'lodash';
 
 @Component({
   selector: 'app-new-ticket',
@@ -17,19 +17,17 @@ import { omitBy, isNull } from "lodash";
   styleUrls: ['./new-ticket.component.scss']
 })
 export class NewTicketComponent implements OnInit, AfterViewInit {
-  @ViewChild(QuillEditorComponent) editor: QuillEditorComponent
+  @ViewChild(QuillEditorComponent) editor: QuillEditorComponent;
   //**************VARIABLES OBSERVABLES**********************/
-  $permisosEspeciales = this._user.permisosEspecialesStr$
-  $prioridades = this.api.getAll<Prioridad>('prioridades')
-  $estados = this.api.getAll<Estado>('estados')
-  $personal = this.api.getAll<Usuario>('personalDeSoporte')
+  $permisosEspeciales = this._user.permisosEspecialesStr$;
+  $prioridades = this.api.getAll<Prioridad>('prioridades');
+  $estados = this.api.getAll<Estado>('estados');
+  $personal = this.api.getAll<Usuario>('personalDeSoporte');
   $categorias = this.api.getAll<SubCategoria>('subCategorias')
-    .pipe(tap(console.log), map(of => {
-      return chain(of)
+    .pipe(tap(console.log), map(of => chain(of)
         .groupBy('Categorias.nombre')
-        .map((subcategoria, grupo) => { return { grupo, subcategoria } })
-        .value()
-    }))
+        .map((subcategoria, grupo) => ({ grupo, subcategoria }))
+        .value()));
   /*****************FORMULARIO**************************/
   composeForm = this.fb.group({
     titulo: ['', Validators.required],
@@ -41,8 +39,8 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     asignadoA: null
   });
   /******************************************************/
-  usuarioSeleccionado: string = ''
-  modules = quillConfig.modules
+  usuarioSeleccionado: string = '';
+  modules = quillConfig.modules;
 
   constructor(
     private fb: FormBuilder,
@@ -54,33 +52,33 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.$categorias.subscribe(console.log)
-    this._user.user$.subscribe(val => {
-      this.composeForm.controls.solicitudDe.setValue(val.id)
-      this.usuarioSeleccionado = val.nombre
-    })
+    this.$categorias.subscribe(console.log);
+    this._user.user$.subscribe((val) => {
+      this.composeForm.controls.solicitudDe.setValue(val.id);
+      this.usuarioSeleccionado = val.nombre;
+    });
   }
   ngAfterViewInit(): void {
-    this.editor.modules = quillConfig.modules
+    this.editor.modules = quillConfig.modules;
   }
 
   cancel(): void {
-    this.composeForm.reset()
-    this.ref.close()
+    this.composeForm.reset();
+    this.ref.close();
   }
   openModal() {
-    this.dialogref = this.dialog.open(ListaDeUsuariosComponent, { width: '80vw' })
-    this.dialogref.afterClosed().subscribe(val => {
+    this.dialogref = this.dialog.open(ListaDeUsuariosComponent, { width: '80vw' });
+    this.dialogref.afterClosed().subscribe((val) => {
       if (val) {
-        this.usuarioSeleccionado = val.nombre
-        this.composeForm.controls['solicitudDe'].setValue(val.id)
+        this.usuarioSeleccionado = val.nombre;
+        this.composeForm.controls['solicitudDe'].setValue(val.id);
       }
-    })
+    });
   }
   send(): void {
-    const body = omitBy(this.composeForm.value, isNull)
-    this.api.create('tickets', body).subscribe(res => {
-      this.ref.close()
-    })
+    const body = omitBy(this.composeForm.value, isNull);
+    this.api.create('tickets', body).subscribe((res) => {
+      this.ref.close();
+    });
   }
 }

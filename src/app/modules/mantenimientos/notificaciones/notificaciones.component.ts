@@ -10,7 +10,7 @@ import { BasicInterface } from '../interfaces';
 })
 export class NotificacionesComponent implements OnInit {
 
-  roles$ = this.authApi.getAll<BasicInterface>('roles')
+  roles$ = this.authApi.getAll<BasicInterface>('roles');
   constructor(private authApi: AuthenticationService) { }
 
   ngOnInit(): void {

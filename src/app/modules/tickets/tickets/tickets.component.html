@@ -25,6 +25,7 @@
 		<mat-paginator
 			[length]="totalRows"
 			[pageSizeOptions]="[10, 30, 50, 80, 100]"
+			[pageSize]="pagez"
 			aria-label="Select page of users"
 		></mat-paginator>
 		<table mat-table [dataSource]="dataSource">
@@ -62,8 +63,9 @@
 						class="chip"
 						[ngClass]="row.colorTexto"
 						[ngStyle]="{ 'background-color': row.Prioridades.color }"
-						>{{ row.Prioridades.nombre }}</span
 					>
+						{{ row.Prioridades.nombre }}
+					</span>
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="fecha">
