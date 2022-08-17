@@ -1,5 +1,5 @@
 export type Destino =
-  'estados' | 'categorias' | 'subCategorias' | 'prioridades' | 'tickets' | 'tickets/cerrar' | 'tickets/byUser' | 'comentarios' | 'personalDeSoporte' | 'comentarios' | 'documentos' | 'usuarios';
+  'estados' | 'categorias' | 'subCategorias' | 'prioridades' | 'tickets' | 'tickets/cerrar' | 'tickets/byUser' | 'comentarios' | 'personalDeSoporte' | 'comentarios' | 'documentos' | 'usuarios' | 'notificaciones' | 'notificaciones/porRol' | 'notificaciones/tipos';
 export type AuthRoutes = 'aplicaciones' | 'modulos' | 'roles' | 'usuarios';
 
 export type DashboardPath = 'stats' | 'average' | 'graph';
