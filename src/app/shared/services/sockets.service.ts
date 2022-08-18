@@ -6,30 +6,19 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SocketsService {
-  nuevoTicket$: Observable<any> = this.getEvents$();
-  nuevoComentario$: Observable<any> = this.getComentarios();
+  notificacion$: Observable<any> = this.createObserver('notificacion')
+  nuevoTicket$: Observable<any> = this.createObserver('nuevoTicket');
+  nuevoComentario$: Observable<any> = this.createObserver('nuevoComentario');
   constructor(private socket: Socket) {
   }
-  private getComentarios() {
+  private createObserver(event: string) {
     return new Observable((observer) => {
       try {
-        this.socket.on('nuevoComentario', (data) => { observer.next(data); });
+        this.socket.on(event, (data) => { observer.next(data); });
         this.socket.on('error', (e) => { observer.error(e); });
-        this.socket.on('disconnect', () => { observer.next(); });
       } catch (error) {
-        observer.error(error);
+        observer.error(error)
       }
-    });
-  }
-  private getEvents$() {
-    return new Observable((observer) => {
-      try {
-        this.socket.on('nuevoTicket', (data) => { observer.next(data); });
-        this.socket.on('error', (e) => { observer.error(e); });
-        this.socket.on('disconnect', () => { observer.next(); });
-      } catch (error) {
-        observer.error(error);
-      }
-    });
+    })
   }
 }
