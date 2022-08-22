@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChartData} from "chart.js";
+import {ChartData} from 'chart.js';
 
 @Component({
 	selector: 'app-actual-tickets',
@@ -8,7 +8,7 @@ import {ChartData} from "chart.js";
 })
 export class ActualTicketsComponent implements OnInit {
 
-	@Input() data: ChartData<"bar">;
+	@Input() data: ChartData<'bar'>;
 
 	constructor() {
 	}
