@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SocketsService {
-  notificacion$: Observable<any> = this.createObserver('notificacion')
+  notificacion$: Observable<any> = this.createObserver('notificacion');
   nuevoTicket$: Observable<any> = this.createObserver('nuevoTicket');
   nuevoComentario$: Observable<any> = this.createObserver('nuevoComentario');
   constructor(private socket: Socket) {
@@ -17,8 +17,8 @@ export class SocketsService {
         this.socket.on(event, (data) => { observer.next(data); });
         this.socket.on('error', (e) => { observer.error(e); });
       } catch (error) {
-        observer.error(error)
+        observer.error(error);
       }
-    })
+    });
   }
 }

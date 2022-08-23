@@ -8,6 +8,6 @@ export class FormulariosService {
 
   constructor() { }
   getPermisosFormModel(permisos: NotificacionesPorRol[]) {
-    return permisos.reduce((prev, { id, activo }) => ({ ...prev, [id]: activo }), {})
+    return permisos.reduce((prev, { id, activo }) => ({ ...prev, [id]: activo }), {});
   }
 }

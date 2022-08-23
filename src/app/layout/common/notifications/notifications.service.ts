@@ -10,14 +10,14 @@ import { SocketsService } from 'app/shared/services/sockets.service';
 })
 export class NotificationsService {
     private _notifications: ReplaySubject<Notification[]> = new ReplaySubject<Notification[]>(1);
-    private idUser: string
+    private idUser: string;
 
     /**
      * Constructor
      */
     constructor(private api: HttpService, private user: UserService, private socket: SocketsService) {
-        user.user$.pipe(pluck('id')).subscribe(x => this.idUser = x)
-        socket.notificacion$.subscribe(() => this.getAll())
+        user.user$.pipe(pluck('id')).subscribe(x => this.idUser = x);
+        socket.notificacion$.subscribe(() => this.getAll());
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ export class NotificationsService {
      */
     getAll() {
         this.api.getById<Notification[]>('notificaciones/list', this.idUser)
-            .subscribe(notifications => this._notifications.next(notifications))
+            .subscribe(notifications => this._notifications.next(notifications));
     }
 
 
@@ -49,10 +49,10 @@ export class NotificationsService {
              take(1),
              switchMap(notifications => this._httpClient.post<Notification>('api/common/notifications', { notification }).pipe(
                  map((newNotification) => {
- 
+
                      // Update the notifications with the new notification
                      this._notifications.next([...notifications, newNotification]);
- 
+
                      // Return the new notification from observable
                      return newNotification;
                  })
@@ -63,13 +63,13 @@ export class NotificationsService {
 
     update(id: string) {
         this.api.update('notificaciones/vista', id, null)
-            .subscribe(() => this.getAll())
+            .subscribe(() => this.getAll());
     }
 
 
     delete(id: string) {
         this.api.delete('notificaciones', id)
-            .subscribe(() => this.getAll())
+            .subscribe(() => this.getAll());
     }
 
     /**
@@ -77,6 +77,6 @@ export class NotificationsService {
      */
     markAllAsRead() {
         this.api.update('notificaciones/vistas', this.idUser, null)
-            .subscribe(() => this.getAll())
+            .subscribe(() => this.getAll());
     }
 }

@@ -14,17 +14,17 @@ export class NotificacionesComponent implements OnInit {
 
   roles$ = this.authApi.getAll<BasicInterface>('roles');
   permisos$ = this.api.getAll<NotificacionesPorRol[]>('notificaciones/porRol')
-    .pipe(map(res => {
-      const ar = []
-      const grouping = groupBy(res, 'rol')
+    .pipe(map((res) => {
+      const ar = [];
+      const grouping = groupBy(res, 'rol');
       for (const rol in grouping) {
         if (Object.prototype.hasOwnProperty.call(grouping, rol)) {
           const permisos = grouping[rol];
-          ar.push({ rol, permisos })
+          ar.push({ rol, permisos });
         }
       }
-      return ar
-    }))
+      return ar;
+    }));
 
   constructor(private authApi: AuthenticationService, private api: HttpService) { }
 

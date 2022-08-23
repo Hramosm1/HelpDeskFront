@@ -12,25 +12,25 @@ import { FormulariosService } from '../services/formularios.service';
   styleUrls: ['./tarjeta-permisos.component.scss']
 })
 export class TarjetaPermisosComponent implements OnInit {
-  @Input() data: { rol: string, permisos: NotificacionesPorRol[] }
-  group: FormGroup
+  @Input() data: { rol: string; permisos: NotificacionesPorRol[] };
+  group: FormGroup;
   obs: Observer<any> = {
     next(value) {
-      console.log(value)
+      console.log(value);
     }, error(err) {
-      console.error(err)
+      console.error(err);
     }, complete() { },
-  }
+  };
   constructor(private fb: FormBuilder, private util: FormulariosService, private api: HttpService) { }
 
   ngOnInit(): void {
-    this.group = this.fb.group(this.util.getPermisosFormModel(this.data.permisos))
+    this.group = this.fb.group(this.util.getPermisosFormModel(this.data.permisos));
     for (const key in this.group.controls) {
       if (Object.prototype.hasOwnProperty.call(this.group.controls, key)) {
         const element = this.group.controls[key];
         element.valueChanges
           .pipe(switchMap(activo => this.api.update('notificaciones/porRol', key, { activo })))
-          .subscribe(this.obs)
+          .subscribe(this.obs);
       }
     }
 

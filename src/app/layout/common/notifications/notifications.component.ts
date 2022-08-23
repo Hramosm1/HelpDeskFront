@@ -55,7 +55,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
-        this._notificationsService.getAll()
+        this._notificationsService.getAll();
     }
 
     /**
