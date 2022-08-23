@@ -24,7 +24,7 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   $estados = this.api.getAll<Estado>('estados');
   $personal = this.api.getAll<Usuario>('personalDeSoporte');
   $categorias = this.api.getAll<SubCategoria>('subCategorias')
-    .pipe(tap(console.log), map(of => chain(of)
+    .pipe(map(of => chain(of)
         .groupBy('Categorias.nombre')
         .map((subcategoria, grupo) => ({ grupo, subcategoria }))
         .value()));
@@ -40,7 +40,6 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   });
   /******************************************************/
   usuarioSeleccionado: string = '';
-  modules = quillConfig.modules;
 
   constructor(
     private fb: FormBuilder,
@@ -52,21 +51,21 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.$categorias.subscribe(console.log);
     this._user.user$.subscribe((val) => {
       this.composeForm.controls.solicitudDe.setValue(val.id);
       this.usuarioSeleccionado = val.nombre;
     });
   }
   ngAfterViewInit(): void {
-    this.editor.modules = quillConfig.modules;
+		console.log(quillConfig.modules);
+    //this.editor.modules = quillConfig.modules;
   }
 
   cancel(): void {
     this.composeForm.reset();
     this.ref.close();
   }
-  openModal() {
+  openModal(): void {
     this.dialogref = this.dialog.open(ListaDeUsuariosComponent, { width: '80vw' });
     this.dialogref.afterClosed().subscribe((val) => {
       if (val) {
