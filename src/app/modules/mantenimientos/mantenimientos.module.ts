@@ -13,7 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CreacionEstadosComponent } from './estados/creacion-estados/creacion-estados.component';
 import { CreacionPrioridadComponent } from './prioridades/creacion-prioridad/creacion-prioridad.component';
 import { CreacionCategoriaComponent } from './categorias-ysub-categorias/creacion-categoria/creacion-categoria.component';

@@ -5,8 +5,8 @@
 		[formGroup]="composeForm"
 	>
 		<mat-form-field>
-<!--			<mat-label>Título</mat-label>-->
-<!--			<input matInput formControlName="titulo" />-->
+			<mat-label>Título</mat-label>
+			<input matInput formControlName="titulo"/>
 		</mat-form-field>
 		<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
 			<mat-form-field>
@@ -32,7 +32,7 @@
 					<mat-option
 						*ngFor="let estado of $estados | async"
 						[value]="estado.id"
-						>{{ estado.nombre }}</mat-option
+					>{{ estado.nombre }}</mat-option
 					>
 				</mat-select>
 			</mat-form-field>
@@ -46,18 +46,18 @@
 						<mat-option
 							*ngFor="let sub of categoria.subcategoria"
 							[value]="sub.id"
-							>{{ sub.nombre }}</mat-option
+						>{{ sub.nombre }}</mat-option
 						>
 					</mat-optgroup>
 				</mat-select>
 			</mat-form-field>
 		</div>
-		<quill-editor class="mt-2" formControlName="descripcion" ></quill-editor>
-		<ngx-file-drop [multiple]="true" dropZoneLabel="Subir archivos"  )></ngx-file-drop>
+		<quill-editor class="mt-2" formControlName="descripcion"></quill-editor>
+<!--		<ngx-file-drop [multiple]="true" dropZoneLabel="Subir archivos" )></ngx-file-drop>-->
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
 			<mat-form-field>
 				<mat-label>Solicitante</mat-label>
-				<input matInput disabled [value]="usuarioSeleccionado" />
+				<input matInput disabled [value]="usuarioSeleccionado"/>
 				<button
 					*ngIf="pe.includes('agregar solicitante')"
 					matSuffix
@@ -74,7 +74,7 @@
 				<mat-select formControlName="asignadoA">
 					<mat-option *ngFor="let per of $personal | async" [value]="per.id">{{
 						per.nombre
-					}}</mat-option>
+						}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 		</div>
