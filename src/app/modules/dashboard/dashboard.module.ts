@@ -11,7 +11,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
 import {ActualTicketsComponent} from './actual-tickets/actual-tickets.component';
 import {AsignTicketsComponent} from './asign-tickets/asign-tickets.component';
-import {AverageTicketsComponent} from './average-tickets/average-tickets.component'
+import {AverageTicketsComponent} from './average-tickets/average-tickets.component';
 import {TimelapseTicketsComponent} from './timelapse-tickets/timelapse-tickets.component';
 
 

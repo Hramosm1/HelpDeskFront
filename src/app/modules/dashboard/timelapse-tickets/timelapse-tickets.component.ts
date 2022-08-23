@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChartData, ChartOptions} from "chart.js";
+import {ChartData, ChartOptions} from 'chart.js';
 
 @Component({
 	selector: 'app-timelapse-tickets',
@@ -8,9 +8,9 @@ import {ChartData, ChartOptions} from "chart.js";
 })
 export class TimelapseTicketsComponent implements OnInit {
 
-	@Input() tpdData: ChartData<"bar">;
+	@Input() tpdData: ChartData<'bar'>;
 
-	@Input() options: ChartOptions<"bar">;
+	@Input() options: ChartOptions<'bar'>;
 
 	constructor() {
 	}

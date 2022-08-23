@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TiempoPromedio} from "../dashboard.interface";
+import {TiempoPromedio} from '../dashboard.interface';
 
 @Component({
 	selector: 'app-average-tickets',
