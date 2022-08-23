@@ -15,6 +15,7 @@ import { appRoutes } from 'app/app.routing';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const socketConfig: SocketIoConfig = { url: environment.backenduri, options: {} };
 
@@ -47,7 +48,13 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
 
         // SocketIO
-        SocketIoModule.forRoot(socketConfig)
+        SocketIoModule.forRoot(socketConfig),
+          ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+          })
     ],
     bootstrap: [
         AppComponent
