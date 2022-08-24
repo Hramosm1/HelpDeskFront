@@ -28,6 +28,7 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {DATA_CONFIG} from './interfaces/filtro.interfaces';
+import { CalificacionComponent } from './calificacion/calificacion.component';
 
 @NgModule({
 	declarations: [
@@ -37,7 +38,8 @@ import {DATA_CONFIG} from './interfaces/filtro.interfaces';
 		CommentsComponent,
 		CerrarTicketComponent,
 		AsignarSoporteComponent,
-		FiltroTicketsComponent
+		FiltroTicketsComponent,
+  CalificacionComponent
 	],
 	imports: [
 		CommonModule,
