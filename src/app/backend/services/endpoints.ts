@@ -15,7 +15,8 @@ export type Destino =
 	'notificaciones/porRol' |
 	'notificaciones/tipos' |
 	'notificaciones/vistas' |
-	'notificaciones/list';
+	'notificaciones/list' |
+	'calificaciones';
 export type AuthRoutes = 'aplicaciones' | 'modulos' | 'roles' | 'usuarios';
 
 export type DashboardPath = 'stats' | 'average' | 'graph';

@@ -13,21 +13,22 @@
 	</div>
 	<!-- BODY -->
 	<div class="w-11/12 mx-auto">
-		<div class="inline" *ngFor="let path of ruta; let i = index">
-			<ng-container *ngIf="path !== ''; else home">
-				/
-				<a [routerLink]="[navegate(i)]">
-					{{ path }}
-				</a>
-			</ng-container>
-			<ng-template #home>
-				<a [routerLink]="[navegate(i)]">
-					<mat-icon>home</mat-icon>
-				</a>
-			</ng-template>
-		</div>
+		<ng-container *ngIf="breadcrum">
+			<div class="inline" *ngFor="let path of ruta; let i = index">
+				<ng-container *ngIf="path !== ''; else home">
+					/
+					<a [routerLink]="[navegate(i)]">
+						{{ path }}
+					</a>
+				</ng-container>
+				<ng-template #home>
+					<a [routerLink]="[navegate(i)]">
+						<mat-icon>home</mat-icon>
+					</a>
+				</ng-template>
+			</div>
+		</ng-container>
 		<section class="my-6">
-			<!-- <xng-breadcrumb></xng-breadcrumb> -->
 			<ng-content></ng-content>
 		</section>
 	</div>

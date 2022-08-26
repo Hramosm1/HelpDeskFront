@@ -1,1 +1,11 @@
-<p>calificacion works!</p>
+<app-base [breadcrum]="false" [title]="" [subtitle]="">
+	<div class="mx-auto">
+		<mat-card *ngIf="data$|async as d">
+			<mat-card-header >
+				<mat-card-title>Califica la calidad del servicio que recibiste</mat-card-title>
+				<mat-card-subtitle>No: {{d.id}} {{d.titulo}}</mat-card-subtitle>
+			</mat-card-header>
+			<mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequuntur cupiditate dolores, ducimus ea enim esse eum facilis fuga illo nisi nostrum odio perferendis praesentium quam similique soluta unde voluptas.</mat-card-content>
+		</mat-card>
+	</div>
+</app-base>
