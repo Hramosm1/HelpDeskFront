@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from 'app/backend/services/http.service';
 import { Estado, Prioridad, SubCategoria, Usuario } from 'app/modules/mantenimientos/interfaces';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { chain } from 'lodash';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListaDeUsuariosComponent } from 'app/shared/lista-de-usuarios/lista-de-usuarios.component';
@@ -57,8 +57,7 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
-		console.log(quillConfig.modules);
-    //this.editor.modules = quillConfig.modules;
+    this.editor.modules = quillConfig.modules;
   }
 
   cancel(): void {
@@ -76,7 +75,7 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   }
   send(): void {
     const body = omitBy(this.composeForm.value, isNull);
-    this.api.create('tickets', body).subscribe((res) => {
+    this.api.create('tickets', body).subscribe(() => {
       this.ref.close();
     });
   }
