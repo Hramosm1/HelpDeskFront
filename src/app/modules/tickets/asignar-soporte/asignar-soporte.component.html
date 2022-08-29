@@ -11,16 +11,6 @@
 				>
 			</mat-select>
 		</mat-form-field>
-		<mat-form-field class="mt-8 w-full">
-			<mat-label>Selecciona el nuevo estado del ticket</mat-label>
-			<mat-select formControlName="idEstado">
-				<mat-option
-					*ngFor="let estado of estados$ | async"
-					[value]="estado.id"
-					>{{ estado.nombre }}</mat-option
-				>
-			</mat-select>
-		</mat-form-field>
 	</form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

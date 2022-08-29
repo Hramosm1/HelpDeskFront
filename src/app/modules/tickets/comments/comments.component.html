@@ -9,12 +9,12 @@
 						[ngClass]="{ 'text-primary-500': usuario === comentario.idUsuario }"
 						[ngStyle]="{
 							color:
-								usuario != comentario.idUsuario
+								usuario !== comentario.idUsuario
 									? getColor(comentario.idUsuario)
 									: null
 						}"
-						>{{ comentario.nombre
-						}}<b>{{ comentario.ComentarioDeCierre ? " *" : "" }}</b></span
+					>{{ comentario.nombre
+						}} <b class="text-red-500">{{ comentario.ComentarioDeCierre ? comentario.tipo : "" | uppercase }}</b></span
 					>
 				</h3>
 				<div [innerHTML]="comentario.comentario"></div>
@@ -28,7 +28,6 @@
 <button
 	[disabled]="!comentario.valid"
 	(click)="submit()"
-	disa
 	mat-raised-button
 	color="primary"
 >

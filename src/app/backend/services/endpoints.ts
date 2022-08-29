@@ -1,5 +1,24 @@
 export type Destino =
-  'estados' | 'categorias' | 'subCategorias' | 'prioridades' | 'tickets' | 'tickets/cerrar' | 'tickets/byUser' | 'comentarios' | 'personalDeSoporte' | 'comentarios' | 'documentos' | 'usuarios';
+  'estados' |
+	'categorias' |
+	'subCategorias' |
+	'prioridades' |
+	'tickets' |
+	'tickets/cerrar' |
+	'tickets/byUser' |
+	'personalDeSoporte' |
+	'comentarios' |
+	'documentos' |
+	'documentos/list' |
+	'documentos/download' |
+	'usuarios' |
+	'notificaciones' |
+	'notificaciones/vista' |
+	'notificaciones/porRol' |
+	'notificaciones/tipos' |
+	'notificaciones/vistas' |
+	'notificaciones/list' |
+	'calificaciones';
 export type AuthRoutes = 'aplicaciones' | 'modulos' | 'roles' | 'usuarios';
 
 export type DashboardPath = 'stats' | 'average' | 'graph';

@@ -1,0 +1,41 @@
+<mat-card class="shadow-lg">
+    <mat-card-header>
+        <div class="custom-header bg-primary">
+            <mat-icon class="text-on-primary">people</mat-icon>
+        </div>
+        <span class="flex flex-1"></span>
+        <h3 class="text-lg font-light">Tickets Asignados</h3>
+    </mat-card-header>
+    <mat-card-content class="text-right mt-4">
+        <mat-divider inset class="shadow"></mat-divider>
+        <div class="flex place-content-center">
+            <mat-table class="w-full" [dataSource]="informacionTickets">
+                <ng-container matColumnDef="personalAsignado">
+                    <mat-header-cell *matHeaderCellDef> Personal</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{ element.personalAsignado }}
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="activos">
+                    <mat-header-cell *matHeaderCellDef> Activos</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{ element.cerrados }}
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="cerrados">
+                    <mat-header-cell *matHeaderCellDef> Cerrados</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{ element.activos }}
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                ></mat-header-row>
+                <mat-row
+                        *matRowDef="let row; columns: displayedColumns"
+                ></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -29,14 +29,14 @@
 				<mat-header-cell *matHeaderCellDef> </mat-header-cell>
 				<mat-cell *matCellDef="let element">
 					<button
-						*ngIf="permiso.editar"
+						*ngIf="permiso.editar&&!element.inmutable"
 						mat-icon-button
 						(click)="openDialog(true, element.nombre, element.id)"
 					>
 						<mat-icon>edit</mat-icon>
 					</button>
 					<button
-						*ngIf="permiso.eliminar"
+						*ngIf="permiso.eliminar&&!element.inmutable"
 						mat-icon-button
 						(click)="eliminar(element.id, element.nombre)"
 					>

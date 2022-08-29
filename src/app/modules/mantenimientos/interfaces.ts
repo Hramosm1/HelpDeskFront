@@ -45,3 +45,11 @@ export interface Prioridades {
   color: string;
 }
 
+export interface NotificacionesPorRol {
+  id: number;
+  idRol: number;
+  rol: string;
+  idTipoNotificacion: number;
+  tipoNotificacion: string;
+  activo: boolean;
+}
