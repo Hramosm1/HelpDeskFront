@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {pluck} from 'rxjs/operators';
 import {AsignarSoporteComponent} from '../asignar-soporte/asignar-soporte.component';
 import {CerrarTicketComponent} from '../cerrar-ticket/cerrar-ticket.component';
+import {environment} from '../../../../environments/environment';
 
 @Component({
 	selector: 'app-ticket-information',
@@ -18,14 +19,19 @@ export class TicketInformationComponent implements OnInit {
 	@ViewChild('descripcion') descripcion: ElementRef;
 	id$: Observable<string>;
 	ticket$: Observable<Ticket>;
+	files$: Observable<string[]>;
 	permisosEspeciales$ = this.user.permisosEspecialesStr$;
 
 	constructor(private ar: ActivatedRoute, private api: HttpService, private user: UserService, private dialog: MatDialog) {
 	}
 
+
 	ngOnInit(): void {
 		this.id$ = this.ar.params.pipe(pluck('id'));
-		this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val));
+		this.id$.subscribe((val) => {
+			this.ticket$ = this.api.getById('tickets', val);
+			this.files$ = this.api.getById('documentos/list', val);
+		});
 	}
 
 	cerrarTicket(): void {
@@ -38,5 +44,9 @@ export class TicketInformationComponent implements OnInit {
 			.subscribe((_) => {
 				this.id$.subscribe(val => this.ticket$ = this.api.getById('tickets', val));
 			});
+	}
+
+	openFile(name: string): string {
+		return `${environment.backenduri}documentos/download/${name}`;
 	}
 }

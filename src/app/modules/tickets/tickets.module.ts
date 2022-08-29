@@ -28,7 +28,10 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {DATA_CONFIG} from './interfaces/filtro.interfaces';
-import { CalificacionComponent } from './calificacion/calificacion.component';
+import {CalificacionComponent} from './calificacion/calificacion.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {NgxStarRatingModule} from 'ngx-star-rating';
+
 
 @NgModule({
 	declarations: [
@@ -39,7 +42,7 @@ import { CalificacionComponent } from './calificacion/calificacion.component';
 		CerrarTicketComponent,
 		AsignarSoporteComponent,
 		FiltroTicketsComponent,
-  CalificacionComponent
+		CalificacionComponent
 	],
 	imports: [
 		CommonModule,
@@ -58,7 +61,9 @@ import { CalificacionComponent } from './calificacion/calificacion.component';
 		MatDatepickerModule,
 		MatLuxonDateModule,
 		QuillModule.forRoot(quillConfig),
-		NgxFileDropModule
+		NgxFileDropModule,
+		SweetAlert2Module.forRoot(),
+		NgxStarRatingModule
 	],
 	providers: [
 		{provide: MAT_DATE_LOCALE, useValue: 'es'},

@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SwPush } from '@angular/service-worker';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'app-root',
@@ -10,5 +12,6 @@ export class AppComponent {
 	 * Constructor
 	 */
 	constructor() {
+
 	}
 }
