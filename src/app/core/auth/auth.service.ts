@@ -4,6 +4,7 @@ import {catchError, Observable, of, switchMap, throwError} from 'rxjs';
 import {AuthUtils} from 'app/core/auth/auth.utils';
 import {UserService} from 'app/core/user/user.service';
 import {environment} from 'environments/environment';
+import {SwPush} from '@angular/service-worker';
 
 interface SignUpParams {
 	user: { name: string; email: string; password: string; company: string };
@@ -13,7 +14,10 @@ interface SignUpParams {
 export class AuthService {
 	private _authenticated: boolean = false;
 
-	constructor(private _httpClient: HttpClient, private _userService: UserService) {
+	constructor(private _httpClient: HttpClient,
+							private _userService: UserService,
+							private swPush: SwPush,
+							private user: UserService) {
 	}
 
 	get accessToken(): string {
@@ -50,6 +54,10 @@ export class AuthService {
 
 				// Store the user on the user service
 				this._userService.user = response.user;
+
+				//validate push notifications
+				//this.checkPushNotifications();
+
 				// Return a new observable with the response
 				return of(response);
 			})
@@ -77,6 +85,8 @@ export class AuthService {
 				// Store the user on the user service
 				this._userService.user = response.user;
 
+				//validate push notifications
+				//this.checkPushNotifications();
 				// Return true
 				return of(true);
 			})
@@ -121,5 +131,17 @@ export class AuthService {
 
 		// If the access token exists and it didn't expire, sign in using it
 		return this.signInUsingToken();
+	}
+
+	private checkPushNotifications(): void {
+		if (!this.swPush.isEnabled) {
+			this.swPush
+				.requestSubscription({
+					serverPublicKey: environment.publicKey
+				})
+				.then((result) => {
+					this.user.user$.subscribe(val => console.log({val, permisos: JSON.stringify(result)}));
+				});
+		}
 	}
 }

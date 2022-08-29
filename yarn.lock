@@ -1680,6 +1680,13 @@
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
 
+"@sweetalert2/ngx-sweetalert2@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/ngx-sweetalert2/-/ngx-sweetalert2-11.0.0.tgz#7fe051bde0a147347f2cfde446b77a50ccf4e87a"
+  integrity sha512-xbote4s9dkwzyXb+ymhbh0FnT5GtUtk5poEWJzkaRVt+4Nuwyv+E3OgthdcH79l1QwWYWkob8cxMbL31ub5Wcw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@tailwindcss/aspect-ratio@0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@tailwindcss/aspect-ratio/-/aspect-ratio-0.3.0.tgz#f779ab3f07cac848fb844122d6662ba6560010b8"
@@ -6194,6 +6201,13 @@ ngx-socket-io@^4.3.0:
     tslib "^2.0.0"
     zone.js "~0.11.4"
 
+ngx-star-rating@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-star-rating/-/ngx-star-rating-2.1.0.tgz#234b1f504f224c4c91704c7d583b70cd99747862"
+  integrity sha512-U/5aAIByR3kZfWGunTYTfg3TM4D0Jtyb2t0jV70OWyruMczYaPviCi0FxSf1gaoEpziDMf6PWpMH/i/o7SunVQ==
+  dependencies:
+    tslib "^2.0.0"
+
 nice-napi@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nice-napi/-/nice-napi-1.0.2.tgz#dc0ab5a1eac20ce548802fc5686eaa6bc654927b"
@@ -8106,6 +8120,11 @@ svg.select.js@^3.0.1:
   integrity sha512-h5IS/hKkuVCbKSieR9uQCj9w+zLHoPh+ce19bBYyqF53g6mnPB8sAtIbe1s9dh2S2fCmYX2xel1Ln3PJBbK4kw==
   dependencies:
     svg.js "^2.6.5"
+
+sweetalert2@^11.4.29:
+  version "11.4.29"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.29.tgz#0b42c924dc79eda6580a753e045a5ec7044a0e2e"
+  integrity sha512-UMCZgyEk0m+KizxspB8Bsm5ZQRdguba2t2+Rf0r8XBmq5YqhXq7ItV2C15A3VLfRlxHnEJBTYg6hkSk/x+5Ofw==
 
 symbol-observable@4.0.0:
   version "4.0.0"

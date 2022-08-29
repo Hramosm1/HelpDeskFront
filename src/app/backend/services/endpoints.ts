@@ -9,6 +9,8 @@ export type Destino =
 	'personalDeSoporte' |
 	'comentarios' |
 	'documentos' |
+	'documentos/list' |
+	'documentos/download' |
 	'usuarios' |
 	'notificaciones' |
 	'notificaciones/vista' |
