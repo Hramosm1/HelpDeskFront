@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import {UserService} from '../../../core/user/user.service';
 import {combineLatest} from 'rxjs';
 import {User} from '../../../core/user/user.types';
-import {NotificationsService} from "../../../layout/common/notifications/notifications.service";
+import {NotificationsService} from '../../../layout/common/notifications/notifications.service';
 
 
 @Component({

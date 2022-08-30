@@ -6,6 +6,7 @@
 					{{ ticket.nombreSolicitante[0].nombre }}
 				</h2>
 				<p>{{ ticket.Estados.nombre }}</p>
+				<p *ngIf="ticket.Calificacion>0">Ticket Calificado: {{ticket.Calificacion}}</p>
 			</div>
 			<mat-card-title>{{ ticket.id }}: {{ ticket.titulo }}</mat-card-title>
 			<mat-card-subtitle

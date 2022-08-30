@@ -9,6 +9,7 @@ import {pluck} from 'rxjs/operators';
 import {AsignarSoporteComponent} from '../asignar-soporte/asignar-soporte.component';
 import {CerrarTicketComponent} from '../cerrar-ticket/cerrar-ticket.component';
 import {environment} from '../../../../environments/environment';
+import {TicketInfo} from '../interfaces/tickets-info.interfaces';
 
 @Component({
 	selector: 'app-ticket-information',
@@ -18,7 +19,7 @@ import {environment} from '../../../../environments/environment';
 export class TicketInformationComponent implements OnInit {
 	@ViewChild('descripcion') descripcion: ElementRef;
 	id$: Observable<string>;
-	ticket$: Observable<Ticket>;
+	ticket$: Observable<TicketInfo>;
 	files$: Observable<string[]>;
 	permisosEspeciales$ = this.user.permisosEspecialesStr$;
 
@@ -29,7 +30,7 @@ export class TicketInformationComponent implements OnInit {
 	ngOnInit(): void {
 		this.id$ = this.ar.params.pipe(pluck('id'));
 		this.id$.subscribe((val) => {
-			this.ticket$ = this.api.getById('tickets', val);
+			this.ticket$ = this.api.getById<TicketInfo>('tickets', val);
 			this.files$ = this.api.getById('documentos/list', val);
 		});
 	}
