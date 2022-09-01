@@ -1,4 +1,4 @@
-describe.only('Tickets', () => {
+describe('Tickets', () => {
   beforeEach(() => {
     cy.token('/tickets/list');
   });
