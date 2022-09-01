@@ -9,9 +9,6 @@ describe('Tickets', () => {
     cy.get('h3.font-medium').contains('Tickets');
     cy.get('.text-3xl').contains('Listado');
   });
-  it('filtro activos al entrar', () => {
-    cy.get('.mat-button').should('be.visible');
-  });
   it('validacion formulario crear ticket', () => {
     cy.get('.flex > .mat-primary').click();
     cy.get('.order-first').should('be.disabled');
