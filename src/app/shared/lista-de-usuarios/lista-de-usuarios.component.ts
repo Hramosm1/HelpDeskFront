@@ -14,26 +14,26 @@ import { Observable, tap } from 'rxjs';
   styleUrls: ['./lista-de-usuarios.component.scss']
 })
 export class ListaDeUsuariosComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatSort) sort: MatSort
-  @ViewChild(MatPaginator) paginator: MatPaginator
-  $usuarios: Observable<Usuario[]>
-  dataSource: MatTableDataSource<Usuario> = new MatTableDataSource()
-  filtro: FormControl = new FormControl('')
-  displayedColumns: string[] = ['id', 'usuario', 'nombre', 'correo']
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  $usuarios: Observable<Usuario[]>;
+  dataSource: MatTableDataSource<Usuario> = new MatTableDataSource();
+  filtro: FormControl = new FormControl('');
+  displayedColumns: string[] = ['id', 'usuario', 'nombre', 'correo'];
   constructor(private authApi: AuthenticationService, private ref: MatDialogRef<ListaDeUsuariosComponent>) { }
 
   ngOnInit(): void {
-    this.$usuarios = this.authApi.getAll<Usuario>('usuarios')
-    this.filtro.valueChanges.subscribe(val => this.dataSource.filter = val)
+    this.$usuarios = this.authApi.getAll<Usuario>('usuarios');
+    this.filtro.valueChanges.subscribe(val => this.dataSource.filter = val);
   }
   ngAfterViewInit(): void {
-    this.$usuarios.subscribe(data => {
-      this.dataSource.data = data
-      this.dataSource.sort = this.sort
-      this.dataSource.paginator = this.paginator
-    })
+    this.$usuarios.subscribe((data) => {
+      this.dataSource.data = data;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
   send(row: Usuario) {
-    this.ref.close(row)
+    this.ref.close(row);
   }
 }

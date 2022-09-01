@@ -1,6 +1,6 @@
-export interface BasicInterface { id: string, nombre: string }
-export interface Solicitud extends BasicInterface { }
-export interface Categoria extends BasicInterface { }
+export interface BasicInterface { id: string; nombre: string }
+export type Solicitud = BasicInterface;
+export type Categoria = BasicInterface;
 export interface Estado extends BasicInterface { activo?: boolean }
 export interface SubCategoria extends BasicInterface {
   idCategoria: number;
@@ -23,8 +23,8 @@ export interface Usuario {
   usuario?: string;
   correo?: string;
   idPersonaUnica?: string;
-  idCobrador?: number
-  fechaCreacion?: Date
+  idCobrador?: number;
+  fechaCreacion?: Date;
 }
 export interface Ticket {
   id: number;
@@ -37,11 +37,19 @@ export interface Ticket {
   Estados: Estados;
 }
 export interface TicketResult {
-  rows: Ticket[],
-  count: number
+  rows: Ticket[];
+  count: number;
 }
 export interface Prioridades {
   nombre: string;
   color: string;
 }
 
+export interface NotificacionesPorRol {
+  id: number;
+  idRol: number;
+  rol: string;
+  idTipoNotificacion: number;
+  tipoNotificacion: string;
+  activo: boolean;
+}

@@ -37,16 +37,15 @@ const layoutModules = [
     declarations: [
         LayoutComponent
     ],
-    imports     : [
+    imports: [
         SharedModule,
         SettingsModule,
         ...layoutModules
     ],
-    exports     : [
+    exports: [
         LayoutComponent,
         ...layoutModules
     ]
 })
-export class LayoutModule
-{
+export class LayoutModule {
 }
