@@ -36,7 +36,8 @@
 								"glob": "_redirects",
 								"input": "src",
 								"output": "/"
-							}
+							},
+							"src/manifest.webmanifest"
 						],
 						"stylePreprocessorOptions": {
 							"includePaths": ["src/@fuse/styles"]
@@ -49,7 +50,9 @@
 							"src/styles/styles.scss",
 							"src/styles/tailwind.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"serviceWorker": true,
+						"ngswConfigPath": "ngsw-config.json"
 					},
 					"configurations": {
 						"production": {
@@ -82,6 +85,18 @@
 							"namedChunks": true
 						},
 						"uat": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "3mb",
+									"maximumError": "8mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "75kb",
+									"maximumError": "90kb"
+								}
+							],
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
@@ -125,7 +140,8 @@
 						"assets": [
 							"src/favicon-16x16.png",
 							"src/favicon-32x32.png",
-							"src/assets"
+							"src/assets",
+							"src/manifest.webmanifest"
 						],
 						"styles": ["src/styles/styles.scss"],
 						"scripts": []
@@ -135,6 +151,37 @@
 					"builder": "@angular-eslint/builder:lint",
 					"options": {
 						"lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+					}
+				},
+				"cypress-run": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "fuse:serve"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "fuse:serve:production"
+						}
+					}
+				},
+				"cypress-open": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"watch": true,
+						"headless": false
+					}
+				},
+				"e2e": {
+					"builder": "@cypress/schematic:cypress",
+					"options": {
+						"devServerTarget": "fuse:serve",
+						"watch": true,
+						"headless": false
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "fuse:serve:production"
+						}
 					}
 				}
 			}

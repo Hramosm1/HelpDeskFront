@@ -75,14 +75,14 @@ export class AuthSignUpComponent implements OnInit
         this.showAlert = false;
 
         // Sign up
-        this._authService.signUp(this.signUpForm.value)
+        this._authService.signUp({user : this.signUpForm.value})
             .subscribe(
-                (response) => {
+                () => {
 
                     // Navigate to the confirmation required page
                     this._router.navigateByUrl('/confirmation-required');
                 },
-                (response) => {
+                () => {
 
                     // Re-enable the form
                     this.signUpForm.enable();

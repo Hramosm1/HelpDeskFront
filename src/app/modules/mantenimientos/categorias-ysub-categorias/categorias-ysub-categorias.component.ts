@@ -8,7 +8,7 @@ import { pluck } from 'rxjs';
   styleUrls: ['./categorias-ysub-categorias.component.scss']
 })
 export class CategoriasYSubCategoriasComponent implements OnInit {
-  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'))
+  permisos$ = this._user.permisos$.pipe(pluck('Mantenimientos'));
   constructor(private _user: UserService) { }
 
   ngOnInit(): void {

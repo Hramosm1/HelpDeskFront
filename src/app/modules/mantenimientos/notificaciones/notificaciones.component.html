@@ -1,0 +1,8 @@
+<app-base title="Notificaciones" subtitle="Mantenimientos">
+	<div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
+		<app-tarjeta-permisos
+			*ngFor="let pr of permisos$ | async"
+			[data]="pr"
+		></app-tarjeta-permisos>
+	</div>
+</app-base>

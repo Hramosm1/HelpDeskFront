@@ -1,11 +1,35 @@
-<div class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto base" cdkScrollable>
-  <!-- CABECERA -->
-  <div class="w-11/12 my-6 mx-auto ">
-    <h3 class="font-medium tracking-tight text-secondary">{{subtitle | titlecase}}</h3>
-    <h2 class="text-3xl font-semibold tracking-tight leading-8">{{title | titlecase}}</h2>
-  </div>
-  <!-- BODY -->
-  <section class="w-11/12 mx-auto my-6">
-    <ng-content></ng-content>
-  </section>
+<div
+	class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto base"
+	cdkScrollable
+>
+	<!-- CABECERA -->
+	<div class="w-11/12 my-6 mx-auto">
+		<h3 class="font-medium tracking-tight text-secondary">
+			{{ subtitle | titlecase }}
+		</h3>
+		<h2 class="text-3xl font-semibold tracking-tight leading-8">
+			{{ title | titlecase }}
+		</h2>
+	</div>
+	<!-- BODY -->
+	<div class="w-11/12 mx-auto">
+		<ng-container *ngIf="breadcrum">
+			<div class="inline" *ngFor="let path of ruta; let i = index">
+				<ng-container *ngIf="path !== ''; else home">
+					/
+					<a [routerLink]="[navegate(i)]">
+						{{ path }}
+					</a>
+				</ng-container>
+				<ng-template #home>
+					<a [routerLink]="[navegate(i)]">
+						<mat-icon>home</mat-icon>
+					</a>
+				</ng-template>
+			</div>
+		</ng-container>
+		<section class="my-6">
+			<ng-content></ng-content>
+		</section>
+	</div>
 </div>

@@ -1,0 +1,11 @@
+<app-base title="Dashboard" subtitle="Dashboard">
+	<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+		<ng-container *ngIf="informacionTickets">
+			<app-actual-tickets class="lg:col-span-2" [data]="data"></app-actual-tickets>
+			<app-asign-tickets class="lg:col-span-2" [informacionTickets]="informacionTickets"
+												 [displayedColumns]="displayedColumns"></app-asign-tickets>
+			<app-average-tickets class="lg:col-span-4" [tiemposPromedio]="tiemposPromedio"></app-average-tickets>
+			<app-timelapse-tickets class="lg:col-span-4" [tpdData]="tpdData" [options]="options"></app-timelapse-tickets>
+		</ng-container>
+	</div>
+</app-base>

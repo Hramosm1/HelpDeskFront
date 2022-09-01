@@ -3,67 +3,79 @@
 	title="Listado"
 	subtitle="Tickets"
 >
-	<button
-		*ngIf="permiso.crear"
-		(click)="openDialog()"
-		mat-raised-button
-		color="primary"
-	>
-		Crear nuevo ticket
-	</button>
-	<form>
-		<mat-form-field class="w-full" appearance="standard">
-			<mat-label>Buscador</mat-label>
-			<input matInput [formControl]="control" />
-		</mat-form-field>
-	</form>
+	<div class="flex mb-4">
+		<button
+			*ngIf="permiso.crear"
+			(click)="openDialog()"
+			mat-raised-button
+			color="primary"
+		>
+			Crear nuevo ticket
+		</button>
+		<span class="flex-1"></span>
+		<button mat-raised-button color="acent" (click)="openFilter()">
+			Añade un filtro <mat-icon>filter_list</mat-icon>
+		</button>
+		<button mat-button color="warn" *ngIf="botonLimpiar" (click)="actualizar()">
+			Quitar filtros <mat-icon>close</mat-icon>
+		</button>
+	</div>
+
 	<div class="mat-elevation-z8">
-		<table mat-table [dataSource]="dataSource" matSort>
+		<mat-paginator
+			[length]="totalRows"
+			[pageSizeOptions]="[10, 30, 50, 80, 100]"
+			[pageSize]="pagez"
+			aria-label="Select page of users"
+		></mat-paginator>
+		<table mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="id">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>id</th>
+				<th mat-header-cell *matHeaderCellDef>id</th>
 				<td mat-cell *matCellDef="let row">{{ row.id }}</td>
 			</ng-container>
 			<ng-container matColumnDef="titulo">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+				<th mat-header-cell *matHeaderCellDef>Título</th>
 				<td mat-cell *matCellDef="let row">{{ row.titulo }}</td>
 			</ng-container>
 			<ng-container matColumnDef="solicitudDe">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>Solicitud de</th>
+				<th mat-header-cell *matHeaderCellDef>Solicitud de</th>
 				<td mat-cell *matCellDef="let row">
-					{{ row.solicitudDe }}
+					{{ row.solicitudDe.nombre }}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="asignadoA">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>Asignado a</th>
+				<th mat-header-cell *matHeaderCellDef>Asignado a</th>
 				<td mat-cell *matCellDef="let row">
-					{{ row.asignadoA }}
+					{{ row.PersonalDeSoporte ? row.PersonalDeSoporte.nombre : "" }}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="estado">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
-				<td mat-cell *matCellDef="let row">{{ row.estado }}</td>
+				<th mat-header-cell *matHeaderCellDef>Estado</th>
+				<td mat-cell *matCellDef="let row">
+					{{ row.Estados.nombre }}
+					<div class="text-sm">{{ row.Comentarios }} comentario(s)</div>
+				</td>
 			</ng-container>
 			<ng-container matColumnDef="prioridad">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>Prioridad</th>
+				<th mat-header-cell *matHeaderCellDef>Prioridad</th>
 				<td mat-cell *matCellDef="let row">
 					<span
 						class="chip"
 						[ngClass]="row.colorTexto"
-						[ngStyle]="{ 'background-color': row.colorPrioridad }"
-						>{{ row.prioridad }}</span
+						[ngStyle]="{ 'background-color': row.Prioridades.color }"
 					>
+						{{ row.Prioridades.nombre }}
+					</span>
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="fecha">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>
-					Fecha creacion
-				</th>
+				<th mat-header-cell *matHeaderCellDef>Fecha creacion</th>
 				<td mat-cell *matCellDef="let row">
-					{{ row.fechaSolicitud | date: "dd/MM/yy hh:mm":"UTC" }}
+					{{ row.fechaSolicitud | date: "dd/MM/yy hh:mm a" }}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="activo">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket</th>
+				<th mat-header-cell *matHeaderCellDef>Ticket</th>
 				<td mat-cell *matCellDef="let row">
 					{{ row.activo ? "Ticket abierto" : "Ticket Cerrado" }}
 				</td>
@@ -75,18 +87,12 @@
 				mat-row
 				[ngClass]="{ 'bg-yellow-600': !row.activo }"
 				*matRowDef="let row; columns: displayedColumns"
-				(dblclick)="method(row)"
+				(dblclick)="router.navigateByUrl('tickets/' + row.id)"
 			></tr>
 
-			<!-- Row shown when there is no matching data. -->
 			<tr class="mat-row" *matNoDataRow>
 				<td class="mat-cell" colspan="4">No hay data</td>
 			</tr>
 		</table>
-
-		<mat-paginator
-			[pageSizeOptions]="[5, 10, 25, 100]"
-			aria-label="Select page of users"
-		></mat-paginator>
 	</div>
 </app-base>

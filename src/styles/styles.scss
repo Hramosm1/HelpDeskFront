@@ -2,3 +2,8 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+.custom-header {
+  margin-top: -2rem;
+  padding: 1rem;
+  border-radius: 4px;
+}

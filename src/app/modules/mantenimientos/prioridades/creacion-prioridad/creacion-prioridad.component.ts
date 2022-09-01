@@ -9,7 +9,7 @@ import { DataDialog, Prioridad } from '../../interfaces';
   styleUrls: ['./creacion-prioridad.component.scss']
 })
 export class CreacionPrioridadComponent implements OnInit {
-  formulario: FormGroup
+  formulario: FormGroup;
   constructor(
     private ref: MatDialogRef<CreacionPrioridadComponent>,
     private fb: FormBuilder,
@@ -21,19 +21,19 @@ export class CreacionPrioridadComponent implements OnInit {
       this.formulario = this.fb.group({
         nombre: [this.data.row.nombre, Validators.required],
         color: [this.data.row.color, Validators.required]
-      })
+      });
     } else {
       this.formulario = this.fb.group({
         nombre: ['', Validators.required],
         color: ['', Validators.required]
-      })
+      });
     }
   }
   create(): void {
     if (this.data.editar) {
-      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar, id: this.data.row.id })
+      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar, id: this.data.row.id });
     } else {
-      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar })
+      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar });
     }
   }
 

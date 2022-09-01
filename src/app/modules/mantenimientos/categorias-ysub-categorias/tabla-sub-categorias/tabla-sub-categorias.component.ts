@@ -15,54 +15,42 @@ import { CreacionSubCategoriaComponent } from '../creacion-sub-categoria/creacio
   styleUrls: ['./tabla-sub-categorias.component.scss']
 })
 export class TablaSubCategoriasComponent implements AfterViewInit {
-  @Input() permisos: Permiso
-  @ViewChild(MatSort) sort: MatSort
-  @ViewChild(MatPaginator) paginator: MatPaginator
-  dataSource: MatTableDataSource<SubCategoria> = new MatTableDataSource()
-  displayedColumns: string[] = ['id', 'nombre', 'categoria', 'actions']
+  @Input() permisos: Permiso;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: MatTableDataSource<SubCategoria> = new MatTableDataSource();
+  displayedColumns: string[] = ['id', 'nombre', 'categoria', 'actions'];
   constructor(private api: HttpService, private dialog: MatDialog) { }
 
   actualizar() {
-    this.api.getAll<SubCategoria>('subCategorias').subscribe(res => this.dataSource.data = res)
+    this.api.getAll<SubCategoria>('subCategorias').subscribe(res => this.dataSource.data = res);
   }
   openDialog(editar: boolean, row?: SubCategoria) {
-    const dialogRef = this.dialog.open(CreacionSubCategoriaComponent, { width: '400px', data: { editar, row }, disableClose: true })
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(CreacionSubCategoriaComponent, { width: '400px', data: { editar, row }, disableClose: true });
+    dialogRef.afterClosed().subscribe((result) => {
       if (result.action) {
         if (result.editar) {
-          this.api.update('subCategorias', result.id, result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.update('subCategorias', result.id, result.value).subscribe(res => this.actualizar());
         } else {
-          this.api.create('subCategorias', result.value).subscribe(res => {
-            if (res.rowsAffected[0] > 0) {
-              this.actualizar()
-            }
-          })
+          this.api.create('subCategorias', result.value).subscribe(res => this.actualizar());
         }
       }
-    })
+    });
   }
   eliminar(id: number, nombre: string) {
-    const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true })
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(ConfirmComponent, { data: { texto: `¿Desea eliminar ${nombre}?`, id }, disableClose: true });
+    dialogRef.afterClosed().subscribe((result) => {
       if (result.action) {
-        this.api.delete('subCategorias', result.id).subscribe(res => {
-          if (res.rowsAffected[0] > 0) {
-            this.actualizar()
-          }
-        })
+        this.api.delete('subCategorias', result.id).subscribe(res => this.actualizar());
       }
-    })
+    });
   }
   ngAfterViewInit(): void {
-    this.api.getAll<SubCategoria>('subCategorias').subscribe(res => {
-      this.dataSource.data = res
-      this.dataSource.sort = this.sort
-      this.dataSource.paginator = this.paginator
-    })
+    this.api.getAll<SubCategoria>('subCategorias').subscribe((res) => {
+      this.dataSource.data = res;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
 }

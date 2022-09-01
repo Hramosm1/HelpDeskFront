@@ -2,15 +2,23 @@
 	<mat-card class="relative z-20" *ngIf="ticket$ | async; let ticket">
 		<mat-card-header class="sticky top-0 bg-card z-50">
 			<div mat-card-avatar class="w-28 mr-5">
-				<h2 class="font-extrabold text-primary">{{ ticket.solicitudDe }}</h2>
-				<p>{{ ticket.estado }}</p>
+				<h2 class="font-extrabold text-primary">
+					{{ ticket.nombreSolicitante[0].nombre }}
+				</h2>
+				<p>{{ ticket.Estados.nombre }}</p>
+				<p *ngIf="ticket.Calificacion>0">Ticket Calificado: {{ticket.Calificacion}}</p>
 			</div>
-			<mat-card-title>{{ ticket.titulo }}</mat-card-title>
-			<mat-card-subtitle>Asignado a: {{ ticket.asignadoA }}</mat-card-subtitle>
+			<mat-card-title>{{ ticket.id }}: {{ ticket.titulo }}</mat-card-title>
+			<mat-card-subtitle
+			>Asignado a:
+				{{
+				ticket.PersonalDeSoporte ? ticket.PersonalDeSoporte.nombre : ""
+				}}</mat-card-subtitle
+			>
 			<span class="flex flex-1"></span>
 			<div>
 				<p class="text-right mb-4 mr-4">
-					{{ ticket.fechaSolicitud | date: "dd/MM/yy hh:mm":"UTC" }}
+					{{ ticket.fechaSolicitud | date: "dd/MM/yy hh:mm" }}
 				</p>
 				<button
 					*ngIf="(permisosEspeciales$ | async).includes('asignar ticket')"
@@ -23,8 +31,9 @@
 				<button
 					(click)="cerrarTicket()"
 					*ngIf="
-						(permisosEspeciales$ | async).includes('cerrar ticket') &&
-						tieneComentarios
+						(!ticket.activo ||
+							(permisosEspeciales$ | async).includes('cerrar ticket')) &&
+						ticket.PersonalDeSoporte
 					"
 					mat-raised-button
 					color="warn"
@@ -34,14 +43,18 @@
 			</div>
 		</mat-card-header>
 		<mat-card-content class="z-30">
+			<div class="w-9/12 mx-auto">
+				<ul class="flex flex-wrap gap-8 list-disc">
+					<li class="" *ngFor="let file of files$|async">
+						<a [href]="openFile(file)" target="_blank">{{file}}</a>
+					</li>
+				</ul>
+			</div>
 			<div
 				class="shadow-md rounded-md p-8 mx-auto w-10/12"
 				[innerHTML]="ticket.descripcion"
 			></div>
-			<app-comments
-				(validacion)="GetLegn($event)"
-				[ticket]="id$ | async"
-			></app-comments>
+			<app-comments [ticket]="id$ | async"></app-comments>
 		</mat-card-content>
 	</mat-card>
 </app-base>

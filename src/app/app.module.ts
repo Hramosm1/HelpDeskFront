@@ -12,12 +12,13 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
-
-//import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from 'environments/environment';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
-//const socketConfig: SocketIoConfig = { url: environment.backenduri, options: {} }
+const socketConfig: SocketIoConfig = { url: environment.backenduri, options: {} };
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
@@ -45,13 +46,21 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
-        // SocketIoModule.forRoot(socketConfig)
+
+        // SocketIO
+        SocketIoModule.forRoot(socketConfig),
+          ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+          })
     ],
     bootstrap: [
         AppComponent
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
     ]
 })
 export class AppModule {

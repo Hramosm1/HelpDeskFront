@@ -1,0 +1,16 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>{{ data.rol }}</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<ng-container>
+			<form class="flex flex-col justify-end w-full" [formGroup]="group">
+				<mat-checkbox
+					*ngFor="let permiso of data.permisos"
+					[formControlName]="permiso.id"
+					>{{ permiso.tipoNotificacion }}</mat-checkbox
+				>
+			</form>
+		</ng-container>
+	</mat-card-content>
+</mat-card>

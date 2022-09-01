@@ -13,7 +13,7 @@ interface Data {
   styleUrls: ['./creacion-estados.component.scss']
 })
 export class CreacionEstadosComponent implements OnInit {
-  formulario: FormGroup
+  formulario: FormGroup;
   constructor(
     private fb: FormBuilder,
     private api: HttpService,
@@ -24,18 +24,18 @@ export class CreacionEstadosComponent implements OnInit {
     if (this.data.editar) {
       this.formulario = this.fb.group({
         nombre: [this.data.nombre, Validators.required]
-      })
+      });
     } else {
       this.formulario = this.fb.group({
         nombre: ['', Validators.required]
-      })
+      });
     }
   }
   create(): void {
     if (this.data.editar) {
-      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar, id: this.data.id })
+      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar, id: this.data.id });
     } else {
-      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar })
+      this.ref.close({ action: true, value: this.formulario.value, editar: this.data.editar });
     }
   }
 

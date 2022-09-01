@@ -1,0 +1,45 @@
+<mat-card class="shadow-lg">
+    <mat-card-header>
+        <div class="custom-header bg-warn">
+            <mat-icon class="text-on-warn">book</mat-icon>
+        </div>
+        <span class="flex flex-1"></span>
+        <h3 class="text-lg font-light">Tiempo promedio por ticket</h3>
+    </mat-card-header>
+    <mat-card-content class="text-right mt-4">
+        <!-- <div class="">
+                        <h3 class="text-center text-3xl text-primary-500">En desarrollo</h3>
+                        <img
+                            class="h-10"
+                            src="assets/images/logo/page.svg"
+                            alt="En construccion"
+                        />
+                    </div> -->
+        <mat-divider inset class="shadow"></mat-divider>
+        <mat-table class="w-full" [dataSource]="tiemposPromedio">
+            <ng-container matColumnDef="personal">
+                <mat-header-cell *matHeaderCellDef>
+                    Personal de soporte
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{ element.personal }}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="promedio">
+                <mat-header-cell *matHeaderCellDef>
+                    Tiempo promedio por ticket
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{ element.promedio }}
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+                    *matHeaderRowDef="['personal', 'promedio']"
+            ></mat-header-row>
+            <mat-row
+                    *matRowDef="let row; columns: ['personal', 'promedio']"
+            ></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>
