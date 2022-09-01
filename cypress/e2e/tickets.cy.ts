@@ -26,7 +26,7 @@ describe('Tickets', () => {
     cy.get('#mat-optgroup-label-0').type('{esc}');
     cy.get('.ql-editor').type('Este ticket es una prueba');
     cy.get('.order-first').click();
-    cy.wait('@api').then(res => expect(res.response.statusCode).to.be.equal(200));
+    cy.wait('@api').then(res => expect(res.response.statusCode).to.be.equal(201));
   });
   it('asigna personal de soporte', () => {
     cy.intercept({ method: 'GET', url: 'http://192.168.8.28:9411/tickets/**' }).as('api');
@@ -36,8 +36,6 @@ describe('Tickets', () => {
       cy.get('.mat-acent').click();
       cy.get('mat-select:first').click();
       cy.get('mat-option:first').click();
-      cy.get('mat-select:last').click();
-      cy.get('mat-option').contains('Asignado').click();
       cy.get('.mat-dialog-actions > .mat-raised-button').click();
     });
     cy.wait('@apiPost').then((res) => {
@@ -53,7 +51,7 @@ describe('Tickets', () => {
       cy.get('app-comments > .mat-focus-indicator').click();
     });
     cy.wait('@apiPost').then((res) => {
-      expect(res.response.statusCode).to.be.equal(200);
+      expect(res.response.statusCode).to.be.equal(201);
     });
   });
   it('cierra ticket', () => {
@@ -63,8 +61,6 @@ describe('Tickets', () => {
       cy.get('.mat-row:first').dblclick();
       cy.get('.mat-warn').click();
       cy.get('textarea').type('comentario de cierre cypress');
-      cy.get('.mat-select').click();
-      cy.get('mat-option').contains('Cerrado').click();
       cy.get('.mat-dialog-actions > .mat-raised-button').click();
     });
     cy.wait('@apiPost').then((res) => {
@@ -86,6 +82,6 @@ describe('Tickets', () => {
     cy.get('#mat-select-value-9').click();
     cy.get('mat-option:first').click();
     cy.get('.order-first').click();
-    cy.wait('@api').then(res => expect(res.response.statusCode).to.be.equal(200));
+    cy.wait('@api').then(res => expect(res.response.statusCode).to.be.equal(201));
   });
 });
