@@ -6,7 +6,7 @@ interface RespuestaConfirmacion {
 }
 interface Data {
   texto: string;
-  id: number | string
+  id: number | string;
 }
 @Component({
   selector: 'app-confirm',
@@ -14,13 +14,13 @@ interface Data {
   styleUrls: ['./confirm.component.scss']
 })
 export class ConfirmComponent implements OnInit {
-  cancelar: RespuestaConfirmacion
-  confirmar: RespuestaConfirmacion
+  cancelar: RespuestaConfirmacion;
+  confirmar: RespuestaConfirmacion;
   constructor(@Inject(MAT_DIALOG_DATA) public data: Data) { }
 
   ngOnInit(): void {
-    this.cancelar = { action: false }
-    this.confirmar = { action: true, id: this.data.id }
+    this.cancelar = { action: false };
+    this.confirmar = { action: true, id: this.data.id };
   }
 
 }

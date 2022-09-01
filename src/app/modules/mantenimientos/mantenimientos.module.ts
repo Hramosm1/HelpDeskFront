@@ -13,6 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CreacionEstadosComponent } from './estados/creacion-estados/creacion-estados.component';
 import { CreacionPrioridadComponent } from './prioridades/creacion-prioridad/creacion-prioridad.component';
 import { CreacionCategoriaComponent } from './categorias-ysub-categorias/creacion-categoria/creacion-categoria.component';
@@ -21,6 +22,7 @@ import { TablaCategoriasComponent } from './categorias-ysub-categorias/tabla-cat
 import { TablaSubCategoriasComponent } from './categorias-ysub-categorias/tabla-sub-categorias/tabla-sub-categorias.component';
 import { PersonalDeSoporteComponent } from './personal-de-soporte/personal-de-soporte.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { TarjetaPermisosComponent } from './notificaciones/tarjeta-permisos/tarjeta-permisos.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
     TablaSubCategoriasComponent,
     PersonalDeSoporteComponent,
     NotificacionesComponent,
+    TarjetaPermisosComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
     MatSortModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
   ]
 })
 export class MantenimientosModule { }

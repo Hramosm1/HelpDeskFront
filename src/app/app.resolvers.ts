@@ -17,7 +17,6 @@ export class InitialDataResolver implements Resolve<any>
     constructor(
         private _messagesService: MessagesService,
         private _navigationService: NavigationService,
-        private _notificationsService: NotificationsService,
         private _quickChatService: QuickChatService,
         private _shortcutsService: ShortcutsService,
         private _userService: UserService
@@ -29,10 +28,8 @@ export class InitialDataResolver implements Resolve<any>
         return forkJoin([
             this._navigationService.get(),
             this._messagesService.getAll(),
-            this._notificationsService.getAll(),
             this._quickChatService.getChats(),
             this._shortcutsService.getAll(),
-            //this._userService.get()
         ]);
     }
 }

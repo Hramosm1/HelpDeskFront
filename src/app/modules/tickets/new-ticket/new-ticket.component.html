@@ -6,7 +6,7 @@
 	>
 		<mat-form-field>
 			<mat-label>Título</mat-label>
-			<input matInput formControlName="titulo" />
+			<input matInput formControlName="titulo"/>
 		</mat-form-field>
 		<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
 			<mat-form-field>
@@ -32,7 +32,7 @@
 					<mat-option
 						*ngFor="let estado of $estados | async"
 						[value]="estado.id"
-						>{{ estado.nombre }}</mat-option
+					>{{ estado.nombre }}</mat-option
 					>
 				</mat-select>
 			</mat-form-field>
@@ -46,17 +46,37 @@
 						<mat-option
 							*ngFor="let sub of categoria.subcategoria"
 							[value]="sub.id"
-							>{{ sub.nombre }}</mat-option
+						>{{ sub.nombre }}</mat-option
 						>
 					</mat-optgroup>
 				</mat-select>
 			</mat-form-field>
 		</div>
 		<quill-editor class="mt-2" formControlName="descripcion"></quill-editor>
+		<ngx-file-drop dropZoneLabel="Subir archivos" (onFileDrop)="dropped($event)"
+									 (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+			<ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+				<button type="button" (click)="openFileSelector()">Subir archivos</button>
+			</ng-template>
+		</ngx-file-drop>
+		<table mat-table [dataSource]="files" class="mat-elevation-z8">
+			<ng-container matColumnDef="file">
+				<th mat-header-cell *matHeaderCellDef> Archivo</th>
+				<td mat-cell *matCellDef="let element"> {{element.relativePath}} </td>
+			</ng-container>
+			<ng-container matColumnDef="x">
+				<th mat-header-cell *matHeaderCellDef> Eliminar</th>
+				<td mat-cell *matCellDef="let element; let i = index">
+					<button (click)="drop(i)">x</button>
+				</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="['file','x']"></tr>
+			<tr mat-row *matRowDef="let row; columns: ['file','x'];"></tr>
+		</table>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
 			<mat-form-field>
 				<mat-label>Solicitante</mat-label>
-				<input matInput disabled [value]="usuarioSeleccionado" />
+				<input matInput disabled [value]="usuarioSeleccionado"/>
 				<button
 					*ngIf="pe.includes('agregar solicitante')"
 					matSuffix
@@ -73,7 +93,7 @@
 				<mat-select formControlName="asignadoA">
 					<mat-option *ngFor="let per of $personal | async" [value]="per.id">{{
 						per.nombre
-					}}</mat-option>
+						}}</mat-option>
 				</mat-select>
 			</mat-form-field>
 		</div>
@@ -95,7 +115,7 @@
 				<!-- Send -->
 				<button
 					class="order-first sm:order-last"
-					[disabled]="!composeForm.valid"
+					[disabled]="!composeForm.valid || cargando"
 					mat-flat-button
 					color="warn"
 					(click)="send()"

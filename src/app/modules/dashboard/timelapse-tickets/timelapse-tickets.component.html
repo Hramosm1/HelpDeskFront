@@ -1,0 +1,16 @@
+<mat-card class="shadow-lg">
+    <mat-card-header>
+        <mat-card-title>Tickets por dia</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-divider inset class="shadow"></mat-divider>
+        <canvas
+                baseChart
+                class="overflow-x-auto"
+                [data]="tpdData"
+                [type]="'bar'"
+                [options]="options"
+        >
+        </canvas>
+    </mat-card-content>
+</mat-card>

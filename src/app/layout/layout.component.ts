@@ -78,7 +78,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config: AppConfig) => {
                 // Store the config
-                localStorage.setItem('config', JSON.stringify(config))
+                localStorage.setItem('config', JSON.stringify(config));
                 this.config = config;
                 // Update the layout
                 this._updateLayout();

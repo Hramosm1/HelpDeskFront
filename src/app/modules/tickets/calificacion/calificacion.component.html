@@ -1,0 +1,24 @@
+<app-base [breadcrum]="false" [title]="" [subtitle]="">
+	<div class="mx-auto">
+		<mat-card *ngIf="data$|async as d">
+			<mat-card-header>
+				<mat-card-title>Califica la calidad del servicio que recibiste</mat-card-title>
+				<mat-card-subtitle>No: {{d.id}} {{d.titulo}}</mat-card-subtitle>
+			</mat-card-header>
+			<mat-card-content>
+				<form *ngIf="qualityForm" class="w-10/12 mx-auto flex flex-col justify-center" [formGroup]="qualityForm">
+					<div class="flex justify-center">
+						<ngx-star-rating formControlName="calificacion"></ngx-star-rating>
+					</div>
+					<mat-form-field>
+						<mat-label>Deja un comentario</mat-label>
+						<textarea formControlName="comentario" matInput></textarea>
+					</mat-form-field>
+				</form>
+			</mat-card-content>
+			<mat-card-actions class="flex justify-end">
+				<button mat-button color="primary" (click)="calificar()">Calificar</button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</app-base>
