@@ -4,11 +4,6 @@ interface Values {
   ticketsCerrados: number;
 }
 
-
-interface PersonalDeSoporte extends Values {
-  personalAsignado: string;
-}
-
 export interface TicketsInfo {
   ticketsActivos: number;
   ticketsCerrados: number;
@@ -21,8 +16,7 @@ export interface TicketsInfo {
 
 export interface AverageTickets {
   personal: string;
-  tiempoAbierto: number;
-  ticket: string;
+  tiempoPromedio: number;
 }
 export interface TiempoPromedio {
   personal: string;

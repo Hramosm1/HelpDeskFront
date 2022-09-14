@@ -7,14 +7,6 @@
         <h3 class="text-lg font-light">Tiempo promedio por ticket</h3>
     </mat-card-header>
     <mat-card-content class="text-right mt-4">
-        <!-- <div class="">
-                        <h3 class="text-center text-3xl text-primary-500">En desarrollo</h3>
-                        <img
-                            class="h-10"
-                            src="assets/images/logo/page.svg"
-                            alt="En construccion"
-                        />
-                    </div> -->
         <mat-divider inset class="shadow"></mat-divider>
         <mat-table class="w-full" [dataSource]="tiemposPromedio">
             <ng-container matColumnDef="personal">
@@ -30,7 +22,7 @@
                     Tiempo promedio por ticket
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    {{ element.promedio }}
+                    {{ (element.tiempoPromedio|timeHMS) }}
                 </mat-cell>
             </ng-container>
 

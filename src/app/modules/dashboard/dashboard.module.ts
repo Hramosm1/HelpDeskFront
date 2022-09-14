@@ -13,6 +13,7 @@ import {ActualTicketsComponent} from './actual-tickets/actual-tickets.component'
 import {AsignTicketsComponent} from './asign-tickets/asign-tickets.component';
 import {AverageTicketsComponent} from './average-tickets/average-tickets.component';
 import {TimelapseTicketsComponent} from './timelapse-tickets/timelapse-tickets.component';
+import {PipesModule} from "../../pipes/pipes.module";
 
 
 @NgModule({
@@ -23,16 +24,17 @@ import {TimelapseTicketsComponent} from './timelapse-tickets/timelapse-tickets.c
 		AverageTicketsComponent,
 		TimelapseTicketsComponent
 	],
-	imports: [
-		CommonModule,
-		DashboardRoutingModule,
-		SharedModule,
-		NgChartsModule,
-		MatCardModule,
-		MatIconModule,
-		MatDividerModule,
-		MatTableModule
-	]
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        SharedModule,
+        NgChartsModule,
+        MatCardModule,
+        MatIconModule,
+        MatDividerModule,
+        MatTableModule,
+        PipesModule
+    ]
 })
 export class DashboardModule {
 }
