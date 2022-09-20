@@ -24,6 +24,7 @@ import {quillConfig} from 'app/core/config/quill.config';
 import {FiltroTicketsComponent} from './filtro-tickets/filtro-tickets.component';
 import {MatDatepickerModule,} from '@angular/material/datepicker';
 import {LuxonDateAdapter, MatLuxonDateModule} from '@angular/material-luxon-adapter';
+import {MatListModule} from '@angular/material/list';
 import {NgxFileDropModule} from 'ngx-file-drop';
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -31,6 +32,7 @@ import {DATA_CONFIG} from './interfaces/filtro.interfaces';
 import {CalificacionComponent} from './calificacion/calificacion.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {NgxStarRatingModule} from 'ngx-star-rating';
+import { ListaCalificarComponent } from './modals/lista-calificar/lista-calificar.component';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import {NgxStarRatingModule} from 'ngx-star-rating';
 		CerrarTicketComponent,
 		AsignarSoporteComponent,
 		FiltroTicketsComponent,
-		CalificacionComponent
+		CalificacionComponent,
+  ListaCalificarComponent
 	],
 	imports: [
 		CommonModule,
@@ -63,7 +66,8 @@ import {NgxStarRatingModule} from 'ngx-star-rating';
 		QuillModule.forRoot(quillConfig),
 		NgxFileDropModule,
 		SweetAlert2Module.forRoot(),
-		NgxStarRatingModule
+		NgxStarRatingModule,
+		MatListModule
 	],
 	providers: [
 		{provide: MAT_DATE_LOCALE, useValue: 'es'},
