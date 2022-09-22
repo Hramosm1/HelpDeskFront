@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
 	};
 	data: ChartData<'bar'>;
 	displayedColumns = ['personalAsignado', 'activos', 'cerrados'];
-	tiemposPromedio: TiempoPromedio[];
+	tiemposPromedio: AverageTickets[];
 	tpdData: ChartData<'bar'>;
 
 	constructor(private api: HttpService) {
@@ -55,23 +55,7 @@ export class DashboardComponent implements OnInit {
 				};
 				this.informacionTickets = ticketsPorUsuario;
 			});
-		this.api.getDashboard<AverageTickets[]>('average', this.mes).subscribe((av) => {
-			const gp = groupBy(av, 'personal');
-			const result = [];
-			for (const key in gp) {
-				if (Object.prototype.hasOwnProperty.call(gp, key)) {
-					const list = gp[key];
-					const suma = list.reduce((prev, {tiempoAbierto}) => (prev + tiempoAbierto), 0);
-					const promedioNumber = suma / list.length;
-					const horas = Math.floor(promedioNumber / (60 * 60));
-					const minutos = Math.floor(promedioNumber / 60) - (horas * 60);
-					const segundos = Math.floor(promedioNumber - (minutos * 60) - (horas * 60 * 60));
-					const promedio = `${horas}h: ${minutos}m: ${segundos}s`;
-					result.push({personal: key, promedio});
-				}
-			}
-			this.tiemposPromedio = result;
-		});
+		this.api.getDashboard<AverageTickets[]>('average', this.mes).subscribe(result => this.tiemposPromedio = result);
 		this.api.getDashboard<TicketsPorDia[]>('graph', this.mes).subscribe((x) => {
 			const gp = groupBy(x, 'dia');
 			const ticketsPorDia: Array<TicketsPorDia[]> = Object.values(gp)

@@ -10,9 +10,10 @@ import {FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
 	providedIn: 'root'
 })
 export class HttpService {
-	base = environment.backenduri;
+	base: string;
 
 	constructor(private http: HttpClient) {
+		this.base = environment.backenduri;
 	}
 
 	getAll<T>(route: Destino): Observable<T[]> {
@@ -42,6 +43,11 @@ export class HttpService {
 
 	getDashboard<T>(path: DashboardPath, mes?: number): Observable<T> {
 		return this.http.get<T>(`${this.base}dashboard/${path}/${mes}`).pipe(catchError(this.handleError));
+	}
+
+	getPendingTickets(idUser: string): Observable<any> {
+		const params = new HttpParams({fromObject: {idUser}});
+		return this.http.get(this.base + 'tickets', {params});
 	}
 
 	uploadFiles(id: number, files: NgxFileDropEntry[]): Observable<any> {

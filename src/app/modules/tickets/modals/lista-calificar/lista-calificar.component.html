@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Tienes tickets pendientes de calificar</h1>
+<div mat-dialog-content>
+	<mat-list>
+		<mat-list-item *ngFor="let row of dat">
+			<p>{{row.descripcion}}</p>
+			<span class="flex flex-1"></span>
+			<button (click)="redireccionar(row.link)" mat-button color="warn">Calificar</button>
+		</mat-list-item>
+	</mat-list>
+</div>
