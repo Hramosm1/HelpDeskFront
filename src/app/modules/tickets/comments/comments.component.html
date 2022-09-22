@@ -14,7 +14,7 @@
 									: null
 						}"
 					>{{ comentario.nombre
-						}} <b class="text-red-500">{{ comentario.ComentarioDeCierre ? comentario.tipo : "" | uppercase }}</b></span
+						}} <b class="text-red-500">{{ comentario.ComentarioDeCierre ? (comentario.tipo | titlecase ): "" }}</b></span
 					>
 				</h3>
 				<div [innerHTML]="comentario.comentario"></div>
